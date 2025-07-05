@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Вставка header
-  fetch('header.html')
+  fetch('partials/header.html')
     .then(res => res.text())
     .then(html => {
       document.getElementById('header').innerHTML = html;
       setActiveNav();
     });
   // Вставка footer
-  fetch('footer.html')
+  fetch('partials/footer.html')
     .then(res => res.text())
     .then(html => {
       document.getElementById('footer').innerHTML = html;
