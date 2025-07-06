@@ -205,4 +205,391 @@ Its for the reviews
     }
   }
 
-  
+/*
+Its for the gallery
+*/
+
+.section1 .gallery-title {
+    font-size: 64px;
+    font-weight: 700;
+    margin-left: 100px;
+    margin-bottom: 24px;
+    text-align: left;
+    color: #fff;
+}
+.section1 .gallery-subtitle {
+    font-size: 24px;
+    color: #fff;
+    margin-left: 100px;
+    margin-bottom: 48px;
+    text-align: left;
+    max-width: 900px;
+}
+.section1 .gallery-cards-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 60px;
+}
+.section1 .gallery-arrow {
+    background: #fff;
+    color: #4CAF50;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    font-size: 32px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+}
+.section1 .gallery-arrow:hover {
+    background: #e8f5e9;
+}
+.section1 .gallery-cards {
+    display: flex;
+    gap: 32px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 8px;
+}
+.section1 .gallery-cards::-webkit-scrollbar {
+    display: none;
+}
+.section1 .gallery-card {
+    position: relative;
+    width: 300px;
+    height: 360px;
+    border-radius: 32px;
+    overflow: hidden;
+    background: #fff;
+    flex-shrink: 0;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.section1 .gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    left: 0; top: 0;
+    z-index: 1;
+}
+.section1 .gallery-card-icons {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 2;
+    display: flex;
+    gap: 12px;
+}
+.section1 .gallery-heart {
+    color: #E57373;
+    font-size: 28px;
+    background: #fff;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.section1 .gallery-plus {
+    color: #4CAF50;
+    font-size: 28px;
+    background: #fff;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.section1 .gallery-card-info {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(0deg, rgba(0,0,0,0.55) 80%, rgba(0,0,0,0.0) 100%);
+    color: #fff;
+    padding: 32px 24px 24px 24px;
+    border-radius: 0 0 32px 32px;
+    margin-top: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+.section1 .gallery-card:hover .gallery-card-info {
+    opacity: 1;
+    pointer-events: auto;
+}
+.section1 .gallery-card-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.section1 .gallery-card-desc {
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+}
+.section1 .gallery-bottom {
+    margin-top: 60px;
+    text-align: center;
+}
+.section1 .gallery-bottom-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    color: #fff;
+}
+.section1 .gallery-bottom-subtitle {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 32px;
+}
+.section1 .gallery-bottom-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+}
+.section1 .gallery-btn {
+    font-size: 20px;
+    padding: 16px 48px;
+    border-radius: 30px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.section1 .gallery-btn-main {
+    background: #fff;
+    color: #4CAF50;
+}
+.section1 .gallery-btn-main:hover {
+    background: #e8f5e9;
+}
+.section1 .gallery-btn-secondary {
+    background: #F8F7F3;
+    color: #4CAF50;
+}
+.section1 .gallery-btn-secondary:hover {
+    background: #e8f5e9;
+}
+@media (max-width: 900px) {
+    .section1 .gallery-title, .section1 .gallery-subtitle {
+        margin-left: 20px;
+        font-size: 32px;
+    }
+    .section1 .gallery-cards {
+        gap: 16px;
+    }
+    .section1 .gallery-card {
+        width: 220px;
+        height: 220px;
+        border-radius: 18px;
+    }
+    .section1 .gallery-bottom-title {
+        font-size: 24px;
+    }
+    .section1 .gallery-bottom-subtitle {
+        font-size: 16px;
+    }
+    .section1 .gallery-btn {
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+}
+
+/*
+Its for the team
+*/
+
+.section1 .team-title {
+    font-size: 64px;
+    font-weight: 700;
+    text-align: left;
+    margin: 0 0 40px 0;
+    color: #fff;
+    padding-left: 100px;
+}
+.section1 .team-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto 40px auto;
+    flex-wrap: wrap;
+}
+.section1 .team-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto 48px auto;
+}
+.section1 .team-main-photo {
+    width: 600px;
+    height: 399px;
+    object-fit: cover;
+    border-radius: 32px;
+    flex-shrink: 0;
+}
+.section1 .team-main-info {
+    color: #fff;
+    max-width: 510px;
+    font-family: 'Roboto', sans-serif;
+}
+.section1 .team-main-name {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.section1 .team-main-role {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+.section1 .team-main-desc {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+.section1 .team-gallery {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto 40px auto;
+}
+.section1 .team-card {
+    position: relative;
+    width: 280px;
+    height: 383px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+.section1 .team-card .team-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 24px;
+    display: block;
+}
+.section1 .hover-info {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.35);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 18px 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    border-radius: 24px;
+}
+.section1 .team-card:hover .hover-info {
+    opacity: 1;
+    pointer-events: auto;
+}
+.section1 .team-card-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+.section1 .team-card-desc {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+}
+.section1 .team-buttons {
+    display: flex;
+    gap: 32px;
+    justify-content: flex-end;
+    max-width: 1200px;
+    margin: 40px auto 0 auto;
+    padding-right: 60px;
+}
+.section1 .team-consult {
+    background: #fff;
+    color: #4CAF50;
+    border: none;
+    font-size: 20px;
+    padding: 16px 40px;
+    border-radius: 30px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.section1 .team-consult:hover {
+    background: #e8f5e9;
+}
+.section1 .team-menu {
+    background: #F8F7F3;
+    color: #4CAF50;
+    border: none;
+    font-size: 20px;
+    padding: 16px 40px;
+    border-radius: 30px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.section1 .team-menu:hover {
+    background: #e8f5e9;
+}
+@media (max-width: 1100px) {
+    .section1 .team-content {
+        flex-direction: column;
+        gap: 40px;
+        align-items: center;
+    }
+    .section1 .team-top {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+    .section1 .team-main-photo {
+        width: 100%;
+        max-width: 340px;
+    }
+    .section1 .team-main-info {
+        max-width: 100%;
+        text-align: center;
+    }
+    .section1 .team-gallery {
+        flex-direction: column;
+        gap: 18px;
+        align-items: center;
+    }
+    .section1 .team-card {
+        width: 100%;
+        max-width: 180px;
+    }
+    .section1 .team-buttons {
+        justify-content: center;
+        padding-right: 0;
+    }
+    .section1 .team-title {
+        padding-left: 0;
+        text-align: center;
+    }
+}
