@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const headerElement = document.getElementById('header');
   if (headerElement && headerElement.innerHTML.trim() === '') {
     // Вставка header
-    fetch('partials/header.html')
+    fetch('/partials/header.html')
       .then(res => {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
     
   // Вставка footer
-  fetch('partials/footer.html')
+  fetch('/partials/footer.html')
     .then(res => {
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
