@@ -12,4 +12,17 @@ document.addEventListener('DOMContentLoaded', function() {
   right.addEventListener('click', function() {
     gallery.scrollBy({ left: scrollStep, behavior: 'smooth' });
   });
+});
+
+document.getElementById('galleryLeft').onclick = function() {
+    document.getElementById('galleryCards').scrollBy({ left: -350, behavior: 'smooth' });
+};
+document.getElementById('galleryRight').onclick = function() {
+    document.getElementById('galleryCards').scrollBy({ left: 350, behavior: 'smooth' });
+};
+
+document.querySelectorAll('.gallery-heart').forEach(function(heart) {
+    heart.addEventListener('click', function() {
+        heart.classList.toggle('active');
+    });
 }); 

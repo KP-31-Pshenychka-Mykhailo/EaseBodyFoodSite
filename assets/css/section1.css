@@ -1,8 +1,8 @@
 .section1 {
-    padding: 40px 0  20px 100px;
+    padding: 40px 0 20px 100px;
     color: #fff;
     text-align: left;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background: #4CAF50;
 }
 
@@ -11,63 +11,34 @@
     z-index: 2;
 }
 
-.section1 h1 {
-    font-size: 80px;
-    font-weight: 700;
-    margin: 0;
-    color: #4CAF50
-}
-
 .section1 h2 {
-    font-size: 64px;
-    font-weight: 700;
-    margin: 10px 0px 30px 0px;
+    font-size: clamp(24px, 8vw, 64px);
+    font-weight: 900;
+    color: #fff;
+    margin: 0 0 clamp(12px, 2vw, 24px) 0;
+    line-height: 0.95;
+    letter-spacing: -2px;
 }
 
 .section1 h3 {
-    font-size: 36px;
+    font-size: clamp(16px, 4vw, 36px);
     color: #fff;
     margin: 0px;
 }
 
-.section1 h4 {
-    font-size: 24px;
-    max-width: 900px;
-    margin: 20px 0;
+.section1 h4, .section1 h4.light {
+    font-size: clamp(14px, 4vw, 24px);
+    font-weight: 500;
     color: #fff;
-}
-
-.section1 h4.light {
-    font-size: 24px;
-    max-width: 900px;
-    margin: 20px 0;
-    color: #9DBF9E;
-}
-
-.section1 h4.white {
-    font-size: 24px;
-    max-width: 900px;
-    margin: 0px 0px 2px 0px;
-    color: #4CAF50;
+    margin: 0 0 clamp(20px, 5vw, 60px) 0;
+    letter-spacing: 0.5px;
 }
 
 .section1 .text24 {
-    font-size: 24px;
+    font-size: clamp(12px, 3vw, 24px);
     max-width: 900px;
     margin: 20px 0;
     color: #fff;
-}
-
-.section1 h6 {
-    font-size: 16px;
-}
-
-.section1 h7 {
-    font-size: 12px;
-}
-
-.section1 p {
-    font-size: 20px;
 }
 
 .section1 .button {
@@ -93,7 +64,6 @@
     border: none;
     padding: 15px 64px;
     font-size: 24px;
-    
     border-radius: 30px;
     cursor: pointer;
 }
@@ -107,42 +77,50 @@ Its for the list with numbers
 */
 .section1 .list {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
-    flex-wrap: wrap;
-    max-width: 1200px;
+    flex-wrap: nowrap;
+    max-width: 100%;
     padding-left: 0px;
     margin: 0;
-    gap: 50px;
+    gap: clamp(8px, 5vw, 40px);
 }
 
 .section1 .list-item {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    align-items: flex-end;
+    gap: 16px;
     justify-content: flex-start;
+    flex: 1 1 33%;
+    min-width: 0;
 }
 
 .section1 .list-item-number {
-    font-size: 64px;
-    font-weight: 700;
+    font-size: clamp(24px, 7vw, 64px);
+    font-weight: 900;
     color: #fff;
-    margin-right: 16px;
-    font-family: 'Roboto', sans-serif;
+    margin-right: clamp(4px, 2vw, 16px);
+    font-family: 'Montserrat', sans-serif;
 }
 
 .section1 .list-item-text {
-    font-size: 24px;
+    font-size: clamp(12px, 3vw, 32px);
     color: #fff;
-    font-weight: 700;
-    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+    text-align: left;
+    max-width: clamp(120px, 30vw, 260px);
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: normal;
+    hyphens: manual;
 }
 
 /*
 Its for the reviews
 */
-
-
 .section1 .review-info {
     font-size: 18px;
     color: #c8e6c9;
@@ -175,16 +153,16 @@ Its for the reviews
     min-height: 260px;
     box-sizing: border-box;
     position: relative;
-  }
+}
 
-  .section1 .review-header {
+.section1 .review-header {
     display: flex;
     align-items: center;
     gap: 18px;
     margin-bottom: 10px;
-  }
+}
 
-  .section1 .review-avatar {
+.section1 .review-avatar {
     width: 64px;
     height: 64px;
     border-radius: 50%;
@@ -192,31 +170,22 @@ Its for the reviews
     margin-bottom: 0;
     margin-right: 0;
     flex-shrink: 0;
-  }
+}
 
-  @media (max-width: 900px) {
+@media (max-width: 900px) {
     .section1 .reviews-grid {
-      grid-template-columns: 1fr;
-      gap: 24px;
+        grid-template-columns: 1fr;
+        gap: 24px;
     }
     .section1 .reviews-title {
-      font-size: 40px;
-      margin-left: 20px;
+        font-size: 40px;
+        margin-left: 20px;
     }
-  }
+}
 
 /*
 Its for the gallery
 */
-
-.section1 .gallery-title {
-    font-size: 64px;
-    font-weight: 700;
-    margin-left: 100px;
-    margin-bottom: 24px;
-    text-align: left;
-    color: #fff;
-}
 .section1 .gallery-subtitle {
     font-size: 24px;
     color: #fff;
@@ -225,31 +194,17 @@ Its for the gallery
     text-align: left;
     max-width: 900px;
 }
+
 .section1 .gallery-cards-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 24px;
     margin-bottom: 60px;
+    position: relative;
+    margin-left: 0;
 }
-.section1 .gallery-arrow {
-    background: #fff;
-    color: #4CAF50;
-    border: none;
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    font-size: 32px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s, color 0.2s;
-}
-.section1 .gallery-arrow:hover {
-    background: #e8f5e9;
-}
+
 .section1 .gallery-cards {
     display: flex;
     gap: 32px;
@@ -257,10 +212,53 @@ Its for the gallery
     scrollbar-width: none;
     -ms-overflow-style: none;
     padding-bottom: 8px;
+    scroll-behavior: smooth;
+    max-width: 1100px;
+    padding-left: 0;
+    padding-right: 60px;
 }
+
 .section1 .gallery-cards::-webkit-scrollbar {
     display: none;
 }
+
+.section1 .gallery-arrow {
+    background: #fff;
+    color: #4CAF50;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 32px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.section1 .gallery-arrow:hover {
+    background: #e8f5e9;
+    box-shadow: 0 6px 18px rgba(76, 175, 80, 0.15);
+}
+
+.section1 .gallery-arrow:hover svg {
+    stroke: #a3c7a3;
+}
+
+.section1 .gallery-arrow:active {
+    transform: scale(0.97) translateY(-50%);
+}
+
+.section1 .gallery-arrow-left { left: 10px; }
+.section1 .gallery-arrow-right { right: 10px; }
+
 .section1 .gallery-card {
     position: relative;
     width: 300px;
@@ -274,6 +272,7 @@ Its for the gallery
     flex-direction: column;
     justify-content: flex-end;
 }
+
 .section1 .gallery-img {
     width: 100%;
     height: 100%;
@@ -282,6 +281,7 @@ Its for the gallery
     left: 0; top: 0;
     z-index: 1;
 }
+
 .section1 .gallery-card-icons {
     position: absolute;
     top: 18px;
@@ -290,9 +290,9 @@ Its for the gallery
     display: flex;
     gap: 12px;
 }
+
 .section1 .gallery-heart {
-    color: #E57373;
-    font-size: 28px;
+    fill: #bbb;
     background: #fff;
     border-radius: 50%;
     width: 36px;
@@ -301,19 +301,15 @@ Its for the gallery
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: fill 0.2s;
+    border: 4px solid #fff;
 }
-.section1 .gallery-plus {
-    color: #4CAF50;
-    font-size: 28px;
-    background: #fff;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+.section1 .gallery-heart.active {
+    fill: #E57373;
 }
+
 .section1 .gallery-card-info {
     position: relative;
     z-index: 2;
@@ -326,40 +322,48 @@ Its for the gallery
     pointer-events: none;
     transition: opacity 0.3s;
 }
+
 .section1 .gallery-card:hover .gallery-card-info {
     opacity: 1;
     pointer-events: auto;
 }
+
 .section1 .gallery-card-title {
     font-size: 22px;
     font-weight: 700;
     margin-bottom: 12px;
 }
+
 .section1 .gallery-card-desc {
     font-size: 16px;
     font-weight: 400;
     color: #fff;
 }
+
 .section1 .gallery-bottom {
     margin-top: 60px;
     text-align: center;
 }
+
 .section1 .gallery-bottom-title {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 18px;
     color: #fff;
 }
+
 .section1 .gallery-bottom-subtitle {
     font-size: 20px;
     color: #fff;
     margin-bottom: 32px;
 }
+
 .section1 .gallery-bottom-buttons {
     display: flex;
     justify-content: center;
     gap: 32px;
 }
+
 .section1 .gallery-btn {
     font-size: 20px;
     padding: 16px 48px;
@@ -369,20 +373,25 @@ Its for the gallery
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
 }
+
 .section1 .gallery-btn-main {
     background: #fff;
     color: #4CAF50;
 }
+
 .section1 .gallery-btn-main:hover {
     background: #e8f5e9;
 }
+
 .section1 .gallery-btn-secondary {
     background: #F8F7F3;
     color: #4CAF50;
 }
+
 .section1 .gallery-btn-secondary:hover {
     background: #e8f5e9;
 }
+
 @media (max-width: 900px) {
     .section1 .gallery-title, .section1 .gallery-subtitle {
         margin-left: 20px;
@@ -411,7 +420,6 @@ Its for the gallery
 /*
 Its for the team
 */
-
 .section1 .team-title {
     font-size: 64px;
     font-weight: 700;
@@ -420,6 +428,7 @@ Its for the team
     color: #fff;
     padding-left: 100px;
 }
+
 .section1 .team-content {
     display: flex;
     justify-content: flex-start;
@@ -429,6 +438,7 @@ Its for the team
     margin: 0 auto 40px auto;
     flex-wrap: wrap;
 }
+
 .section1 .team-top {
     display: flex;
     align-items: flex-start;
@@ -437,6 +447,7 @@ Its for the team
     max-width: 1200px;
     margin: 0 auto 48px auto;
 }
+
 .section1 .team-main-photo {
     width: 600px;
     height: 399px;
@@ -444,26 +455,31 @@ Its for the team
     border-radius: 32px;
     flex-shrink: 0;
 }
+
 .section1 .team-main-info {
     color: #fff;
     max-width: 510px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
+
 .section1 .team-main-name {
     font-size: 36px;
     font-weight: 700;
     margin-bottom: 8px;
 }
+
 .section1 .team-main-role {
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 18px;
 }
+
 .section1 .team-main-desc {
     font-size: 24px;
     font-weight: 400;
     line-height: 1.5;
 }
+
 .section1 .team-gallery {
     display: flex;
     flex-direction: row;
@@ -473,6 +489,7 @@ Its for the team
     max-width: 1200px;
     margin: 0 auto 40px auto;
 }
+
 .section1 .team-card {
     position: relative;
     width: 280px;
@@ -485,6 +502,7 @@ Its for the team
     margin: 0;
     display: block;
 }
+
 .section1 .team-card .team-photo {
     width: 100%;
     height: 100%;
@@ -492,6 +510,7 @@ Its for the team
     border-radius: 24px;
     display: block;
 }
+
 .section1 .hover-info {
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0;
@@ -506,20 +525,24 @@ Its for the team
     transition: opacity 0.3s;
     border-radius: 24px;
 }
+
 .section1 .team-card:hover .hover-info {
     opacity: 1;
     pointer-events: auto;
 }
+
 .section1 .team-card-name {
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 6px;
 }
+
 .section1 .team-card-desc {
     font-size: 14px;
     font-weight: 400;
     line-height: 1.4;
 }
+
 .section1 .team-buttons {
     display: flex;
     gap: 32px;
@@ -528,6 +551,7 @@ Its for the team
     margin: 40px auto 0 auto;
     padding-right: 60px;
 }
+
 .section1 .team-consult {
     background: #fff;
     color: #4CAF50;
@@ -539,9 +563,11 @@ Its for the team
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
 }
+
 .section1 .team-consult:hover {
     background: #e8f5e9;
 }
+
 .section1 .team-menu {
     background: #F8F7F3;
     color: #4CAF50;
@@ -553,9 +579,11 @@ Its for the team
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
 }
+
 .section1 .team-menu:hover {
     background: #e8f5e9;
 }
+
 @media (max-width: 1100px) {
     .section1 .team-content {
         flex-direction: column;
