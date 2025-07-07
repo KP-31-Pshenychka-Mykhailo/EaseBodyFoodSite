@@ -1,5 +1,5 @@
 .section2 {
-    padding: 40px 0 20px 100px;
+    padding: clamp(20px, 5vw, 40px) 0 clamp(10px, 2vw, 20px) clamp(50px, 10vw, 100px);
     color: #4CAF50;
     text-align: left;
     font-family: 'Montserrat', sans-serif;
@@ -175,8 +175,24 @@ Its for the reviews
 
 @media (max-width: 900px) {
     .section2 .reviews-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 16px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        margin-left: -12px;
+        margin-right: -12px;
+    }
+    .section2 .review-card {
+        flex: 0 0 80vw;
+        width: 80vw;
+        min-width: 260px;
+        max-width: 400px;
+        scroll-snap-align: start;
+        margin: 0;
     }
     .section2 .reviews-title {
         font-size: 40px;

@@ -6,7 +6,7 @@
     color: #fff;
     text-align: left;
     padding: 80px 20px;
-    padding-left: 100px;
+    padding-left: clamp(50px, 10vw, 100px);
     overflow: hidden;
 }
 .hero::before {
@@ -30,7 +30,7 @@
     color: white;
     border: none;
     padding: 15px 64px;
-    font-size: 24px;
+    font-size: clamp(15px, 5vw, 24px);
     border-radius: 30px;
     cursor: pointer;
 }
@@ -61,6 +61,22 @@
 }
 .button:hover .btn-arrow {
   transform: translateX(4px);
+}
+
+@media (max-width: 600px) {
+  .hero .button {
+    width: 100%;
+    font-size: clamp(14px, 4vw, 18px);
+    padding: clamp(10px, 3vw, 16px) clamp(16px, 8vw, 32px);
+    border-radius: 22px;
+    margin-top: 32px;
+    min-width: 0;
+    text-align: center;
+  }
+  .hero .btn-arrow {
+    min-width: 22px;
+    min-height: 22px;
+  }
 }
 
 

@@ -1,5 +1,5 @@
 .section1 {
-    padding: 40px 0 20px 100px;
+    padding: clamp(20px, 5vw, 40px) 0 clamp(10px, 2vw, 20px) clamp(50px, 10vw, 100px);
     color: #fff;
     text-align: left;
     font-family: 'Montserrat', sans-serif;
@@ -24,6 +24,14 @@
     font-size: clamp(16px, 4vw, 36px);
     color: #fff;
     margin: 0px;
+    text-align: left;
+}
+
+.section1 h3.center {
+    font-size: clamp(16px, 4vw, 36px);
+    color: #fff;
+    margin: 0px;
+    text-align: center;
 }
 
 .section1 h4, .section1 h4.light {
@@ -35,10 +43,11 @@
 }
 
 .section1 .text24 {
-    font-size: clamp(12px, 3vw, 24px);
+    font-size: clamp(10px, 2vw, 24px);
     max-width: 900px;
-    margin: 20px 0;
+    margin: clamp(10px, 2vw, 20px) 0;
     color: #fff;
+    text-align: left;
 }
 
 .section1 .button {
@@ -122,9 +131,10 @@ Its for the list with numbers
 Its for the reviews
 */
 .section1 .review-info {
-    font-size: 18px;
+    font-size: clamp(8px, 2vw, 18px);
     color: #c8e6c9;
     margin: 0px 0px 10px;
+    text-align: left;
 }
 
 .section1 .review-text {
@@ -341,7 +351,7 @@ Its for the gallery
 }
 
 .section1 .gallery-bottom {
-    margin-top: 60px;
+    margin-top: clamp(0px, 5vw, 60px);
     text-align: center;
 }
 
@@ -445,7 +455,7 @@ Its for the team
     justify-content: center;
     gap: 50px;
     max-width: 1200px;
-    margin: 0 auto 48px auto;
+    margin: 0 auto clamp(20px, 5vw, 48px) auto;
 }
 
 .section1 .team-main-photo {
@@ -487,7 +497,7 @@ Its for the team
     align-items: flex-start;
     justify-content: center;
     max-width: 1200px;
-    margin: 0 auto 40px auto;
+    margin: 0 auto clamp(4px, 1vw, 40px) auto;
 }
 
 .section1 .team-card {
@@ -532,13 +542,13 @@ Its for the team
 }
 
 .section1 .team-card-name {
-    font-size: 18px;
+    font-size: clamp(9px, 2vw, 18px);
     font-weight: 700;
     margin-bottom: 6px;
 }
 
 .section1 .team-card-desc {
-    font-size: 14px;
+    font-size: clamp(7px, 2vw, 14px);
     font-weight: 400;
     line-height: 1.4;
 }
@@ -619,5 +629,54 @@ Its for the team
     .section1 .team-title {
         padding-left: 0;
         text-align: center;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .team-top {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+      }
+
+    .team-gallery {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        gap: 10px !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        width: 100vw;
+        margin-left: -16px;
+        margin-right: -16px;
+        padding-bottom: 5px;
+    }
+    .team-card {
+        flex: 0 0 100px !important;
+        width: 100px !important;
+        min-width: 100px !important;
+        max-width: 100px !important;
+        height: auto !important;
+        margin: 0 !important;
+        background: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(76,175,80,0.07);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 8px 0 4px 0;
+    }
+
+    .team-main-photo {
+        width: 150px !important;
+        height: 150px !important;
+        object-fit: cover !important;
+        border-radius: 12px !important;
+        display: block !important;
+        margin: 0 0 0px 0 !important;
     }
 }

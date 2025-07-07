@@ -71,6 +71,8 @@ header img {
 }
 .logo {
     margin-left: 75px;
+    min-width: 36px;
+    flex-shrink: 0;
 }
 .basket-big {
     border: 1px solid #4CAF50;
@@ -426,27 +428,32 @@ header img {
   .main-header {
     padding: 0 8px;
     height: 56px;
-  }
-  .burger {
+    gap: 8px;
     display: flex;
-    order: 1;
+    align-items: center;
+    justify-content: space-between;
   }
   .logo {
-    order: 2;
-    margin: 0 auto;
-    position: absolute;
-    left: 0; right: 0;
-    top: 50%;
-    transform: translateY(-50%);
     height: 36px;
-    z-index: 1;
-    pointer-events: none;
+    min-width: 36px;
+    margin: 0;
+    position: static;
+    transform: none;
+    pointer-events: auto;
+    flex-shrink: 0;
+    z-index: auto;
+    order: 2;
+  }
+  .burger {
+    order: 1;
   }
   .header-actions {
     order: 3;
-    margin-left: auto;
+    margin-left: 0;
     gap: 8px;
     display: flex;
+    z-index: 1;
+    background: transparent;
   }
 }
 
