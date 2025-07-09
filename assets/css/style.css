@@ -333,7 +333,7 @@ header img {
   border-color: #388e3c;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .header-actions {
     display: none;
   }
@@ -362,7 +362,7 @@ header img {
   transition: 0.3s;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .burger {
     display: flex;
   }
@@ -424,7 +424,7 @@ header img {
   margin: 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .main-header {
     padding: 0 8px;
     height: 56px;
@@ -457,7 +457,7 @@ header img {
   }
 }
 
-@media (min-width: 901px) {
+@media (min-width: 1000px) {
   .burger {
     display: none;
   }

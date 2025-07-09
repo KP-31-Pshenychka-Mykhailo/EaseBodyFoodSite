@@ -1,10 +1,10 @@
 console.log('Layout.js loaded!');
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Проверяем, есть ли уже header в DOM
+
   const headerElement = document.getElementById('header');
   if (headerElement && headerElement.innerHTML.trim() === '') {
-    // Вставка header
+  
     fetch('partials/header.html')
       .then(res => {
         if (!res.ok) {
@@ -14,21 +14,21 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       .then(html => {
         document.getElementById('header').innerHTML = html;
-        // Небольшая задержка для гарантии что DOM обновился
+   
         setTimeout(() => {
           setActiveNav();
           setupBurgerMenu();
         }, 100);
       })
       .catch(error => {
-        // Если fetch не работает, попробуем вставить header напрямую
+ 
         insertHeaderDirectly();
       });
   } else {
     setActiveNav();
   }
     
-  // Вставка footer
+
   fetch('partials/footer.html')
     .then(res => {
       if (!res.ok) {
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('footer').innerHTML = html;
     })
     .catch(error => {
-      // Игнорируем ошибки загрузки footer
+   
     });
 
   function insertHeaderDirectly() {
@@ -78,17 +78,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     navLinks.forEach((link) => {
       const href = link.getAttribute('href');
-      // Извлекаем имя файла из href, убирая относительный путь
+     
       const hrefFileName = href.split('/').pop();
       
-      // Проверяем различные случаи
+     
       let isActive = false;
       
-      // Для главной страницы
+    
       if (hrefFileName === 'index.html' && (path === '' || path === '/' || path === 'index.html')) {
         isActive = true;
       }
-      // Для остальных страниц
+     
       else if (hrefFileName === path) {
         isActive = true;
       }
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
       burger.classList.toggle('active');
       nav.classList.toggle('open');
     });
-    // Закрытие по клику вне меню
+
     document.addEventListener('click', function(e) {
       if (window.innerWidth > 900) return;
       if (!nav.classList.contains('open')) return;
@@ -125,16 +125,16 @@ document.addEventListener('DOMContentLoaded', function() {
         nav.classList.remove('open');
       }
     });
-    // Закрытие по Esc
+
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         burger.classList.remove('active');
         nav.classList.remove('open');
       }
     });
-    // Автоматически закрывать меню при ресайзе на большой экран
+
     window.addEventListener('resize', function() {
-      if (window.innerWidth > 900) {
+      if (window.innerWidth >= 1000) {
         burger.classList.remove('active');
         nav.classList.remove('open');
       }

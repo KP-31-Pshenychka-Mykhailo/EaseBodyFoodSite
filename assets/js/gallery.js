@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const right = document.querySelector('.gallery-arrow-right');
   if (!gallery || !left || !right) return;
 
-  const scrollStep = 320; // ширина карточки + gap
+  const scrollStep = 320; 
 
   left.addEventListener('click', function() {
     gallery.scrollBy({ left: -scrollStep, behavior: 'smooth' });
