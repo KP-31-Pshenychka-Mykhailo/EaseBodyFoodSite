@@ -35,6 +35,13 @@
     color: #fff;
 }
 
+.section2 h4.green {
+    font-size: 24px;
+    max-width: 900px;
+    margin: 0px 0px 2px 0px;
+    color: #4CAF50;
+}
+
 .section2 .button {
     margin-top: 150px;
     background-color: #4CAF50;
@@ -91,7 +98,7 @@ Its for the list with numbers
     letter-spacing: 0.08em;
     line-height: 1.1;
     text-align: left;
-    max-width: clamp(120px, 30vw, 260px);
+    max-width: clamp(120px, 30vw, 280px);
     white-space: normal;
     word-break: normal;
     overflow-wrap: normal;

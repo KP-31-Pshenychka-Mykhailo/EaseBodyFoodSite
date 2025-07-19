@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор раціону | Easy Body Food</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rubik:wght@900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/header.css">
+  <link rel="stylesheet" href="assets/css/footer.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style0-alt.css">
+  <link rel="stylesheet" href="assets/css/section1.css">
+  <link rel="stylesheet" href="assets/css/section2.css">
+  <link rel="stylesheet" href="assets/css/calculator.css">
+  
+</head>
+<body>
+  <div id="header"></div>
+  <main>
+    <section class="section2">
+        <h2>Калькулятор раціону</h2>
+        <h4 class="light">Заповніть дані для розрахунку</h4>
+    </section>
+    <section class="container">
+        <div class="calculator-center"></div>
+        <div class="steps">
+          <div class="step active" id="step-1">1</div>
+          <div class="step-line"></div>
+          <div class="step" id="step-2">2</div>
+          <div class="step-line"></div>
+          <div class="step" id="step-3">3</div>
+          <div class="step-line"></div>
+          <div class="step" id="step-4">4</div>
+        </div>
+        <form id="calculator-form">
+          <div class="form-box" id="form-step-1">
+            <legend>Ваша стать:</legend>
+            <div class="custom-radio-group">
+              <label class="custom-radio">
+                <input type="radio" name="gender" value="male" required>
+                <span class="custom-radio-indicator"></span>
+                Чоловіча
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="gender" value="female" required>
+                <span class="custom-radio-indicator"></span>
+                Жіноча
+              </label>
+            </div>
+            <button type="button" onclick="nextStep()">Далі</button>
+          </div>
+          <div class="form-box" id="form-step-2" style="display:none;">
+            <legend>Рівень активності:</legend>
+            <div class="custom-radio-group">
+              <label class="custom-radio">
+                <input type="radio" name="activity" value="1" required>
+                <span class="custom-radio-indicator"></span>
+                Дуже низький
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="activity" value="2" required>
+                <span class="custom-radio-indicator"></span>
+                Низький
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="activity" value="3" required>
+                <span class="custom-radio-indicator"></span>
+                Середній
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="activity" value="4" required>
+                <span class="custom-radio-indicator"></span>
+                Високий
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="activity" value="5" required>
+                <span class="custom-radio-indicator"></span>
+                Дуже високий
+              </label>
+            </div>
+            <button type="button" onclick="nextStep()">Далі</button>
+          </div>
+          <div class="form-box" id="form-step-3" style="display:none;">
+            <legend>Фізичні дані:</legend>
+            <input type="number" name="age" placeholder="Вік" min="10" max="100" required><br>
+            <input type="number" name="weight" placeholder="Вага (кг)" min="30" max="200" required><br>
+            <input type="number" name="height" placeholder="Зріст (см)" min="120" max="230" required><br>
+            <button type="button" onclick="nextStep()">Далі</button>
+          </div>
+          <div class="form-box" id="form-step-4" style="display:none;">
+            <legend>Мета:</legend>
+            <div class="custom-radio-group">
+              <label class="custom-radio">
+                <input type="radio" name="goal" value="lose" required>
+                <span class="custom-radio-indicator"></span>
+                Схуднення
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="goal" value="gain">
+                <span class="custom-radio-indicator"></span>
+                Набір ваги
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="goal" value="keep">
+                <span class="custom-radio-indicator"></span>
+                Підтримка фізичної форми
+              </label>
+            </div>
+            <button type="submit">Отримати результат</button>
+          </div>
+        </form>
+        <div class="result" id="result" style="display:none;"></div>
+      </div>
+    </section>
+
+    <!-- Персоналізований раціон -->
+    <section class="menu-hero-alt section1" id="personal-diet-section" style="display:none;">
+      <h2>Ваш персоналізований раціон</h2>
+      <h4 class="light">Сформовано на основі ваших даних: стать, вік, мета, активність</h4>
+      
+      <div class="menu-days-alt">
+        <button class="menu-day-alt active" data-day="monday">Пн</button>
+        <button class="menu-day-alt" data-day="tuesday">Вт</button>
+        <button class="menu-day-alt" data-day="wednesday">Ср</button>
+        <button class="menu-day-alt" data-day="thursday">Чт</button>
+        <button class="menu-day-alt" data-day="friday">Пт</button>
+        <button class="menu-day-alt" data-day="saturday">Сб</button>
+        <button class="menu-day-alt" data-day="sunday">Нд</button>
+      </div>
+      <div class="menu-slider-wrapper-alt">
+        <button class="gallery-arrow-alt gallery-arrow-left-alt menu-slider-arrow-alt left" id="dietLeft">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow-left">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <div class="menu-slider-alt" id="dietCards">
+          <!-- Пример карточек еды для Пн -->
+          <div class="menu-card-alt" data-day="monday">
+            <div class="menu-card-img-wrap-alt">
+              <img src="assets/img/food1.jpg" alt="Сніданок" class="menu-card-img">
+              <div class="gallery-card-icons-alt">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart-alt icon-heart">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </div>
+              <span class="menu-card-plus">+</span>
+            </div>
+            <div class="menu-card-content-alt">
+              <div class="menu-card-title-alt">Сніданок</div>
+              <div class="menu-card-macros-alt">Б: 6 г, Ж: 17 г, В: 8 г; 215 ккал</div>
+              <div class="menu-card-desc-alt">Цільнозерновий тост з хумусом, мікрозеленою та томатами. Ідеальний старт дня — білки, клітковина, ніжний смак.</div>
+            </div>
+          </div>
+          <div class="menu-card-alt" data-day="monday">
+            <div class="menu-card-img-wrap-alt">
+              <img src="assets/img/food2.jpg" alt="Полуденок" class="menu-card-img">
+              <div class="gallery-card-icons">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </div>
+              <span class="menu-card-plus">+</span>
+            </div>
+            <div class="menu-card-content-alt">
+              <div class="menu-card-title-alt">Полуденок</div>
+              <div class="menu-card-macros-alt">Б: 6 г, Ж: 17 г, В: 8 г; 215 ккал</div>
+              <div class="menu-card-desc-alt">Горіховий мікс (фундук, кеш'ю, мигдаль) з вівсяними пластівцями. Повільні вуглеводи, здорова енергія.</div>
+            </div>
+          </div>
+          <div class="menu-card-alt" data-day="monday">
+            <div class="menu-card-img-wrap-alt">
+              <img src="assets/img/food4.jpg" alt="Обід" class="menu-card-img">
+              <div class="gallery-card-icons">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </div>
+              <span class="menu-card-plus">+</span>
+            </div>
+            <div class="menu-card-content-alt">
+              <div class="menu-card-title-alt">Обід</div>
+              <div class="menu-card-macros-alt">Б: 6 г, Ж: 17 г, В: 8 г; 215 ккал</div>
+              <div class="menu-card-desc-alt">Лазанья з соусом бешамель, цільнозерновим листом та індичкою. Збалансована страва.</div>
+            </div>
+          </div>
+          <!-- Пример для вторника (скрыт по умолчанию) -->
+          <div class="menu-card-alt" data-day="tuesday" style="display:none;">
+            <div class="menu-card-img-wrap-alt">
+              <img src="assets/img/food3.jpg" alt="Сніданок" class="menu-card-img">
+              <div class="gallery-card-icons-alt">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart-alt icon-heart">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </div>
+              <span class="menu-card-plus">+</span>
+            </div>
+            <div class="menu-card-content-alt">
+              <div class="menu-card-title-alt">Сніданок (Вт)</div>
+              <div class="menu-card-macros-alt">Б: 8 г, Ж: 12 г, В: 15 г; 245 ккал</div>
+              <div class="menu-card-desc-alt">Омлет з овочами та сиром. Багато білку, мінімум вуглеводів, максимум смаку.</div>
+            </div>
+          </div>
+          <!-- Добавьте аналогично для других дней недели -->
+        </div>
+        <button class="gallery-arrow-alt gallery-arrow-right-alt menu-slider-arrow-alt right" id="dietRight">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+      <div class="menu-total-alt">Б: 18 г, Ж: 51 г, В: 24 г; 645 ккал</div>
+      
+    </section>
+
+    <section class="section2"></section>
+
+    <!-- Блок персоналізації -->
+    <section class="menu-personal">
+      <h2 class="menu-personal-title">Хочеться персоналізації?</h2>
+      <p class="menu-personal-subtitle">Сконструюй власне меню!</p>
+      <div class="menu-personal-btns">
+        <button class="menu-personal-btn">Конструктор меню</button>
+      </div>
+    </section>
+  </main>
+  <div id="footer"></div>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/calculator.js"></script>
+  <script>
+    // Переключение дней недели для персонального меню
+    document.querySelectorAll('.menu-day-alt').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        // Снять active со всех кнопок
+        document.querySelectorAll('.menu-day-alt').forEach(function(b) {
+          b.classList.remove('active');
+        });
+        btn.classList.add('active');
+        // Получить выбранный день
+        var day = btn.getAttribute('data-day');
+        // Скрыть все карточки
+        document.querySelectorAll('.menu-card-alt').forEach(function(card) {
+          if (card.getAttribute('data-day') === day) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // При загрузке показать только карточки для первого дня
+    document.addEventListener('DOMContentLoaded', function() {
+      var activeBtn = document.querySelector('.menu-day-alt.active');
+      if (activeBtn) {
+        var day = activeBtn.getAttribute('data-day');
+        document.querySelectorAll('.menu-card-alt').forEach(function(card) {
+          if (card.getAttribute('data-day') === day) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

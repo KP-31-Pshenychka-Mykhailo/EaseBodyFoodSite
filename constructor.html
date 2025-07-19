@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конструктор меню | Easy Body Food</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rubik:wght@900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/section1.css">
+    <link rel="stylesheet" href="assets/css/section2.css">
+</head>
+<body>
+    <div id="header"></div>
+    <main>
+        <section class="section2">
+            <h2>Конструктор меню</h2>
+            <h4 class="light">Зберіть меню за своїми вподобаннями</h4>
+            <h4 class="green"><b>Як це працює?</b></h4>
+            <div class="list" style="margin: 32px 0 24px 0;">
+                <div class="list-item">
+                    <span class="list-item-number">01</span>
+                    <span class="list-item-text">Оберіть день та прийом їжі</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-item-number">02</span>
+                    <span class="list-item-text">Додайте страви</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-item-number">03</span>
+                    <span class="list-item-text">Налаштуйте інгредієнти</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-item-number">04</span>
+                    <span class="list-item-text">Оформіть доставку</span>
+                </div>
+            </div>
+        </section>
+        <section class="menu-hero">
+            <div class="menu-days">
+                <button class="menu-day active">Пн</button>
+                <button class="menu-day">Вт</button>
+                <button class="menu-day">Ср</button>
+                <button class="menu-day">Чт</button>
+                <button class="menu-day">Пт</button>
+                <button class="menu-day">Сб</button>
+                <button class="menu-day">Нд</button>
+            </div>
+            <div class="menu-type-tabs">
+                <button class="menu-type-tab active">Сніданок</button>
+                <button class="menu-type-tab">Полуденок</button>
+                <button class="menu-type-tab">Обід</button>
+                <button class="menu-type-tab">Вечеря</button>
+            </div>
+            <div class="menu-slider-wrapper">
+                <button class="gallery-arrow gallery-arrow-left menu-slider-arrow left">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow-left">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <div class="menu-slider">
+                    <!-- Пример карточки блюда -->
+                    <div class="menu-card" data-day="monday" data-type="breakfast">
+                        <div class="menu-card-img-wrap">
+                            <img src="assets/img/food1.jpg" alt="Сніданок" class="menu-card-img">
+                            <div class="gallery-card-icons">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
+                                         4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
+                                         14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+                                         6.86-8.55 11.54L12 21.35z"/>
+                              </svg>
+                            </div>
+                            <span class="menu-card-plus">+</span>
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-title">Яєчня з авокадо та мікрозеленью</div>
+                            <div class="menu-card-macros">Б: 6 г, Ж: 17 г, В: 8 г; 310 ккал</div>
+                            <div class="menu-card-desc">Ніжна яєчня з органічних яєць, подана з кремовим авокадо, шпинатом і мікрозеленью для старту дня з білками й клітковиною.</div>
+                        </div>
+                    </div>
+                    <div class="menu-card" data-day="monday" data-type="breakfast">
+                        <div class="menu-card-img-wrap">
+                            <img src="assets/img/food2.jpg" alt="Сніданок" class="menu-card-img">
+                            <div class="gallery-card-icons">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
+                                         4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
+                                         14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+                                         6.86-8.55 11.54L12 21.35z"/>
+                              </svg>
+                            </div>
+                            <span class="menu-card-plus">+</span>
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-title">Тост з хумусом та мікрозеленью</div>
+                            <div class="menu-card-macros">Б: 6 г, Ж: 17 г, В: 8 г; 310 ккал</div>
+                            <div class="menu-card-desc">Цільнозерновий тост з хумусом, мікрозеленью та томатами. Ідеальний старт дня — білки, клітковина, ніжний смак.</div>
+                        </div>
+                    </div>
+                    <!-- ...другие карточки по аналогии... -->
+                </div>
+                <button class="gallery-arrow gallery-arrow-right menu-slider-arrow right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+            <div class="menu-total">Загалом у меню: 0 Білки 0 Жири 0 Вуглеводи, 000 ккал.</div>
+            <button class="menu-choose-btn">Затвердити шаблон</button>
+        </section>
+        <section class="section1">
+            <h2>Не хочеш обирати?</h2>
+            <h4 class="light">Спробуй меню від нашого нутриціолога</h4>
+            <div class="team-top">
+                <img src="assets/img/nutritionist.jpg" alt="Нутриціолог" class="team-main-photo-star">
+            <div class="team-main-info">
+                <div class="menu-nutritionist-info">
+                    <h3>Микита Бондаренко</h3>
+                    <div class="team-main-info">Нутриціолог</div>
+                    <div class="text24">Експерт з харчування, якому довіряють медіа, спортсмени та тисячі людей по всій Україні.<br><br>Працює з професійними атлетами, активними людьми, молодими мамами — та кожному підбирає раціон.<br>Його філософія проста:<br><b>"Раціон має бути не про жертви, а про свободу".</b></div>
+                    <div class="gallery-bottom-buttons">
+                        <button class="gallery-btn gallery-btn-main">Зіркове меню</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            
+            <section class="menu-standard-choice">
+                <div class="menu-standard-choice-inner">
+                    <div class="menu-standard-choice-title">Або ж обирай наше стандартне меню</div>
+                    <div class="menu-standard-choice-desc">Ми вже сформували збалансоване меню на день, щоб вам не довелося нічого обирати.</div>
+                    <button class="menu-standard-choice-btn">Стандартне меню</button>
+                </div>
+            </section>
+        </section>
+
+    </main>
+    <div id="footer"></div>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/constructor-menu.js"></script>
+</body>
+</html> 

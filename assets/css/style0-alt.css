@@ -1,0 +1,909 @@
+body-alt {
+    background: #4CAF50;
+}
+.menu-hero-alt {
+    width: 100vw;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.menu-type-tabs-alt {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+    width: 100%;
+    justify-content: center;
+}
+.menu-type-tab-alt {
+    border: 1.5px solid #4CAF50;
+    background: transparent;
+    color: #4CAF50;
+    border-radius: 30px;
+    padding: 10px 36px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.menu-type-tab-alt.active, .menu-type-tab-alt:hover {
+    background: #4CAF50;
+    color: #fff;
+}
+.menu-days-alt {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+    width: 100%;
+    justify-content: center;
+}
+.menu-day-alt {
+    width: 36px;
+    height: 36px;
+    min-width: 26px;
+    min-height: 26px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #a3c7a3;
+    background: #4CAF50;
+    color: #fff;
+    border-radius: 50%;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.menu-day-alt.active, .menu-day-alt:hover {
+    background: #fff;
+    color: #4CAF50;
+    border-color: #4CAF50;
+}
+.menu-slider-wrapper-alt {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto 24px auto;
+    justify-content: center;
+}
+.menu-slider-arrow-alt {
+    background: #4CAF50;
+    border: none;
+    color: #fff;
+    font-size: 32px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.menu-slider-arrow-alt:hover {
+    background: #fff;
+    color: #4CAF50;
+}
+
+.menu-slider-arrow-alt:hover svg {
+    stroke: #4CAF50;
+}
+.menu-slider-alt {
+    display: flex;
+    gap: 40px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    width: 100%;
+}
+.menu-card-alt {
+    background: #fff;
+    border-radius: 32px;
+    color: #4CAF50;
+    min-width: 380px;
+    max-width: 420px;
+    flex: 0 0 400px;
+    min-height: 520px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(255, 255, 255, 0.10);
+}
+.menu-card-img-wrap-alt {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+}
+.menu-card-img-alt {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.menu-card-heart-alt {
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    font-size: 22px;
+    color: #4CAF50;
+    background: rgba(255,255,255,0.7);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+.menu-card-heart-alt.active {
+    fill: #E57373;
+    stroke: #E57373;
+}
+.menu-card-plus-alt {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 28px;
+    color: #4CAF50;
+    background: rgba(255,255,255,0.7);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+.menu-card-content-alt {
+    padding: 10px 14px 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.menu-card-title-alt {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+.menu-card-macros-alt {
+    font-size: 14px;
+    color: #d0f5d0;
+    margin-bottom: 4px;
+}
+.menu-card-desc-alt {
+    font-size: 15px;
+    color: #4CAF50;
+    opacity: 0.95;
+}
+.menu-total-alt {
+    color: #fff;
+    font-size: 18px;
+    margin: 24px 0 16px 0;
+    text-align: center;
+}
+.menu-choose-btn-alt {
+    background: #fff;
+    color: #4CAF50;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 48px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 40px;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(255,255,255,0.08);
+}
+.menu-choose-btn-alt:hover {
+    background: #4CAF50;
+}
+.menu-personal-alt {
+    background: #fff;
+    border-radius: 32px;
+    margin-top: 48px;
+    margin-bottom: 60px;
+    max-width: 700px;
+    padding: 48px 32px 40px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.menu-personal-title-alt {
+    color: #4CAF50;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-align: center;
+}
+.menu-personal-subtitle-alt {
+    color: #4CAF50;
+    font-size: 20px;
+    margin-bottom: 32px;
+    text-align: center;
+}
+.menu-personal-btns-alt {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+}
+.menu-personal-btn-alt {
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 36px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.menu-personal-btn-alt:hover {
+    background: #fff;
+    color: #4CAF50;
+}
+/* --- Конструктор меню: хедер и шаги --- */
+.menu-constructor-hero-alt {
+    max-width: 1100px;
+    margin: 0 auto 32px auto;
+    padding: 40px 0 0 0;
+    text-align: left;
+}
+.menu-constructor-title-alt {
+    font-size: 56px;
+    font-weight: 900;
+    color: #4CAF50;
+    margin-bottom: 8px;
+    font-family: 'Montserrat', sans-serif;
+}
+.menu-constructor-subtitle-alt {
+    color: #A3C7A3;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 32px;
+}
+.menu-constructor-how-title-alt {
+    color: #4CAF50;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+.menu-constructor-steps-alt {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+.menu-constructor-step-alt {
+    font-size: 20px;
+    color: #4CAF50;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.menu-constructor-step-alt .step-num-alt {
+    font-size: 32px;
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 2px #4CAF50;
+    text-stroke: 2px #4CAF50;
+    margin-right: 8px;
+    font-family: 'Montserrat', sans-serif;
+}
+.menu-constructor-days-alt, .menu-constructor-meals-alt {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.menu-constructor-day-alt, .menu-constructor-meal-alt {
+    background: #4CAF50;
+    color: #fff;
+    border: 1.5px solid #fff;
+    border-radius: 30px;
+    padding: 8px 28px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    font-family: 'Montserrat', sans-serif;
+}
+.menu-constructor-day-alt.active, .menu-constructor-day-alt:hover,
+.menu-constructor-meal-alt.active, .menu-constructor-meal-alt:hover {
+    background: #fff;
+    color: #4CAF50;
+} 
+.menu-constructor-cards-alt {
+    max-width: 1100px;
+    margin: 0 auto 32px auto;
+    padding: 0 0 24px 0;
+}
+.menu-constructor-cards-row-alt {
+    display: flex;
+    gap: 32px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+.menu-constructor-card-alt {
+    background: #F8F7F3;
+    border-radius: 24px;
+    box-shadow: 0 2px 12px rgba(255, 255, 255, 0.08);
+    min-width: 260px;
+    max-width: 260px;
+    flex: 0 0 260px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+.menu-constructor-card-img-wrap-alt {
+    width: 100%;
+    height: 140px;
+    overflow: hidden;
+    position: relative;
+}
+.menu-constructor-card-img-wrap-alt img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.menu-constructor-card-heart-alt, .menu-constructor-card-plus-alt {
+    position: absolute;
+    top: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+    color: #4CAF50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    z-index: 2;
+}
+.menu-constructor-card-heart-alt {
+    left: 12px;
+}
+.menu-constructor-card-plus-alt {
+    right: 12px;
+    font-size: 26px;
+}
+.menu-constructor-card-content-alt {
+    padding: 18px 18px 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.menu-constructor-card-title-alt {
+    font-size: 18px;
+    font-weight: 700;
+    color: #4CAF50;
+    margin-bottom: 2px;
+}
+.menu-constructor-card-macros-alt {
+    font-size: 14px;
+    color: #A3C7A3;
+    margin-bottom: 4px;
+}
+.menu-constructor-card-desc-alt {
+    font-size: 15px;
+    color: #4CAF50;
+    opacity: 0.95;
+    margin-bottom: 8px;
+}
+.menu-constructor-card-btn-alt {
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 8px 32px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.2s;
+}
+.menu-constructor-card-btn-alt:hover {
+    background: #fff;
+} 
+.menu-constructor-total-alt {
+    color: #4CAF50;
+    font-size: 18px;
+    margin: 16px 0 16px 0;
+    text-align: center;
+}
+.menu-constructor-approve-btn-alt {
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 48px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 0 auto 24px auto;
+    display: block;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(255,255,255,0.08);
+}
+.menu-constructor-approve-btn-alt:hover {
+    background: #fff;
+}
+
+/* --- Блок нутрициолога --- */
+.menu-nutritionist-alt {
+    background: #fff;
+    border-radius: 32px;
+    margin: 0 auto 40px auto;
+    max-width: 1100px;
+    padding: 48px 32px 40px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.menu-nutritionist-title-alt {
+    color: #4CAF50;
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+.menu-nutritionist-subtitle-alt {
+    color: #4CAF50;
+    font-size: 20px;
+    margin-bottom: 24px;
+}
+.menu-nutritionist-content-alt {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    width: 100%;
+}
+.menu-nutritionist-img-alt {
+    width: 260px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 24px;
+    flex-shrink: 0;
+}
+.menu-nutritionist-info-alt {
+    color: #4CAF50;
+    font-size: 18px;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.menu-nutritionist-name-alt {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+.menu-nutritionist-desc-alt {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+}
+.menu-nutritionist-btn-alt {
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 36px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 12px;
+    align-self: flex-start;
+    transition: background 0.2s, color 0.2s;
+}
+.menu-nutritionist-btn-alt:hover {
+    background: #e8f5e9;
+    color: #388e3c;
+} 
+.menu-standard-choice-alt {
+    background: #4CAF50;
+    border-radius: 32px;
+    margin: 0 auto 60px auto;
+    max-width: 900px;
+    padding: 40px 32px 40px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 12px rgba(255, 255, 255, 0.08);
+}
+.menu-standard-choice-inner-alt {
+    width: 100%;
+    text-align: center;
+}
+.menu-standard-choice-title-alt {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.menu-standard-choice-desc-alt {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 24px;
+}
+.menu-standard-choice-btn-alt {
+    background: #fff;
+    color: #4CAF50;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 36px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.menu-standard-choice-btn-alt:hover {
+    background: #4CAF50;
+}
+
+/* Стили для сердечек как в галерее */
+.gallery-card-icons-alt {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    z-index: 2;
+    display: flex;
+    gap: 12px;
+}
+
+.gallery-heart-alt {
+    fill: none;
+    stroke: #E57373;
+    stroke-width: 2;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.gallery-heart-alt.active {
+    fill: #E57373;
+    stroke: #E57373;
+}
+
+/* Стили для плюсиков */
+.menu-card-plus-alt {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 2;
+    background: #4CAF50;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    border: 4px solid #4CAF50;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.menu-card-plus-alt.active {
+    color: #E57373;
+    transform: rotate(45deg);
+}
+
+.menu-card-heart-alt, .menu-card-plus-alt {
+    width: 22px;
+    height: 22px;
+    font-size: 15px;
+    top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+.menu-card-heart-alt {
+    left: 8px;
+    right: auto;
+}
+.menu-card-plus-alt {
+    right: 8px;
+    left: auto;
+}
+
+.gallery-arrow-alt {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 50% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+} 
+
+@media (max-width: 1100px) {
+    .menu-constructor-hero-alt, .menu-constructor-cards-alt, .menu-nutritionist-alt, .menu-standard-choice-alt {
+        max-width: 98vw;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    .menu-constructor-cards-row-alt {
+        gap: 16px;
+    }
+    .menu-nutritionist-content-alt {
+        flex-direction: column;
+        gap: 18px;
+        align-items: flex-start;
+    }
+    .menu-nutritionist-img-alt {
+        width: 100%;
+        max-width: 320px;
+        height: 160px;
+    }
+}
+@media (max-width: 700px) {
+    .menu-hero-alt {
+        max-width: 100vw;
+        padding: 0 4px;
+    }
+    .menu-type-tabs-alt {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        width: 100%;
+        align-items: stretch;
+        justify-content: flex-start;
+    }
+    .menu-type-tab-alt {
+        font-size: 16px;
+        padding: 8px 18px;
+        border-radius: 20px;
+        flex: 1 1 120px;
+        min-width: 100px;
+        max-width: 100%;
+        white-space: nowrap;
+    }
+    .menu-days-alt {
+        gap: 8px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    .menu-day-alt {
+        width: 22px;
+        height: 22px;
+        min-width: 22px;
+        min-height: 22px;
+        font-size: 10px;
+    }
+    .menu-slider-wrapper-alt {
+        max-width: 100vw;
+        width: 100vw;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .menu-slider-alt {
+        display: flex;
+        flex-direction: row;
+        gap: 18px;
+        width: 100vw;
+        min-width: 0;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        padding-left: 3vw;
+        padding-right: 3vw;
+        box-sizing: border-box;
+    }
+    .menu-card-alt {
+        min-width: 70vw;
+        max-width: 70vw;
+        width: 70vw;
+        border-radius: 14px;
+        scroll-snap-align: start;
+        flex: 0 0 70vw;
+        box-sizing: border-box;
+        min-height: unset;
+        height: auto;
+    }
+    .menu-card-img-wrap-alt {
+        height: 120px;
+    }
+    .menu-card-content-alt {
+        padding: 10px 14px 10px 14px;
+        gap: 6px;
+    }
+    .menu-card-title-alt {
+        font-size: 13px;
+    }
+    .menu-card-macros-alt {
+        font-size: 10px;
+    }
+    .menu-card-desc-alt {
+        font-size: 11px;
+    }
+    .menu-card-plus-alt {
+        right: 8px;
+        left: auto;
+    }
+    .menu-card-heart-alt {
+        left: 8px;
+        right: auto;
+    }
+    .gallery-card-icons-alt {
+        top: 8px;
+        left: 8px;
+        gap: 6px;
+    }
+    .gallery-heart-alt {
+        width: 22px;
+        height: 22px;
+    }
+    .menu-total-alt {
+        font-size: 15px;
+        margin: 12px 0 8px 0;
+    }
+    .menu-choose-btn-alt, .menu-personal-btn-alt, .menu-constructor-card-btn-alt, .menu-constructor-approve-btn-alt, .menu-standard-choice-btn-alt {
+        font-size: 15px;
+        padding: 10px 18px;
+        border-radius: 20px;
+        width: auto;
+        min-width: 90px;
+    }
+    .menu-personal-alt {
+        padding: 18px 4px 18px 4px;
+        max-width: 98vw;
+    }
+    .menu-personal-title-alt {
+        font-size: 22px;
+    }
+    .menu-personal-subtitle-alt {
+        font-size: 15px;
+    }
+    .menu-personal-btns-alt {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .menu-constructor-hero-alt, .menu-constructor-cards-alt, .menu-nutritionist-alt, .menu-standard-choice-alt {
+        max-width: 98vw;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+    .menu-constructor-cards-row-alt {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 18px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        padding-left: 3vw;
+        padding-right: 3vw;
+        align-items: stretch;
+        box-sizing: border-box;
+    }
+    .menu-constructor-card-alt {
+        max-width: 94vw;
+        min-width: 94vw;
+        width: 94vw;
+        border-radius: 16px;
+        scroll-snap-align: start;
+        flex: 0 0 94vw;
+        box-sizing: border-box;
+    }
+    .menu-constructor-card-img-wrap-alt {
+        height: 160px;
+    }
+    .menu-constructor-card-content-alt {
+        padding: 14px 10px 12px 10px;
+        gap: 8px;
+    }
+    .menu-constructor-card-title-alt {
+        font-size: 14px;
+    }
+    .menu-constructor-card-macros-alt {
+        font-size: 11px;
+    }
+    .menu-constructor-card-desc-alt {
+        font-size: 12px;
+    }
+    .menu-nutritionist-alt, .menu-standard-choice-alt {
+        padding: 10px 2px 10px 2px;
+    }
+    .menu-nutritionist-title-alt {
+        font-size: 20px;
+    }
+    .menu-nutritionist-subtitle-alt {
+        font-size: 13px;
+    }
+    .menu-nutritionist-content-alt {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    .menu-nutritionist-img-alt {
+        width: 100%;
+        max-width: 180px;
+        height: 80px;
+    }
+    .menu-standard-choice-title-alt {
+        font-size: 18px;
+    }
+    .menu-standard-choice-desc-alt {
+        font-size: 13px;
+    }
+    .gallery-arrow-alt {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        min-height: 32px;
+    }
+}
+
+@media (max-width: 400px) {
+    .menu-type-tab-alt {
+        font-size: 13px;
+        padding: 6px 0;
+        min-width: 70px;
+    }
+    .menu-day-alt {
+        width: 27px;
+        height: 27px;
+        min-width: 16px;
+        min-height: 16px;
+        font-size: 10px;
+    }
+    .menu-card-content-alt {
+        padding: 8px 10px 8px 10px;
+    }
+    .menu-card-title-alt {
+        font-size: 12px;
+    }
+    .menu-card-macros-alt {
+        font-size: 9px;
+    }
+    .menu-card-desc-alt {
+        font-size: 10px;
+    }
+    .menu-choose-btn-alt, .menu-personal-btn-alt, .menu-constructor-card-btn-alt, .menu-constructor-approve-btn-alt, .menu-standard-choice-btn-alt {
+        font-size: 11px;
+        padding: 6px 8px;
+        border-radius: 14px;
+        min-width: 60px;
+    }
+    .menu-personal-title-alt {
+        font-size: 14px;
+    }
+    .menu-personal-subtitle-alt {
+        font-size: 10px;
+    }
+    .menu-nutritionist-title-alt {
+        font-size: 13px;
+    }
+    .menu-nutritionist-subtitle-alt {
+        font-size: 9px;
+    }
+    .menu-standard-choice-title-alt {
+        font-size: 12px;
+    }
+    .menu-standard-choice-desc-alt {
+        font-size: 9px;
+    }
+} 
