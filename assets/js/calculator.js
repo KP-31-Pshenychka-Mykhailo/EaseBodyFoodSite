@@ -64,7 +64,7 @@ function getClosestMenuType(calories) {
 async function loadMenuData() {
   const menuResp = await fetch('../EaseBodyFoodSite/assets/data/menu.json');
   const menuData = await menuResp.json();
-  const dishesResp = await fetch('assets/data/dishes.json');
+  const dishesResp = await fetch('../EaseBodyFoodSite/assets/data/dishes.json');
   const dishesData = await dishesResp.json();
   return { menuData, dishesData };
 }
