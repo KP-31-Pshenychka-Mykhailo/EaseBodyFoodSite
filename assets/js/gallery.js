@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!gallery || !left || !right) return;
 
   // Загрузка и отображение 5 случайных блюд
-  fetch('../EaseBodyFood/assets/data/dishes.json')
+  fetch('../EaseBodyFoodSite/assets/data/dishes.json')
     .then(response => response.json())
     .then(dishes => {
       // Фильтруем только блюда с картинками (если нужно)
