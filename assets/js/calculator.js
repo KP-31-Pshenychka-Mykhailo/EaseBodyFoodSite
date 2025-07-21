@@ -56,7 +56,100 @@ function calculateCalories({ gender, age, weight, height, activity, goal }) {
   return Math.round(calories);
 }
 
-document.getElementById('calculator-form').addEventListener('submit', function(e) {
+function getClosestMenuType(calories) {
+  const types = [900, 1200, 1600, 1800, 2500, 3000, 3500];
+  return types.reduce((prev, curr) => Math.abs(curr - calories) < Math.abs(prev - calories) ? curr : prev);
+}
+
+async function loadMenuData() {
+  const menuResp = await fetch('../EaseBodyFoodSite/assets/data/menu.json');
+  const menuData = await menuResp.json();
+  const dishesResp = await fetch('assets/data/dishes.json');
+  const dishesData = await dishesResp.json();
+  return { menuData, dishesData };
+}
+
+function getMenuForDay(menuArr, day) {
+  return menuArr.find(item => item.dayOfWeek && item.dayOfWeek.toLowerCase().startsWith(day.toLowerCase()));
+}
+
+function getDishById(dishes, id) {
+  return dishes.find(d => d.id === id);
+}
+
+const mealMap = [
+  { key: 'breakfastId', name: 'Сніданок' },
+  { key: 'additionaldishesId', name: 'Додаткова страва' },
+  { key: 'sweetbreakfastId', name: 'Солодкий сніданок' },
+  { key: 'afternoonsnaskId', name: 'Полуденок' },
+  { key: 'sweetafternoonsnaskId', name: 'Солодкий полуденок' },
+  { key: 'dinnerdishId', name: 'Обід' },
+  { key: 'eveningmealdishId', name: 'Вечеря' }
+];
+
+function createMenuCardAlt(dish, mealType) {
+  if (!dish) return '';
+  return `
+    <div class="menu-card-alt">
+      <div class="menu-card-img-wrap-alt">
+        <img src="${dish.img || '../EaseBodyFoodSite/assets/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
+        <div class="gallery-card-icons-alt">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart-alt icon-heart">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+        <span class="menu-card-plus">+</span>
+      </div>
+      <div class="menu-card-content-alt">
+        <div class="menu-card-title-alt">${mealType}</div>
+        <div class="menu-card-macros-alt">Б: ${dish.p} г, Ж: ${dish.f} г, В: ${dish.c} г</div>
+        <div class="menu-card-desc-alt">${dish.title}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderPersonalMenu(menuArr, dishes, day) {
+  const menuSlider = document.getElementById('dietCards');
+  const menuTotal = document.querySelector('.menu-total-alt');
+  menuSlider.innerHTML = '';
+  let totalP = 0, totalF = 0, totalC = 0;
+  const menuObj = getMenuForDay(menuArr, day);
+  if (!menuObj) {
+    menuSlider.innerHTML = '<div style="padding:2rem">Немає меню для цього дня.</div>';
+    if (menuTotal) menuTotal.textContent = 'Б: 0 г, Ж: 0 г, В: 0 г';
+    return;
+  }
+  let cardsHTML = '';
+  mealMap.forEach(meal => {
+    if (menuObj[meal.key]) {
+      const dish = getDishById(dishes, menuObj[meal.key]);
+      if (dish) {
+        totalP += Number(dish.p) || 0;
+        totalF += Number(dish.f) || 0;
+        totalC += Number(dish.c) || 0;
+      }
+      cardsHTML += createMenuCardAlt(dish, meal.name);
+    }
+  });
+  menuSlider.innerHTML = cardsHTML;
+  if (menuTotal) menuTotal.textContent = `Б: ${totalP} г, Ж: ${totalF} г, В: ${totalC} г`;
+  // Интерактивность
+  document.querySelectorAll('.gallery-heart-alt').forEach(function(heart) {
+    heart.addEventListener('click', function() {
+      heart.classList.toggle('active');
+    });
+  });
+  document.querySelectorAll('.menu-card-plus').forEach(function(plus) {
+    plus.addEventListener('click', function() {
+      plus.classList.toggle('active');
+      plus.textContent = plus.classList.contains('active') ? '−' : '+';
+    });
+  });
+}
+
+// --- Модификация обработчика submit ---
+document.getElementById('calculator-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   // Simple validation for last step
   const goalRadios = document.querySelectorAll('input[name="goal"]');
@@ -88,6 +181,40 @@ document.getElementById('calculator-form').addEventListener('submit', function(e
   document.getElementById('result').style.display = 'block';
   document.getElementById('result').innerText = `Ваша приблизна добова норма калорій ${goalText}: ${calories} ккал`;
   this.style.display = 'none';
+
+  // --- Динамическое меню ---
+  const menuType = getClosestMenuType(calories);
+  const { menuData, dishesData } = await loadMenuData();
+  let currentDay = 'Mon';
+  const dayMap = {
+    'monday': 'Mon',
+    'tuesday': 'Tue',
+    'wednesday': 'Wed',
+    'thursday': 'Thu',
+    'friday': 'Fri',
+    'saturday': 'Sat',
+    'sunday': 'Sun'
+  };
+  // Кнопки дней недели
+  document.querySelectorAll('.menu-day-alt').forEach(function(btn) {
+    btn.onclick = function() {
+      document.querySelectorAll('.menu-day-alt').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentDay = dayMap[btn.getAttribute('data-day')] || 'Mon';
+      renderPersonalMenu(menuData[menuType], dishesData, currentDay);
+    };
+  });
+  // Первичный рендер
+  renderPersonalMenu(menuData[menuType], dishesData, currentDay);
+  // Показать секцию
+  var dietSection = document.getElementById('personal-diet-section');
+  if (dietSection) {
+    dietSection.style.display = 'block';
+    setTimeout(function() {
+      dietSection.style.opacity = 1;
+      dietSection.style.transform = 'translateY(0)';
+    }, 50);
+  }
 });
 
 // Initial step
