@@ -5,8 +5,8 @@ body {
   padding: 0;
 }
 .container {
-  align-items: center; /* по центру по горизонтали */
-  justify-content: center; /* по центру по вертикали, если нужно */
+  align-items: center; 
+  justify-content: center;
   margin: 40px auto;
   background: #fff;
   border-radius: 8px;
@@ -43,22 +43,24 @@ h1 {
   align-items: center;
   justify-content: center;
   transition: background 0.2s, color 0.2s;
+  opacity: 0.6; 
 }
 .step.active {
-  background: #4cc14f;
+  background: #4CAF50;
   color: #fff;
+  opacity: 1; 
 }
 .step-line {
   width: 32px;
   height: 4px;
-  background: #4cc14f;
+  background: #4CAF50;
   border-radius: 2px;
 }
 .step.active ~ .step-line {
   background: #e0e0e0;
 }
 .form-box {
-  background: #4cc14f;
+  background: #4CAF50;
   border-radius: 24px;
   padding: 32px 24px;
   color: #fff;
@@ -95,7 +97,7 @@ h1 {
   margin-left: auto;
   margin-right: auto;
   background: #fff;
-  color: #4cc14f;
+  color: #4CAF50;
   border: none;
   border-radius: 16px;
   padding: 8px 28px;
@@ -109,7 +111,7 @@ h1 {
   background: #e0e0e0;
 }
 .result {
-  color: #4cc14f;
+  color: #4CAF50;
   font-size: 1.2em;
   font-weight: 600;
   margin-top: 24px;
@@ -152,7 +154,7 @@ h1 {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #4cc14f;
+  background: #4CAF50;
   box-sizing: border-box;
   display: flex;
   align-items: center;

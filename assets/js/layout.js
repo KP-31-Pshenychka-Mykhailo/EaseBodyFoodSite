@@ -55,8 +55,8 @@ document.addEventListener('DOMContentLoaded', function() {
               <a href="index.html">Головна</a>
               <a href="constructor.html">Конструктор меню</a>
               <a href="calculator.html">Калькулятор раціону</a>
-              <a href="star-menu.html">Зіркове меню</a>
-              <a href="standart-menu.html">Стандартне меню</a>
+              <a href="star.html">Зіркове меню</a>
+              <a href="standart.html">Стандартне меню</a>
           </nav>
           <div class="header-actions">
               <a href="cart.html" class="icon-button basket-big"><svg class="icon-img basket-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6H21L20 14H7L6 6Z" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1" stroke="#4CAF50" stroke-width="2"/><circle cx="18" cy="20" r="1" stroke="#4CAF50" stroke-width="2"/><path d="M9 6V4C9 2.89543 9.89543 2 11 2H16C17.1046 2 18 2.89543 18 4V6" stroke="#4CAF50" stroke-width="2" stroke-linecap="round"/></svg> 0 <span class="currency">₴</span></a>
