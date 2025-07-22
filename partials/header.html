@@ -69,18 +69,20 @@
       });
     }
     // --- Модалки: переключение ---
-    // Открыть loginModal по клику 'Увійти' в модалке регистрации
-    document.getElementById('registerToLogin').onclick = function(e) {
-      e.preventDefault();
-      document.getElementById('registerModal').style.display = 'none';
-      document.getElementById('loginModal').style.display = 'block';
-    };
-    // Открыть registerModal по клику 'Зареєструватися' в модалке входа
-    document.getElementById('loginToRegister').onclick = function(e) {
-      e.preventDefault();
-      document.getElementById('loginModal').style.display = 'none';
-      document.getElementById('registerModal').style.display = 'block';
-    };
+    document.addEventListener('click', function(e) {
+      if (e.target && e.target.id === 'registerToLogin') {
+        e.preventDefault();
+        document.getElementById('registerModal').style.display = 'none';
+        document.getElementById('loginModal').style.display = 'block';
+        return false;
+      }
+      if (e.target && e.target.id === 'loginToRegister') {
+        e.preventDefault();
+        document.getElementById('loginModal').style.display = 'none';
+        document.getElementById('registerModal').style.display = 'block';
+        return false;
+      }
+    });
     // Закрытие модалок
     document.getElementById('registerModalClose').onclick = function() {
       document.getElementById('registerModal').style.display = 'none';
