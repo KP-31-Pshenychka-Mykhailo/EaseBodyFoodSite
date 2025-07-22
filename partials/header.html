@@ -21,7 +21,7 @@
     <div class="auth-modal" style="position:relative; box-shadow:0 4px 32px rgba(0,0,0,0.18);">
       <button class="auth-modal__close" id="registerModalClose" style="position:absolute;top:32px;right:32px;font-size:2rem;color:#222;background:none;border:none;cursor:pointer;">&times;</button>
       <div class="auth-modal__title">Реєстрація</div>
-      <div class="auth-modal__switch">Є акаунт? <a href="login.html">Увійти</a></div>
+      <div class="auth-modal__switch">Є акаунт? <a href="#" id="registerToLogin">Увійти</a></div>
       <form class="auth-modal__form" id="registerModalForm">
         <input class="auth-modal__input" type="text" name="FirstName" placeholder="Ім'я" required>
         <input class="auth-modal__input" type="text" name="SecondName" placeholder="Прізвище" required>
@@ -70,7 +70,7 @@
     }
     // --- Модалки: переключение ---
     // Открыть loginModal по клику 'Увійти' в модалке регистрации
-    document.querySelector('#registerModal .auth-modal__switch a').onclick = function(e) {
+    document.getElementById('registerToLogin').onclick = function(e) {
       e.preventDefault();
       document.getElementById('registerModal').style.display = 'none';
       document.getElementById('loginModal').style.display = 'block';
