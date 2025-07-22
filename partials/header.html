@@ -4,7 +4,7 @@
         <a href="/EaseBodyFoodSite/index.html">Головна</a>
         <a href="/EaseBodyFoodSite/constructor.html">Конструктор меню</a>
         <a href="/EaseBodyFoodSite/calculator.html">Калькулятор раціону</a>
-        <a href="/EaseBodyFoodSite/star.html">Зіркове меню</a>
+       <!-- <a href="/EaseBodyFoodSite/star.html">Зіркове меню</a> -->
         <a href="/EaseBodyFoodSite/standart.html">Стандартне меню</a>
     </nav>
     <div class="header-actions">
@@ -14,4 +14,166 @@
     <button class="burger" id="burgerBtn" aria-label="Открыть меню">
       <span></span><span></span><span></span>
     </button>
-</header> 
+</header>
+<!-- Модалка регистрации -->
+<div id="registerModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(72,72,72,0.25); backdrop-filter: blur(6px);">
+  <div style="display:flex; align-items:center; justify-content:center; height:100%;">
+    <div class="auth-modal" style="position:relative; box-shadow:0 4px 32px rgba(0,0,0,0.18);">
+      <button class="auth-modal__close" id="registerModalClose" style="position:absolute;top:32px;right:32px;font-size:2rem;color:#222;background:none;border:none;cursor:pointer;">&times;</button>
+      <div class="auth-modal__title">Реєстрація</div>
+      <div class="auth-modal__switch">Є акаунт? <a href="login.html">Увійти</a></div>
+      <form class="auth-modal__form" id="registerModalForm">
+        <input class="auth-modal__input" type="text" name="FirstName" placeholder="Ім'я" required>
+        <input class="auth-modal__input" type="text" name="SecondName" placeholder="Прізвище" required>
+        <input class="auth-modal__input" type="email" name="Email" placeholder="E-mail" required>
+        <input class="auth-modal__input" type="tel" name="PhoneNumber" placeholder="Телефон" required>
+        <input class="auth-modal__input" type="password" name="Password" placeholder="Пароль" required>
+        <input class="auth-modal__input" type="password" name="ConfirmPassword" placeholder="Повторити пароль" required>
+        <button class="auth-modal__button" type="submit">Реєстрація</button>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Модалка входа -->
+<div id="loginModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(72,72,72,0.25); backdrop-filter: blur(6px);">
+  <div style="display:flex; align-items:center; justify-content:center; height:100%;">
+    <div class="auth-modal" style="position:relative; box-shadow:0 4px 32px rgba(0,0,0,0.18);">
+      <button class="auth-modal__close" id="loginModalClose" style="position:absolute;top:32px;right:32px;font-size:2rem;color:#222;background:none;border:none;cursor:pointer;">&times;</button>
+      <div class="auth-modal__title">Вхід</div>
+      <div class="auth-modal__switch">Немає акаунту? <a href="#" id="loginToRegister">Зареєструватися</a></div>
+      <form class="auth-modal__form" id="loginModalForm">
+        <input class="auth-modal__input" type="text" name="Email" placeholder="E-mail" required>
+        <input class="auth-modal__input" type="password" name="Password" placeholder="Пароль" required>
+        <button class="auth-modal__button" type="submit">Вхід</button>
+        <div class="auth-modal__forgot"><a href="#">Забули пароль?</a></div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const userName = localStorage.getItem('userName');
+    const loginBtn = document.querySelector('.icon-button.icon-button--wide');
+    if (userName && loginBtn) {
+      loginBtn.innerHTML = `<svg class="icon-img user-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="2"/><path d="M4 20C4 16.6863 7.13401 14 12 14C16.866 14 20 16.6863 20 20" stroke="#fff" stroke-width="2"/></svg>${userName}`;
+      loginBtn.href = "#";
+      loginBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = '/profile.html';
+      });
+    } else if (loginBtn) {
+      loginBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('registerModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      });
+    }
+    // --- Модалки: переключение ---
+    // Открыть loginModal по клику 'Увійти' в модалке регистрации
+    document.querySelector('#registerModal .auth-modal__switch a').onclick = function(e) {
+      e.preventDefault();
+      document.getElementById('registerModal').style.display = 'none';
+      document.getElementById('loginModal').style.display = 'block';
+    };
+    // Открыть registerModal по клику 'Зареєструватися' в модалке входа
+    document.getElementById('loginToRegister').onclick = function(e) {
+      e.preventDefault();
+      document.getElementById('loginModal').style.display = 'none';
+      document.getElementById('registerModal').style.display = 'block';
+    };
+    // Закрытие модалок
+    document.getElementById('registerModalClose').onclick = function() {
+      document.getElementById('registerModal').style.display = 'none';
+      document.body.style.overflow = '';
+    };
+    document.getElementById('loginModalClose').onclick = function() {
+      document.getElementById('loginModal').style.display = 'none';
+      document.body.style.overflow = '';
+    };
+    // --- Регистрация ---
+    document.getElementById('registerModalForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        FirstName: form.FirstName.value,
+        SecondName: form.SecondName.value,
+        Email: form.Email.value,
+        PhoneNumber: form.PhoneNumber.value,
+        Password: form.Password.value
+      };
+      if (form.Password.value !== form.ConfirmPassword.value) {
+        alert('Паролі не співпадають!');
+        return;
+      }
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (res.ok) {
+          const result = await res.json();
+          if (result.id) {
+            localStorage.setItem('userId', result.id);
+          }
+          const email = form.Email.value;
+          const userName = email.split('@')[0];
+          localStorage.setItem('userName', userName);
+          alert('Реєстрація успішна!');
+          form.reset();
+          document.getElementById('registerModal').style.display = 'none';
+          document.body.style.overflow = '';
+          if (loginBtn) {
+            loginBtn.innerHTML = `<svg class="icon-img user-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="2"/><path d="M4 20C4 16.6863 7.13401 14 12 14C16.866 14 20 16.6863 20 20" stroke="#fff" stroke-width="2"/></svg>${userName}`;
+            loginBtn.href = "#";
+            loginBtn.onclick = function(ev) { ev.preventDefault(); window.location.href = '/profile.html'; };
+          }
+        } else {
+          const err = await res.text();
+          alert('Помилка: ' + err);
+        }
+      } catch (err) {
+        alert('Помилка з’єднання з сервером');
+      }
+    });
+    // --- Вход ---
+    document.getElementById('loginModalForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        Email: form.Email.value,
+        Password: form.Password.value
+      };
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (res.ok) {
+          const result = await res.json();
+          if (result.id) {
+            localStorage.setItem('userId', result.id);
+          }
+          const email = form.Email.value;
+          const userName = email.split('@')[0];
+          localStorage.setItem('userName', userName);
+          alert('Вхід успішний!');
+          form.reset();
+          document.getElementById('loginModal').style.display = 'none';
+          document.body.style.overflow = '';
+          if (loginBtn) {
+            loginBtn.innerHTML = `<svg class="icon-img user-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="2"/><path d="M4 20C4 16.6863 7.13401 14 12 14C16.866 14 20 16.6863 20 20" stroke="#fff" stroke-width="2"/></svg>${userName}`;
+            loginBtn.href = "#";
+            loginBtn.onclick = function(ev) { ev.preventDefault(); window.location.href = '/profile.html'; };
+          }
+        } else {
+          const err = await res.text();
+          alert('Помилка: ' + err);
+        }
+      } catch (err) {
+        alert('Помилка з’єднання з сервером');
+      }
+    });
+  });
+</script> 

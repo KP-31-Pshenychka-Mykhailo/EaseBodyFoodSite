@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
   const menuSlider = document.querySelector('.menu-slider');
   const leftBtn = document.querySelector('.menu-slider-arrow.left');
   const rightBtn = document.querySelector('.menu-slider-arrow.right');
@@ -13,85 +13,120 @@ document.addEventListener('DOMContentLoaded', function() {
     menuSlider.scrollBy({ left: scrollStep, behavior: 'smooth' });
   });
 
-  // Функциональность для переключения дней и типов меню
-  const dayButtons = document.querySelectorAll('.menu-day');
   const typeTabs = document.querySelectorAll('.menu-type-tab');
-  const menuCards = document.querySelectorAll('.menu-card');
-
-  let currentDay = 'monday';
   let currentType = 'breakfast';
 
-  // Функция для показа карточек
-  function showCards(day, type) {
-    menuCards.forEach(card => {
-      const cardDay = card.getAttribute('data-day');
-      const cardType = card.getAttribute('data-type');
-      if (cardDay === day && cardType === type) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
+  // Маппинг вкладок к type в dishes.json
+  const typeMap = {
+    'сніданок': 'breakfast',
+    'полуденок': 'afternoonsnask',
+    'обід': 'dinnerdish',
+    'вечеря': 'eveningmealdish'
+  };
+
+  // Загрузка блюд
+  let dishesData = [];
+  async function loadDishes() {
+    const resp = await fetch('../EaseBodyFoodSite/assets/data/dishes.json');
+    dishesData = await resp.json();
+  }
+
+  // Сохраняем состояние плюса/минуса для каждого блюда по id и дню недели
+  const cardState = {};
+  let currentDay = 'monday';
+
+  function createMenuCard(dish) {
+    if (!cardState[currentDay]) cardState[currentDay] = {};
+    const isActive = cardState[currentDay][dish.id] !== false; // по умолчанию active (минус)
+    return `
+      <div class="menu-card">
+        <div class="menu-card-img-wrap">
+          <img src="${dish.img || '../EaseBodyFoodSite/assets/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
+          <div class="gallery-card-icons">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
+                       4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
+                       14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+                       6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          </div>
+          <span class="menu-card-plus${isActive ? ' active' : ''}" data-dish-id="${dish.id}">${isActive ? '−' : '+'}</span>
+        </div>
+        <div class="menu-card-content">
+          <div class="menu-card-title">${dish.title}</div>
+          <div class="menu-card-macros">Б: ${dish.p} г, Ж: ${dish.f} г, В: ${dish.c} г</div>
+          <div class="menu-card-desc">${dish.subtitle || ''}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderCards(type) {
+    menuSlider.innerHTML = '';
+    const filtered = dishesData.filter(d => d.type === type);
+    if (filtered.length === 0) {
+      menuSlider.innerHTML = '<div style="padding:2rem">Немає страв для цієї категорії.</div>';
+      return;
+    }
+    menuSlider.innerHTML = filtered.map(createMenuCard).join('');
+    attachCardEvents();
+  }
+
+  function attachCardEvents() {
+    document.querySelectorAll('.gallery-heart').forEach(heart => {
+      heart.addEventListener('click', function() {
+        this.classList.toggle('active');
+      });
+    });
+    document.querySelectorAll('.menu-card-plus').forEach(plus => {
+      plus.addEventListener('click', function() {
+        const dishId = this.getAttribute('data-dish-id');
+        if (!cardState[currentDay]) cardState[currentDay] = {};
+        this.classList.toggle('active');
+        if (this.classList.contains('active')) {
+          this.textContent = '−';
+          cardState[currentDay][dishId] = true;
+        } else {
+          this.textContent = '+';
+          cardState[currentDay][dishId] = false;
+        }
+      });
     });
   }
 
-  // Обработчики для дней недели
-  dayButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      dayButtons.forEach(btn => btn.classList.remove('active'));
-      this.classList.add('active');
-      const dayText = this.textContent.toLowerCase();
-      const dayMap = {
-        'пн': 'monday',
-        'вт': 'tuesday',
-        'ср': 'wednesday',
-        'чт': 'thursday',
-        'пт': 'friday',
-        'сб': 'saturday',
-        'нд': 'sunday'
-      };
-      currentDay = dayMap[dayText] || 'monday';
-      showCards(currentDay, currentType);
-    });
-  });
-
-  // Обработчики для типов меню
+  // Обработчики для вкладок
   typeTabs.forEach(tab => {
     tab.addEventListener('click', function() {
       typeTabs.forEach(t => t.classList.remove('active'));
       this.classList.add('active');
       const typeText = this.textContent.toLowerCase();
-      const typeMap = {
-        'сніданок': 'breakfast',
-        'полуденок': 'lunch',
-        'обід': 'dinner',
-        'вечеря': 'supper'
-      };
       currentType = typeMap[typeText] || 'breakfast';
-      showCards(currentDay, currentType);
+      renderCards(currentType);
     });
   });
 
-  // Функциональность для сердечек
-  const hearts = document.querySelectorAll('.gallery-heart');
-  hearts.forEach(heart => {
-    heart.addEventListener('click', function() {
-      this.classList.toggle('active');
+  // Обработчики для дней недели
+  const dayButtons = document.querySelectorAll('.menu-day');
+  const dayMap = {
+    'пн': 'monday',
+    'вт': 'tuesday',
+    'ср': 'wednesday',
+    'чт': 'thursday',
+    'пт': 'friday',
+    'сб': 'saturday',
+    'нд': 'sunday'
+  };
+  dayButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      dayButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+      const dayText = this.textContent.toLowerCase();
+      currentDay = dayMap[dayText] || 'monday';
+      renderCards(currentType);
     });
   });
 
-  // Функциональность для плюсиков
-  const plusIcons = document.querySelectorAll('.menu-card-plus');
-  plusIcons.forEach(plus => {
-    plus.addEventListener('click', function() {
-      this.classList.toggle('active');
-      if (this.classList.contains('active')) {
-        this.textContent = '−';
-      } else {
-        this.textContent = '+';
-      }
-    });
-  });
-
-  // Показываем карточки для понедельника и завтрака по умолчанию
-  showCards('monday', 'breakfast');
+  // Загрузка и первичный рендер
+  await loadDishes();
+  renderCards(currentType);
 }); 
