@@ -14,7 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       .then(html => {
         document.getElementById('header').innerHTML = html;
-   
+        // Подключаем header.js после вставки header
+        const script = document.createElement('script');
+        script.src = 'assets/js/header.js';
+        document.body.appendChild(script);
         setTimeout(() => {
           setActiveNav();
           setupBurgerMenu();
