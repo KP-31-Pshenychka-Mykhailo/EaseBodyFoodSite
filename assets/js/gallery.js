@@ -29,7 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
       `).join('');
       // Добавляем обработчики для сердечек
       document.querySelectorAll('.gallery-heart').forEach(function(heart) {
-        heart.addEventListener('click', function() {
+        heart.addEventListener('click', function(e) {
+          if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
+            e.preventDefault();
+            return;
+          }
           heart.classList.toggle('active');
         });
       });

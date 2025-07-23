@@ -74,7 +74,11 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   function attachCardEvents() {
     document.querySelectorAll('.gallery-heart').forEach(heart => {
-      heart.addEventListener('click', function() {
+      heart.addEventListener('click', function(e) {
+        if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
+          e.preventDefault();
+          return;
+        }
         this.classList.toggle('active');
       });
     });

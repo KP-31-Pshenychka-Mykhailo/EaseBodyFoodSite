@@ -1,0 +1,227 @@
+/* === PROFILE PAGE CUSTOM STYLES === */
+
+.profile-header-title {
+  font-family: 'Rubik', sans-serif;
+  font-size: 56px;
+  font-weight: 900;
+  color: #36b23a;
+  margin-bottom: 32px;
+  margin-top: 0;
+  letter-spacing: -2px;
+}
+
+.profile-main-row {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.profile-avatar-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  min-width: 220px;
+}
+
+.profile-avatar-img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 24px;
+  box-shadow: 0 2px 16px rgba(76,175,80,0.10);
+}
+
+.profile-avatar-btns {
+  display: flex;
+  gap: 12px;
+}
+
+.profile-btn-main {
+  background: #fff;
+  color: #36b23a;
+  border: 1.5px solid #36b23a;
+  border-radius: 20px;
+  padding: 6px 28px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.profile-btn-main:hover {
+  background: #36b23a;
+  color: #fff;
+}
+.profile-btn-danger {
+  background: #fff;
+  color: #E53935;
+  border: 1.5px solid #E53935;
+  border-radius: 20px;
+  padding: 6px 28px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.profile-btn-danger:hover {
+  background: #E53935;
+  color: #fff;
+}
+
+.profile-form {
+  flex: 1;
+  min-width: 260px;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.profile-form-row {
+  display: flex;
+  gap: 16px;
+}
+.profile-label {
+  font-size: 15px;
+  color: #888;
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+.profile-input {
+  border: none;
+  border-bottom: 1.5px solid #bdbdbd;
+  padding: 8px 0 8px 0;
+  font-size: 17px;
+  width: 100%;
+  background: transparent;
+  color: #222;
+  outline: none;
+  transition: border 0.2s;
+}
+.profile-input:focus {
+  border-bottom: 1.5px solid #36b23a;
+}
+.profile-input[readonly] {
+  color: #888;
+}
+.profile-edit-icon {
+  margin-left: 8px;
+  color: #bdbdbd;
+  font-size: 18px;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: color 0.2s;
+}
+.profile-edit-icon:hover {
+  color: #36b23a;
+}
+.profile-error {
+  color: #E53935;
+  font-size: 13px;
+  margin-top: 2px;
+  margin-bottom: 0;
+}
+
+.profile-tabs {
+  display: flex;
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 0;
+  margin-top: 32px;
+  background: #fff;
+}
+.profile-tab {
+  font-size: 18px;
+  font-weight: 500;
+  color: #222;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 12px 36px 10px 36px;
+  border-radius: 18px 18px 0 0;
+  margin-right: 0;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s, color 0.2s;
+}
+.profile-tab.active {
+  background: #36b23a;
+  color: #fff;
+  border-bottom: 2px solid #36b23a;
+  z-index: 2;
+}
+.profile-tab:not(.active):hover {
+  background: transparent;
+  color: #36b23a;
+  border-bottom: 2px solid #36b23a;
+}
+.profile-tab-accent {
+  color: #36b23a;
+  border-bottom: none;
+  background: transparent;
+}
+
+.profile-tab-content {
+  padding: 40px 0 0 0;
+}
+
+.profile-cart-title {
+  color: #36b23a;
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 24px;
+  font-family: 'Rubik', sans-serif;
+}
+.profile-cart-empty {
+  background: #36b23a;
+  border-radius: 40px;
+  padding: 48px 24px;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+.profile-cart-empty-title {
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.profile-cart-empty-desc {
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 32px;
+}
+.profile-cart-btns {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+.profile-cart-btn {
+  background: #fff;
+  color: #36b23a;
+  border: 1.5px solid #36b23a;
+  border-radius: 20px;
+  padding: 10px 32px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.profile-cart-btn:hover {
+  background: #36b23a;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .profile-main-row { flex-direction: column; gap: 32px; }
+  .profile-form { max-width: 100%; }
+  .profile-cart-empty { padding: 32px 8px; }
+}
+
+@media (max-width: 600px) {
+  .profile-header-title { font-size: 32px; }
+  .profile-avatar-img { width: 120px; height: 120px; }
+  .profile-tab { font-size: 15px; padding: 8px 12px 8px 12px; }
+  .profile-cart-title { font-size: 22px; }
+  .profile-cart-empty-title { font-size: 18px; }
+  .profile-cart-btn { font-size: 14px; padding: 8px 12px; }
+} 

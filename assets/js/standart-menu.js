@@ -126,7 +126,11 @@ document.addEventListener('DOMContentLoaded', async function() {
   function attachCardEvents() {
     const hearts = document.querySelectorAll('.gallery-heart');
     hearts.forEach(heart => {
-      heart.addEventListener('click', function() {
+      heart.addEventListener('click', function(e) {
+        if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
+          e.preventDefault();
+          return;
+        }
         this.classList.toggle('active');
       });
     });

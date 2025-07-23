@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('header').innerHTML = html;
         // Подключаем header.js после вставки header
         const script = document.createElement('script');
-        script.src = 'assets/js/header.js';
+        script.src = '../EaseBodyFoodSite/assets/js/header.js';
         document.body.appendChild(script);
         setTimeout(() => {
           setActiveNav();
@@ -48,9 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function insertHeaderDirectly() {
     const headerHTML = `
-      <link rel="stylesheet" href="assets/css/style.css">
+      <link rel="stylesheet" href="../EaseBodyFoodSite/assets/css/style.css">
       <header>
-          <img src="assets/img/logo.png" alt="Logo" class="logo">
+          <img src="../EaseBodyFoodSite/assets/img/logo.png" alt="Logo" class="logo">
           <button class="burger" id="burgerBtn" aria-label="Открыть меню">
             <span></span><span></span><span></span>
           </button>

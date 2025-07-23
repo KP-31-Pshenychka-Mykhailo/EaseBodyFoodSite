@@ -193,4 +193,12 @@ Promise.all([
   console.error('[header.js] Ошибка загрузки модалок:', err);
 });
 
+window.showRegisterModalIfNotAuth = function() {
+  if (!localStorage.getItem('userName')) {
+    showRegisterModal();
+    return true;
+  }
+  return false;
+};
+
 console.log('[header.js] init завершён'); 

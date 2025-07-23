@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мій профіль | Easy Body Food</title>
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/profile.css">
+</head>
+<body>
+    <div id="header"></div>
+    <main style="background:#fff;">
+        <section style="padding: 40px 0 0 0; max-width: 1200px; margin: 0 auto;">
+            <h1 class="profile-header-title">Мій профіль</h1>
+            <div class="profile-main-row">
+                <div class="profile-avatar-block">
+                    <img src="assets/img/user1.png" alt="Avatar" class="profile-avatar-img">
+                    <div class="profile-avatar-btns">
+                        <button class="profile-btn-main">Змінити</button>
+                       <!-- <button class="profile-btn-danger">Видалити</button> -->
+                    </div>
+                </div>
+                <form class="profile-form">
+                    <div class="profile-form-row">
+                        <div style="flex:1;">
+                            <div class="profile-label">Ім'я <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                            <input class="profile-input" id="firstname-input" type="text" value="Олена">
+                            <div class="profile-error" id="firstname-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                        </div>
+                        <div style="flex:1;">
+                            <div class="profile-label">Прізвище <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                            <input class="profile-input" id="lastname-input" type="text" value="Клименко">
+                            <div class="profile-error" id="lastname-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="profile-label">Телефон <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                        <input class="profile-input" id="phone-input" type="tel" value="+380000000000">
+                        <div class="profile-error" id="phone-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                    </div>
+                    <div>
+                        <div class="profile-label">Email <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                        <input class="profile-input" id="email-input" type="email" value="olenaolena@gmail.com">
+                        <div class="profile-error" id="email-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                    </div>
+                    <div class="profile-form-row">
+                        <div style="flex:1;">
+                            <div class="profile-label">Telegram <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                            <input class="profile-input" id="telegram-input" type="text" value="@olena_telegram">
+                            <div class="profile-error" id="telegram-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                        </div>
+                        <div style="flex:1;">
+                            <div class="profile-label">Instagram <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                            <input class="profile-input" id="instagram-input" type="text" value="@olena_insta">
+                            <div class="profile-error" id="instagram-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                        </div>
+                    </div>
+                    <div class="profile-label" style="margin-top:12px;">Адреса доставки:</div>
+                    <div>
+                        <div class="profile-label">Вулиця <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                        <input class="profile-input" id="street-input" type="text" value="Вулиця Назва, 23А">
+                        <div class="profile-error" id="street-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                    </div>
+                    <div class="profile-form-row">
+                        <div style="flex:1;">
+                            <div class="profile-label">Будинок <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                            <input class="profile-input" id="house-input" type="text" value="Будинок 23">
+                            <div class="profile-error" id="house-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                        </div>
+                        <div style="flex:1;">
+                            <div class="profile-label">Поверх <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                            <input class="profile-input" id="floor-input" type="text" value="Поверх 3">
+                            <div class="profile-error" id="floor-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                        </div>
+                        <div style="flex:1;">
+                            <div class="profile-label">Квартира <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                            <input class="profile-input" id="apartment-input" type="text" value="Квартира 23">
+                            <div class="profile-error" id="apartment-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section style="max-width:1200px;margin:0 auto;">
+            <div class="profile-tabs" id="profileTabs">
+                <button class="profile-tab active" data-tab="cart">Кошик</button>
+                <button class="profile-tab" data-tab="favorites">Улюблені страви</button>
+                <button class="profile-tab" data-tab="templates">Збережені шаблони</button>
+                <button class="profile-tab" data-tab="history">Історія замовлень</button>
+            </div>
+            <div id="tab-cart" class="profile-tab-content" style="display:block;">
+                <div class="profile-cart-title">Кошик</div>
+                <div class="profile-cart-empty">
+                    <div class="profile-cart-empty-title">Упс! Кошик порожній</div>
+                    <div class="profile-cart-empty-desc">Саме час для правильного харчування!</div>
+                    <div class="profile-cart-btns">
+                        <button class="profile-cart-btn">Конструктор меню</button>
+                        <button class="profile-cart-btn">Зіркове меню</button>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-favorites" class="profile-tab-content" style="display:none;">
+                <div class="profile-cart-title">Улюблені страви</div>
+                <div class="profile-cart-empty" style="background:#f8fff8;color:#36b23a;">
+                    Тут будуть ваші улюблені страви.
+                </div>
+            </div>
+            <div id="tab-templates" class="profile-tab-content" style="display:none;">
+                <div class="profile-cart-title">Збережені шаблони</div>
+                <div class="profile-cart-empty" style="background:#f8fff8;color:#36b23a;">
+                    Тут будуть ваші шаблони меню.
+                </div>
+            </div>
+            <div id="tab-history" class="profile-tab-content" style="display:none;">
+                <div class="profile-cart-title">Історія замовлень</div>
+                <div class="profile-cart-empty" style="background:#f8fff8;color:#36b23a;">
+                    Тут буде історія ваших замовлень.
+                </div>
+            </div>
+        </section>
+    </main>
+    <div id="footer"></div>
+    <script src="assets/js/layout.js"></script>
+    <script>
+    // Переключение вкладок профиля
+    document.querySelectorAll('.profile-tab').forEach(function(tabBtn) {
+        tabBtn.addEventListener('click', function() {
+            document.querySelectorAll('.profile-tab').forEach(function(btn){btn.classList.remove('active');});
+            tabBtn.classList.add('active');
+            var tab = tabBtn.getAttribute('data-tab');
+            document.querySelectorAll('.profile-tab-content').forEach(function(content){
+                content.style.display = 'none';
+            });
+            document.getElementById('tab-' + tab).style.display = 'block';
+        });
+    });
+    // Валидация всех обязательных полей
+    const requiredFields = [
+        {input: 'firstname-input', error: 'firstname-error'},
+        {input: 'lastname-input', error: 'lastname-error'},
+        {input: 'phone-input', error: 'phone-error'},
+        {input: 'email-input', error: 'email-error'},
+        {input: 'telegram-input', error: 'telegram-error'},
+        {input: 'instagram-input', error: 'instagram-error'},
+        {input: 'street-input', error: 'street-error'},
+        {input: 'house-input', error: 'house-error'},
+        {input: 'floor-input', error: 'floor-error'},
+        {input: 'apartment-input', error: 'apartment-error'}
+    ];
+    requiredFields.forEach(({input, error}) => {
+        const inputEl = document.getElementById(input);
+        const errorEl = document.getElementById(error);
+        if (!inputEl || !errorEl) return;
+        inputEl.addEventListener('blur', function() {
+            if (!inputEl.value.trim()) {
+                errorEl.style.display = 'block';
+            } else {
+                errorEl.style.display = 'none';
+            }
+        });
+        inputEl.addEventListener('input', function() {
+            if (inputEl.value.trim()) {
+                errorEl.style.display = 'none';
+            }
+        });
+    });
+    </script>
+</body>
+</html> 

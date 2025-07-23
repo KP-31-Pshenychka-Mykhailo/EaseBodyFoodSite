@@ -136,7 +136,11 @@ function renderPersonalMenu(menuArr, dishes, day) {
   if (menuTotal) menuTotal.textContent = `Б: ${totalP} г, Ж: ${totalF} г, В: ${totalC} г`;
   // Интерактивность
   document.querySelectorAll('.gallery-heart-alt').forEach(function(heart) {
-    heart.addEventListener('click', function() {
+    heart.addEventListener('click', function(e) {
+      if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
+        e.preventDefault();
+        return;
+      }
       heart.classList.toggle('active');
     });
   });
@@ -271,8 +275,30 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // --- Сердечки ---
+  document.querySelectorAll('.gallery-heart-alt').forEach(function(heart) {
+    heart.addEventListener('click', function(e) {
+      if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
+        e.preventDefault();
+        return;
+      }
+      heart.classList.toggle('active');
+    });
+  });
+  document.querySelectorAll('.gallery-heart').forEach(function(heart) {
+    heart.addEventListener('click', function(e) {
+      if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
+        e.preventDefault();
+        return;
+      }
+      heart.classList.toggle('active');
+    });
+  });
   document.querySelectorAll('#personal-diet-section .gallery-heart').forEach(function(heart) {
-    heart.addEventListener('click', function() {
+    heart.addEventListener('click', function(e) {
+      if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
+        e.preventDefault();
+        return;
+      }
       heart.classList.toggle('active');
     });
   });

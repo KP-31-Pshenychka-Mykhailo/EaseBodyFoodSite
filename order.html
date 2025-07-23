@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформити замовлення | Easy Body Food</title>
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/order.css">
+</head>
+<body>
+    <div id="header"></div>
+    <main style="background:#fff;">
+        <section style="max-width: 700px; margin: 0 auto; padding: 40px 0 0 0;">
+            <h1 class="order-header-title">Оформити замовлення</h1>
+            <div class="order-subtitle">Харчуйся правильно вже зараз!</div>
+            <div class="order-info-block">
+                <ul>
+                    <li>Доставка здійснюється лише ввечері (17:00 - 22:00)</li>
+                    <li>Замовлення на завтра приймаються до 20:00 сьогодні</li>
+                    <li>У випадку скасування/перенесення замовлення - зв'яжіться з нами за добу до моменту доставки</li>
+                    <li>Якщо Ви маєте алергію на певний продукт - обов'язково повідомте про це у графі "Коментар до замовлення"</li>
+                </ul>
+            </div>
+            <form class="order-form" autocomplete="off" novalidate>
+                <div class="order-form-title">Контактна інформація:</div>
+                <div class="order-form-row">
+                    <div style="flex:1;">
+                        <div class="order-label">Прізвище <svg class="order-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                        <input class="order-input" id="order-lastname" type="text" placeholder="Клименко">
+                        <div class="order-error" id="order-lastname-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="order-label">Ім'я <svg class="order-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                        <input class="order-input" id="order-firstname" type="text" placeholder="Ім'я">
+                        <div class="order-error" id="order-firstname-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="order-label">Телефон <svg class="order-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                    <input class="order-input" id="order-phone" type="tel" placeholder="Телефон">
+                    <div class="order-error" id="order-phone-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                </div>
+                <div>
+                    <div class="order-label">E-mail <svg class="order-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                    <input class="order-input" id="order-email" type="email" placeholder="E-mail">
+                    <div class="order-error" id="order-email-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                </div>
+                <div>
+                    <div class="order-label">Посилання на Instagram/Telegram <svg class="order-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                    <input class="order-input" id="order-social" type="text" placeholder="Instagram/Telegram">
+                    <div class="order-error" id="order-social-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                </div>
+                <div>
+                    <div class="order-label">Коментар до замовлення</div>
+                    <textarea class="order-input" id="order-comment" rows="2" placeholder="Коментар до замовлення"></textarea>
+                </div>
+                <div>
+                    <div class="order-label">Промокод</div>
+                    <input class="order-input" id="order-promocode" type="text" placeholder="Промокод">
+                </div>
+                <div class="order-form-title">Адреса доставки:</div>
+                <div>
+                    <div class="order-label">Вулиця <svg class="order-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                    <input class="order-input" id="order-street" type="text" placeholder="Вулиця">
+                    <div class="order-error" id="order-street-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                </div>
+                <div class="order-form-row">
+                    <div style="flex:1;">
+                        <div class="order-label">Будинок <svg class="order-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                        <input class="order-input" id="order-house" type="text" placeholder="Будинок">
+                        <div class="order-error" id="order-house-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="order-label">Поверх <svg class="order-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                        <input class="order-input" id="order-floor" type="text" placeholder="Поверх">
+                        <div class="order-error" id="order-floor-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="order-label">Квартира <svg class="order-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                        <input class="order-input" id="order-apartment" type="text" placeholder="Квартира">
+                        <div class="order-error" id="order-apartment-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                    </div>
+                </div>
+                <div class="order-form-row" style="margin-top:24px;align-items:center;">
+                    <div style="flex:1;">
+                        <div class="order-label">Кількість днів:</div>
+                        <select class="order-input" id="order-days">
+                            <option>5 пробні днів</option>
+                            <option>7 днів</option>
+                            <option>14 днів</option>
+                        </select>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="order-label">Тип оплати:</div>
+                        <select class="order-input" id="order-payment">
+                            <option>Карткою на сайті</option>
+                            <option>Готівкою кур'єру</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="order-form-row" style="margin-top:12px;align-items:center;">
+                    <label style="flex:1;display:flex;align-items:center;gap:8px;font-size:15px;">
+                        <input type="checkbox" id="order-night" style="width:18px;height:18px;"> Доставка під під'їзд
+                    </label>
+                    <label style="flex:1;display:flex;align-items:center;gap:8px;font-size:15px;">
+                        <input type="checkbox" id="order-no-call" style="width:18px;height:18px;"> Не телефонувати для уточнення деталей
+                    </label>
+                </div>
+                <button type="submit" class="order-submit-btn">Оформити замовлення</button>
+            </form>
+        </section>
+    </main>
+    <div id="footer"></div>
+    <script src="assets/js/layout.js"></script>
+    <script>
+    // Валидация обязательных полей
+    const requiredFields = [
+        {input: 'order-lastname', error: 'order-lastname-error'},
+        {input: 'order-firstname', error: 'order-firstname-error'},
+        {input: 'order-phone', error: 'order-phone-error'},
+        {input: 'order-email', error: 'order-email-error'},
+        {input: 'order-social', error: 'order-social-error'},
+        {input: 'order-street', error: 'order-street-error'},
+        {input: 'order-house', error: 'order-house-error'},
+        {input: 'order-floor', error: 'order-floor-error'},
+        {input: 'order-apartment', error: 'order-apartment-error'}
+    ];
+    requiredFields.forEach(({input, error}) => {
+        const inputEl = document.getElementById(input);
+        const errorEl = document.getElementById(error);
+        if (!inputEl || !errorEl) return;
+        inputEl.addEventListener('blur', function() {
+            if (!inputEl.value.trim()) {
+                errorEl.style.display = 'block';
+            } else {
+                errorEl.style.display = 'none';
+            }
+        });
+        inputEl.addEventListener('input', function() {
+            if (inputEl.value.trim()) {
+                errorEl.style.display = 'none';
+            }
+        });
+    });
+    // Базовая отправка формы (заглушка)
+    document.querySelector('.order-form').addEventListener('submit', function(e) {
+        let valid = true;
+        requiredFields.forEach(({input, error}) => {
+            const inputEl = document.getElementById(input);
+            const errorEl = document.getElementById(error);
+            if (inputEl && errorEl && !inputEl.value.trim()) {
+                errorEl.style.display = 'block';
+                valid = false;
+            }
+        });
+        if (!valid) e.preventDefault();
+    });
+    </script>
+</body>
+</html> 
