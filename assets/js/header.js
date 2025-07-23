@@ -18,7 +18,7 @@ function setupLoginBtn() {
   loginBtn.addEventListener('click', function(e) {
     e.preventDefault();
     if (localStorage.getItem('userName')) {
-      window.location.href = '/EaseBodyFoodSite/profile.html';
+      window.location.href = '../EaseBodyFoodSite/profile.html';
     } else {
       showRegisterModal();
     }
@@ -183,8 +183,8 @@ function showLoginModal() {
 
 // Загружаем HTML модалок (один раз)
 Promise.all([
-  fetch('/partials/register-modal.html').then(r => { console.log('[header.js] register-modal.html статус:', r.status); return r.text(); }),
-  fetch('/partials/login-modal.html').then(r => { console.log('[header.js] login-modal.html статус:', r.status); return r.text(); })
+  fetch('/EaseBodyFoodSite/assets/partials/register-modal.html').then(r => { console.log('[header.js] register-modal.html статус:', r.status); return r.text(); }),
+  fetch('/EaseBodyFoodSite/assets/partials/login-modal.html').then(r => { console.log('[header.js] login-modal.html статус:', r.status); return r.text(); })
 ]).then(([registerHtml, loginHtml]) => {
   registerModalHTML = registerHtml;
   loginModalHTML = loginHtml;
