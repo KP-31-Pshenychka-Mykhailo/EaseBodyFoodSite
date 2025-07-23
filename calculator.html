@@ -157,7 +157,18 @@
       </div>
     </section>
   </main>
+  <style>
+#order-modal-content::-webkit-scrollbar { display: none; }
+#order-modal-content { scrollbar-width: none; }
+</style>
   <div id="footer"></div>
+  <!-- Модальное окно заказа -->
+  <div id="order-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); align-items:center; justify-content:center;">
+    <div id="order-modal-content" style="background:#fff; border-radius:24px; max-width:900px; width:98vw; max-height:95vh; overflow-y:auto; overflow-x:hidden; position:relative; box-sizing:border-box; padding:32px 32px 24px 32px; scrollbar-width:none;">
+      <button id="order-modal-close" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:32px; color:#4CAF50; cursor:pointer;">&times;</button>
+      <div id="order-modal-body"></div>
+    </div>
+  </div>
   <script src="assets/js/layout.js"></script>
   <script src="assets/js/calculator.js"></script>
   <script>
@@ -195,6 +206,39 @@
           }
         });
       }
+    });
+
+    // Открытие модального окна заказа
+    document.addEventListener('DOMContentLoaded', function() {
+      var orderBtn = document.querySelector('.menu-choose-btn-alt');
+      if(orderBtn) {
+        orderBtn.addEventListener('click', function() {
+          // Подключаем order.css, если не подключён
+          if (!document.querySelector('link[href="assets/css/order.css"]')) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'assets/css/order.css';
+            document.head.appendChild(link);
+          }
+          fetch('order.html')
+            .then(r => r.text())
+            .then(html => {
+              var mainMatch = html.match(/<main[\s\S]*?<\/main>/);
+              document.getElementById('order-modal-body').innerHTML = mainMatch ? mainMatch[0] : html;
+              document.getElementById('order-modal').style.display = 'flex';
+            });
+        });
+      }
+      // Закрытие модального окна
+      var closeBtn = document.getElementById('order-modal-close');
+      document.getElementById('order-modal').addEventListener('click', function(e) {
+        if(e.target === this) {
+          this.style.display = 'none';
+        }
+      });
+      if(closeBtn) closeBtn.addEventListener('click', function() {
+        document.getElementById('order-modal').style.display = 'none';
+      });
     });
   </script>
 </body>

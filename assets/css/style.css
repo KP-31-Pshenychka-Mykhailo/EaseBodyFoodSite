@@ -638,6 +638,10 @@ body {
     padding: 0;
 }
 
+/* Скрыть все скроллбары на сайте (визуально, но оставить прокрутку) */
+*::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; }
+
 @media (max-width: 1100px) {
     .menu-constructor-hero, .menu-constructor-cards, .menu-nutritionist, .menu-standard-choice {
         max-width: 98vw;
