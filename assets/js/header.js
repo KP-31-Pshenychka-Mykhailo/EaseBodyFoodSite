@@ -183,8 +183,8 @@ function showLoginModal() {
 
 // Загружаем HTML модалок (один раз)
 Promise.all([
-  fetch('/EaseBodyFoodSite/assets/partials/register-modal.html').then(r => { console.log('[header.js] register-modal.html статус:', r.status); return r.text(); }),
-  fetch('/EaseBodyFoodSite/assets/partials/login-modal.html').then(r => { console.log('[header.js] login-modal.html статус:', r.status); return r.text(); })
+  fetch('../EaseBodyFoodSite/partials/register-modal.html').then(r => { console.log('[header.js] register-modal.html статус:', r.status); return r.text(); }),
+  fetch('../EaseBodyFoodSite/partials/login-modal.html').then(r => { console.log('[header.js] login-modal.html статус:', r.status); return r.text(); })
 ]).then(([registerHtml, loginHtml]) => {
   registerModalHTML = registerHtml;
   loginModalHTML = loginHtml;
