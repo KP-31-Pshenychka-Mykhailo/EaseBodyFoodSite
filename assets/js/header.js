@@ -185,6 +185,7 @@ function showLoginModal() {
           document.body.style.overflow = '';
           // window.location.reload(); // убрано
         } else {
+          console.log('Ответ сервера:', result);
           alert('Ошибка входа: Некорректный ответ сервера');
         }
       } catch (err) {
