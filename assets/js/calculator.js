@@ -90,11 +90,11 @@ const mealMap = [
 function createMenuCardAlt(dish, mealType) {
   if (!dish) return '';
   return `
-    <div class="menu-card-alt" data-dish-id="${dish.id}">
+    <div class="menu-card-alt">
       <div class="menu-card-img-wrap-alt">
         <img src="${dish.img || '../EaseBodyFoodSite/assets/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
         <div class="gallery-card-icons-alt">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart-alt icon-heart" data-dish-id="${dish.id}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart-alt icon-heart">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
           </svg>
         </div>
@@ -135,8 +135,15 @@ function renderPersonalMenu(menuArr, dishes, day) {
   menuSlider.innerHTML = cardsHTML;
   if (menuTotal) menuTotal.textContent = `Б: ${totalP} г, Ж: ${totalF} г, В: ${totalC} г`;
   // Интерактивность
-  // Удаляем старый обработчик toggle('active') для сердечек
-  // Сердечки теперь обрабатываются в favorites.js
+  document.querySelectorAll('.gallery-heart-alt').forEach(function(heart) {
+    heart.addEventListener('click', function(e) {
+      if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
+        e.preventDefault();
+        return;
+      }
+      heart.classList.toggle('active');
+    });
+  });
   document.querySelectorAll('.menu-card-plus').forEach(function(plus) {
     plus.addEventListener('click', function() {
       plus.classList.toggle('active');
@@ -268,8 +275,15 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // --- Сердечки ---
-  // Удаляем старый обработчик toggle('active') для сердечек
-  // Сердечки теперь обрабатываются в favorites.js
+  document.querySelectorAll('.gallery-heart-alt').forEach(function(heart) {
+    heart.addEventListener('click', function(e) {
+      if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
+        e.preventDefault();
+        return;
+      }
+      heart.classList.toggle('active');
+    });
+  });
   document.querySelectorAll('.gallery-heart').forEach(function(heart) {
     heart.addEventListener('click', function(e) {
       if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
