@@ -171,7 +171,12 @@ function showLoginModal() {
           body: JSON.stringify(data)
         });
         let result, errorText = '';
-        try { result = await response.clone().json(); } catch (e) { errorText = await response.text(); }
+        try { 
+          result = await response.clone().json(); 
+        } catch (e) { 
+          errorText = await response.text(); 
+        }
+        console.log('Ответ сервера:', result, 'Текст ошибки:', errorText); // <--- ДОБАВЬТЕ ЭТО
         if (!response.ok) {
           alert('Ошибка входа: ' + (result?.message || errorText || 'Неизвестная ошибка'));
           return;
@@ -185,8 +190,7 @@ function showLoginModal() {
           document.body.style.overflow = '';
           // window.location.reload(); // убрано
         } else {
-          console.log('Ответ сервера:', result);
-          alert('Ответ сервера:', result);
+          alert('Ошибка входа: Некорректный ответ сервера');
         }
       } catch (err) {
         alert('Ошибка входа: ' + err.message);
