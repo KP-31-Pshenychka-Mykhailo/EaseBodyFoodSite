@@ -87,18 +87,18 @@ function showRegisterModal() {
         });
         let result, errorText = '';
         try { result = await response.clone().json(); } catch (e) { errorText = await response.text(); }
+        console.log('Ответ сервера:', result, 'userId:', result && result.userId, 'Message:', result && (result.message || result.Message));
         if (!response.ok) {
-          alert('Ошибка регистрации: ' + (result?.message || errorText || 'Неизвестная ошибка'));
+          alert('Ошибка регистрации: ' + (result?.message || result?.Message || errorText || 'Неизвестная ошибка'));
           return;
         }
-        if (result && result.userId) {
+        if (result && (result.userId !== undefined && result.userId !== null)) {
           localStorage.setItem('userId', result.userId);
           const email = form.Email.value;
           const userName = email.split('@')[0];
           localStorage.setItem('userName', userName);
           overlay.remove();
           document.body.style.overflow = '';
-          // window.location.reload(); // убрано
         } else {
           alert('Ошибка регистрации: Некорректный ответ сервера');
         }
@@ -176,19 +176,18 @@ function showLoginModal() {
         } catch (e) { 
           errorText = await response.text(); 
         }
-        console.log('Ответ сервера:', result, 'Текст ошибки:', errorText); // <--- ДОБАВЬТЕ ЭТО
+        console.log('Ответ сервера:', result, 'userId:', result && result.userId, 'Message:', result && (result.message || result.Message));
         if (!response.ok) {
-          alert('Ошибка входа: ' + (result?.message || errorText || 'Неизвестная ошибка'));
+          alert('Ошибка входа: ' + (result?.message || result?.Message || errorText || 'Неизвестная ошибка'));
           return;
         }
-        if (result && result.userId) {
+        if (result && (result.userId !== undefined && result.userId !== null)) {
           localStorage.setItem('userId', result.userId);
           const email = form.Email.value;
           const userName = email.split('@')[0];
           localStorage.setItem('userName', userName);
           overlay.remove();
           document.body.style.overflow = '';
-          // window.location.reload(); // убрано
         } else {
           alert('Ошибка входа: Некорректный ответ сервера');
         }
