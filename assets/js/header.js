@@ -91,8 +91,8 @@ function showRegisterModal() {
           alert('Ошибка регистрации: ' + (result?.message || errorText || 'Неизвестная ошибка'));
           return;
         }
-        if (result && result.id) {
-          localStorage.setItem('userId', result.id);
+        if (result && result.userId) {
+          localStorage.setItem('userId', result.userId);
           const email = form.Email.value;
           const userName = email.split('@')[0];
           localStorage.setItem('userName', userName);
@@ -181,8 +181,8 @@ function showLoginModal() {
           alert('Ошибка входа: ' + (result?.message || errorText || 'Неизвестная ошибка'));
           return;
         }
-        if (result && result.id) {
-          localStorage.setItem('userId', result.id);
+        if (result && result.userId) {
+          localStorage.setItem('userId', result.userId);
           const email = form.Email.value;
           const userName = email.split('@')[0];
           localStorage.setItem('userName', userName);
