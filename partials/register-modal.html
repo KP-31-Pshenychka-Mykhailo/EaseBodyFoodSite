@@ -122,10 +122,14 @@
         registerForm.addEventListener('submit', async function(e) {
           e.preventDefault();
           const formData = new FormData(registerForm);
-          const data = {};
-          formData.forEach((value, key) => {
-            data[key] = value;
-          });
+          // Собираем только нужные поля для DTO
+          const data = {
+            FirstName: formData.get('FirstName'),
+            SecondName: formData.get('SecondName'),
+            Email: formData.get('Email'),
+            PhoneNumber: formData.get('PhoneNumber'),
+            Password: formData.get('Password')
+          };
           try {
             const response = await fetch(REGISTER_URL, {
               method: 'POST',
@@ -134,9 +138,24 @@
               },
               body: JSON.stringify(data),
             });
-            if (!response.ok) throw new Error('Network response was not ok');
-            const result = await response.json();
-            if (result.id) {
+            let result;
+            let errorText = '';
+            try {
+              result = await response.clone().json();
+            } catch (e) {
+              errorText = await response.text();
+            }
+            if (!response.ok) {
+              if (result && result.message) {
+                alert('Ошибка регистрации: ' + result.message);
+              } else if (errorText) {
+                alert('Ошибка регистрации: ' + errorText);
+              } else {
+                alert('Ошибка регистрации: Неизвестная ошибка');
+              }
+              return;
+            }
+            if (result && result.id) {
               localStorage.setItem('userId', result.id);
               // Сохраняем часть email до @
               if (data.Email && data.Email.includes('@')) {
@@ -145,7 +164,7 @@
               }
               // Можно добавить редирект или сообщение об успехе
             } else {
-              alert('Ошибка регистрации');
+              alert('Ошибка регистрации: Некорректный ответ сервера');
             }
           } catch (error) {
             alert('Ошибка регистрации: ' + error.message);
