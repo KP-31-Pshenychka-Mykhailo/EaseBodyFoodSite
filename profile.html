@@ -123,6 +123,7 @@
     </main>
     <div id="footer"></div>
     <script src="assets/js/layout.js"></script>
+    <script src="assets/js/favorites.js"></script>
     <script>
     // Переключение вкладок профиля
     document.querySelectorAll('.profile-tab').forEach(function(tabBtn) {
@@ -134,6 +135,9 @@
                 content.style.display = 'none';
             });
             document.getElementById('tab-' + tab).style.display = 'block';
+            if(tab === 'favorites' && window.loadFavorites) {
+                window.loadFavorites();
+            }
         });
     });
     // Валидация всех обязательных полей
