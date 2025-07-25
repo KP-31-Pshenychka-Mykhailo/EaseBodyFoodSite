@@ -186,7 +186,7 @@ function showLoginModal() {
           // window.location.reload(); // убрано
         } else {
           console.log('Ответ сервера:', result);
-          alert('Ошибка входа: Некорректный ответ сервера');
+          alert('Ответ сервера:', result);
         }
       } catch (err) {
         alert('Ошибка входа: ' + err.message);
