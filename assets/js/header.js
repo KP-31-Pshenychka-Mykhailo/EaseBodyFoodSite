@@ -3,6 +3,14 @@ console.log('[header.js] Скрипт загружен');
 let registerModalHTML = null;
 let loginModalHTML = null;
 
+// Добавим загрузку настроек
+let SERVER_BASE_URL = '';
+fetch('assets/js/settings.json')
+  .then(r => r.json())
+  .then(settings => {
+    SERVER_BASE_URL = settings.SERVER_BASE_URL;
+  });
+
 function setupLoginBtn() {
   const userName = localStorage.getItem('userName');
   const loginBtn = document.getElementById('loginBtn');
@@ -80,7 +88,7 @@ function showRegisterModal() {
         return;
       }
       try {
-        const response = await fetch('https://a58b26a315a8.ngrok-free.app/user/registration', {
+        const response = await fetch(SERVER_BASE_URL + '/user/registration', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
@@ -177,7 +185,7 @@ function showLoginModal() {
         Password: form.Password.value
       };
       try {
-        const response = await fetch('https://09ff2fb6fcdf.ngrok-free.app/user/login', {
+        const response = await fetch(SERVER_BASE_URL + '/user/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
