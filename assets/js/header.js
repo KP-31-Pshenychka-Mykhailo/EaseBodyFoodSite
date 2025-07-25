@@ -80,29 +80,30 @@ function showRegisterModal() {
         return;
       }
       try {
-        const res = await fetch('/api/register', {
+        const response = await fetch('https://a58b26a315a8.ngrok-free.app/user/registration', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
-        if (res.ok) {
-          const result = await res.json();
-          if (result.id) {
-            localStorage.setItem('userId', result.id);
-          }
+        let result, errorText = '';
+        try { result = await response.clone().json(); } catch (e) { errorText = await response.text(); }
+        if (!response.ok) {
+          alert('Ошибка регистрации: ' + (result?.message || errorText || 'Неизвестная ошибка'));
+          return;
+        }
+        if (result && result.id) {
+          localStorage.setItem('userId', result.id);
           const email = form.Email.value;
           const userName = email.split('@')[0];
           localStorage.setItem('userName', userName);
-          alert('Реєстрація успішна!');
           overlay.remove();
           document.body.style.overflow = '';
-          window.location.reload();
+          // window.location.reload(); // убрано
         } else {
-          const err = await res.text();
-          alert('Помилка: ' + err);
+          alert('Ошибка регистрации: Некорректный ответ сервера');
         }
       } catch (err) {
-        alert('Помилка з’єднання з сервером');
+        alert('Ошибка регистрации: ' + err.message);
       }
     });
   }
@@ -159,15 +160,36 @@ function showLoginModal() {
   if (form) {
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
-      // Пример: просто сохраняем userName из email
-      const email = form.Email.value;
-      const userName = email.split('@')[0];
-      localStorage.setItem('userName', userName);
-      alert('Вхід успішний!');
-      overlay.remove();
-      document.body.style.overflow = '';
-      window.location.reload();
-      // Здесь можно добавить реальный запрос к API
+      const data = {
+        Email: form.Email.value,
+        Password: form.Password.value
+      };
+      try {
+        const response = await fetch('https://09ff2fb6fcdf.ngrok-free.app/user/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        let result, errorText = '';
+        try { result = await response.clone().json(); } catch (e) { errorText = await response.text(); }
+        if (!response.ok) {
+          alert('Ошибка входа: ' + (result?.message || errorText || 'Неизвестная ошибка'));
+          return;
+        }
+        if (result && result.id) {
+          localStorage.setItem('userId', result.id);
+          const email = form.Email.value;
+          const userName = email.split('@')[0];
+          localStorage.setItem('userName', userName);
+          overlay.remove();
+          document.body.style.overflow = '';
+          // window.location.reload(); // убрано
+        } else {
+          alert('Ошибка входа: Некорректный ответ сервера');
+        }
+      } catch (err) {
+        alert('Ошибка входа: ' + err.message);
+      }
     });
   }
   // Крестик закрытия
