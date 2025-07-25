@@ -89,10 +89,9 @@ function showRegisterModal() {
         try { result = await response.clone().json(); } catch (e) { errorText = await response.text(); }
         console.log('Ответ сервера:', result, 'userId:', result && result.userId, 'Message:', result && (result.message || result.Message));
         if (!response.ok) {
-          // Если result — строка, показываем её, иначе ищем message/Message
-          let errorMsg = typeof result === 'string'
-            ? result
-            : (result?.message || result?.Message || errorText || 'Неизвестная ошибка');
+          let errorMsg = errorText ||
+            (typeof result === 'string' ? result : (result?.message || result?.Message)) ||
+            'Неизвестная ошибка';
           alert('Ошибка регистрации: ' + errorMsg);
           return;
         }
@@ -110,10 +109,9 @@ function showRegisterModal() {
           overlay.remove();
           document.body.style.overflow = '';
         } else {
-          // Если result — строка, показываем её, иначе ищем message/Message
-          let errorMsg = typeof result === 'string'
-            ? result
-            : (result?.message || result?.Message || errorText || 'Некорректный ответ сервера');
+          let errorMsg = errorText ||
+            (typeof result === 'string' ? result : (result?.message || result?.Message)) ||
+            'Некорректный ответ сервера';
           alert('Ошибка регистрации: ' + errorMsg);
         }
       } catch (err) {
@@ -192,10 +190,9 @@ function showLoginModal() {
         }
         console.log('Ответ сервера:', result, 'userId:', result && result.userId, 'Message:', result && (result.message || result.Message));
         if (!response.ok) {
-          // Если result — строка, показываем её, иначе ищем message/Message
-          let errorMsg = typeof result === 'string'
-            ? result
-            : (result?.message || result?.Message || errorText || 'Неизвестная ошибка');
+          let errorMsg = errorText ||
+            (typeof result === 'string' ? result : (result?.message || result?.Message)) ||
+            'Неизвестная ошибка';
           alert('Ошибка входа: ' + errorMsg);
           return;
         }
@@ -213,10 +210,9 @@ function showLoginModal() {
           overlay.remove();
           document.body.style.overflow = '';
         } else {
-          // Если result — строка, показываем её, иначе ищем message/Message
-          let errorMsg = typeof result === 'string'
-            ? result
-            : (result?.message || result?.Message || errorText || 'Некорректный ответ сервера');
+          let errorMsg = errorText ||
+            (typeof result === 'string' ? result : (result?.message || result?.Message)) ||
+            'Некорректный ответ сервера';
           alert('Ошибка входа: ' + errorMsg);
         }
       } catch (err) {
