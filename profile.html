@@ -297,66 +297,52 @@
         const fullUrl = baseUrl + '/user/info/' + userId;
         console.log('Отправляем GET запрос на:', fullUrl);
         
-        // Для примера просто делаем GET на /user/profile
-        fetch(fullUrl, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+        // Для примера просто делаем POST на /user/profile (так как GET не работает с ngrok)
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', fullUrl, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                console.log('Получен ответ от сервера:', xhr.status, xhr.statusText);
+                if (xhr.status === 200) {
+                    try {
+                        const data = JSON.parse(xhr.responseText);
+                        console.log('Данные профиля получены:', data);
+                        // Заполняем поля формы только если значение есть, иначе оставляем пустым
+                        const setValue = (id, value) => {
+                            const el = document.getElementById(id);
+                            if (el) el.value = (value !== undefined && value !== null) ? value : '';
+                        };
+                        setValue('firstname-input', data.firstName);
+                        setValue('lastname-input', data.lastName);
+                        setValue('phone-input', data.number);
+                        setValue('email-input', data.email);
+                        setValue('telegram-input', data.telegram);
+                        setValue('instagram-input', data.instagram);
+                        setValue('street-input', data.street);
+                        setValue('house-input', data.house);
+                        setValue('apartment-input', data.apartment);
+                        // Для пола (gender)
+                        if (data.userSex === 'Мужской' || data.userSex === 'Чоловіча') {
+                            setValue('gender-input', 'male');
+                        } else if (data.userSex === 'Женский' || data.userSex === 'Жіноча') {
+                            setValue('gender-input', 'female');
+                        } else {
+                            setValue('gender-input', '');
+                        }
+                        setValue('allergens-input', data.userAllergens);
+                        // Для этажа (floor-input) — если entrance есть, иначе пусто
+                        setValue('floor-input', data.entrance ? 'Підʼїзд ' + data.entrance : '');
+                    } catch (e) {
+                        console.error('Ошибка парсинга JSON:', e);
+                        console.error('Полный ответ сервера:', xhr.responseText);
+                    }
+                } else {
+                    console.error('Ошибка загрузки профиля:', xhr.status, xhr.statusText);
+                }
             }
-            // credentials: 'include' // убираем для совместимости с AllowAnyOrigin
-        })
-          .then(response => {
-            console.log('Получен ответ от сервера:', response.status, response.statusText);
-            if (!response.ok) {
-              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-            // Сначала получаем текст ответа для отладки
-            return response.text().then(text => {
-              console.log('Содержимое ответа сервера:', text.substring(0, 500) + '...');
-              try {
-                return JSON.parse(text);
-              } catch (e) {
-                console.error('Ошибка парсинга JSON:', e);
-                console.error('Полный ответ сервера:', text);
-                throw new Error('Сервер вернул не JSON: ' + text.substring(0, 100));
-              }
-            });
-          })
-          .then(data => {
-            console.log('Данные профиля получены:', data);
-            // Заполняем поля формы только если значение есть, иначе оставляем пустым
-            const setValue = (id, value) => {
-                const el = document.getElementById(id);
-                if (el) el.value = (value !== undefined && value !== null) ? value : '';
-            };
-            setValue('firstname-input', data.firstName);
-            setValue('lastname-input', data.lastName);
-            setValue('phone-input', data.number);
-            setValue('email-input', data.email);
-            setValue('telegram-input', data.telegram);
-            setValue('instagram-input', data.instagram);
-            setValue('street-input', data.street);
-            setValue('house-input', data.house);
-            setValue('apartment-input', data.apartment);
-            // Для пола (gender)
-            if (data.userSex === 'Мужской' || data.userSex === 'Чоловіча') {
-                setValue('gender-input', 'male');
-            } else if (data.userSex === 'Женский' || data.userSex === 'Жіноча') {
-                setValue('gender-input', 'female');
-            } else {
-                setValue('gender-input', '');
-            }
-            setValue('allergens-input', data.userAllergens);
-            // Для этажа (floor-input) — если entrance есть, иначе пусто
-            setValue('floor-input', data.entrance ? 'Підʼїзд ' + data.entrance : '');
-          })
-          .catch(err => {
-            console.error('Ошибка загрузки профиля:', err);
-            console.error('Полный URL запроса:', fullUrl);
-            console.error('UserID:', userId);
-            console.error('Base URL:', baseUrl);
-          });
+        };
+        xhr.send(JSON.stringify({ userId: userId }));
       })
       .catch(err => {
         console.error('Ошибка загрузки settings.json:', err);
