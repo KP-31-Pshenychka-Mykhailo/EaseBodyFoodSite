@@ -57,12 +57,6 @@
                         <div class="profile-label">Алергени <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
                         <input class="profile-input" id="allergens-input" type="text" placeholder="Вкажіть ваші алергени, якщо є">
                     </div>
-                    <div>
-                        <div class="profile-label">Місто <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
-                        <select class="profile-input" id="city-input">
-                            <option value="Київ">Київ</option>
-                        </select>
-                    </div>
                     <div class="profile-form-row">
                         <div style="flex:1;">
                             <div class="profile-label">Telegram <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
@@ -76,10 +70,18 @@
                         </div>
                     </div>
                     <div class="profile-label" style="margin-top:12px;">Адреса доставки:</div>
-                    <div>
-                        <div class="profile-label">Вулиця <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
-                        <input class="profile-input" id="street-input" type="text" value="">
-                        <div class="profile-error" id="street-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                    <div class="profile-form-row">
+                        <div style="flex:1;">
+                            <div class="profile-label">Місто <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                            <select class="profile-input" id="city-input">
+                                <option value="Київ">Київ</option>
+                            </select>
+                        </div>
+                        <div style="flex:1;">
+                            <div class="profile-label">Вулиця <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                            <input class="profile-input" id="street-input" type="text" value="">
+                            <div class="profile-error" id="street-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                        </div>
                     </div>
                     <div class="profile-form-row">
                         <div style="flex:1;">
@@ -88,9 +90,9 @@
                             <div class="profile-error" id="house-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
                         </div>
                         <div style="flex:1;">
-                            <div class="profile-label">Поверх <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
-                            <input class="profile-input" id="floor-input" type="text" value="">
-                            <div class="profile-error" id="floor-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                            <div class="profile-label">Підʼїзд <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                            <input class="profile-input" id="entrance-input" type="text" value="">
+                            <div class="profile-error" id="entrance-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
                         </div>
                         <div style="flex:1;">
                             <div class="profile-label">Квартира <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
@@ -165,7 +167,7 @@
         {input: 'instagram-input', error: 'instagram-error'},
         {input: 'street-input', error: 'street-error'},
         {input: 'house-input', error: 'house-error'},
-        {input: 'floor-input', error: 'floor-error'},
+        {input: 'entrance-input', error: 'entrance-error'},
         {input: 'apartment-input', error: 'apartment-error'}
     ];
     requiredFields.forEach(({input, error}) => {
@@ -207,7 +209,7 @@
         const street = document.getElementById('street-input').value;
         const house = document.getElementById('house-input').value;
         const apartment = document.getElementById('apartment-input').value;
-        const floorValue = document.getElementById('floor-input').value;
+        const entrance = document.getElementById('entrance-input').value;
         
         if (street) addressData.Street = street;
         if (house) addressData.House = house ? parseInt(house) : undefined;
@@ -217,10 +219,10 @@
         const city = document.getElementById('city-input').value;
         if (city) addressData.Sity = city;
         
-        if (floorValue) {
-            const match = floorValue.match(/Підʼїзд (\d+)/);
+        if (entrance) {
+            const match = entrance.match(/Підʼїзд (\d+)/);
             if (match) {
-                addressData.Enterence = parseInt(match[1]);
+                addressData.Entrance = parseInt(match[1]);
             }
         }
         
@@ -303,7 +305,7 @@
         const ids = [
             'firstname-input', 'lastname-input', 'phone-input', 'email-input',
             'telegram-input', 'instagram-input', 'street-input', 'house-input',
-            'floor-input', 'apartment-input', 'gender-input', 'allergens-input', 'city-input'
+            'entrance-input', 'apartment-input', 'gender-input', 'allergens-input', 'city-input'
         ];
         ids.forEach(id => {
             const el = document.getElementById(id);
@@ -368,7 +370,7 @@
                         // Для города
                         setValue('city-input', data.city);
                         // Для этажа (floor-input) — если entrance есть, иначе пусто
-                        setValue('floor-input', data.entrance ? 'Підʼїзд ' + data.entrance : '');
+                        setValue('entrance-input', data.entrance ? data.entrance : '');
                     } catch (e) {
                         console.error('Ошибка парсинга JSON:', e);
                         console.error('Полный ответ сервера:', xhr.responseText);
