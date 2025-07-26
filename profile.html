@@ -18,65 +18,77 @@
                 <div class="profile-avatar-block">
                     <img src="assets/img/user1.png" alt="Avatar" class="profile-avatar-img">
                     <div class="profile-avatar-btns">
-                        <button class="profile-btn-main">Змінити</button>
-                       <!-- <button class="profile-btn-danger">Видалити</button> -->
+                        <button class="profile-btn-main" id="save-profile-btn">Змінити</button>
+                        <button class="profile-btn-danger" id="logout-btn">Вийти</button> 
                     </div>
                 </div>
                 <form class="profile-form">
                     <div class="profile-form-row">
                         <div style="flex:1;">
                             <div class="profile-label">Ім'я <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
-                            <input class="profile-input" id="firstname-input" type="text" value="Олена">
+                            <input class="profile-input" id="firstname-input" type="text" value="">
                             <div class="profile-error" id="firstname-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
                         </div>
                         <div style="flex:1;">
                             <div class="profile-label">Прізвище <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
-                            <input class="profile-input" id="lastname-input" type="text" value="Клименко">
+                            <input class="profile-input" id="lastname-input" type="text" value="">
                             <div class="profile-error" id="lastname-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
                         </div>
                     </div>
                     <div>
                         <div class="profile-label">Телефон <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
-                        <input class="profile-input" id="phone-input" type="tel" value="+380000000000">
+                        <input class="profile-input" id="phone-input" type="tel" value="">
                         <div class="profile-error" id="phone-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
                     </div>
                     <div>
                         <div class="profile-label">Email <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
-                        <input class="profile-input" id="email-input" type="email" value="olenaolena@gmail.com">
+                        <input class="profile-input" id="email-input" type="email" value="">
                         <div class="profile-error" id="email-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                    </div>
+                    <div>
+                        <div class="profile-label">Стать <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                        <select class="profile-input" id="gender-input">
+                            <option value="female">Жіноча</option>
+                            <option value="male">Чоловіча</option>
+                        </select>
+                        <div class="profile-error" id="gender-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
+                    </div>
+                    <div>
+                        <div class="profile-label">Алергени <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                        <input class="profile-input" id="allergens-input" type="text" placeholder="Вкажіть ваші алергени, якщо є">
                     </div>
                     <div class="profile-form-row">
                         <div style="flex:1;">
                             <div class="profile-label">Telegram <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
-                            <input class="profile-input" id="telegram-input" type="text" value="@olena_telegram">
+                            <input class="profile-input" id="telegram-input" type="text" value="">
                             <div class="profile-error" id="telegram-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
                         </div>
                         <div style="flex:1;">
                             <div class="profile-label">Instagram <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
-                            <input class="profile-input" id="instagram-input" type="text" value="@olena_insta">
+                            <input class="profile-input" id="instagram-input" type="text" value="">
                             <div class="profile-error" id="instagram-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
                         </div>
                     </div>
                     <div class="profile-label" style="margin-top:12px;">Адреса доставки:</div>
                     <div>
                         <div class="profile-label">Вулиця <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
-                        <input class="profile-input" id="street-input" type="text" value="Вулиця Назва, 23А">
+                        <input class="profile-input" id="street-input" type="text" value="">
                         <div class="profile-error" id="street-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
                     </div>
                     <div class="profile-form-row">
                         <div style="flex:1;">
                             <div class="profile-label">Будинок <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
-                            <input class="profile-input" id="house-input" type="text" value="Будинок 23">
+                            <input class="profile-input" id="house-input" type="text" value="">
                             <div class="profile-error" id="house-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
                         </div>
                         <div style="flex:1;">
                             <div class="profile-label">Поверх <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
-                            <input class="profile-input" id="floor-input" type="text" value="Поверх 3">
+                            <input class="profile-input" id="floor-input" type="text" value="">
                             <div class="profile-error" id="floor-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
                         </div>
                         <div style="flex:1;">
                             <div class="profile-label">Квартира <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
-                            <input class="profile-input" id="apartment-input" type="text" value="Квартира 23">
+                            <input class="profile-input" id="apartment-input" type="text" value="">
                             <div class="profile-error" id="apartment-error" style="display:none;">Поле є обов'язковим для відправки інформації!</div>
                         </div>
                     </div>
@@ -142,6 +154,7 @@
         {input: 'lastname-input', error: 'lastname-error'},
         {input: 'phone-input', error: 'phone-error'},
         {input: 'email-input', error: 'email-error'},
+        {input: 'gender-input', error: 'gender-error'},
         {input: 'telegram-input', error: 'telegram-error'},
         {input: 'instagram-input', error: 'instagram-error'},
         {input: 'street-input', error: 'street-error'},
@@ -166,6 +179,146 @@
             }
         });
     });
+    document.getElementById('logout-btn').addEventListener('click', function() {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.href = '/index.html'; // Измените путь, если у вас другая страница входа
+    });
+
+    // Обработчик для кнопки "Змінити" - сохранение профиля
+    document.getElementById('save-profile-btn').addEventListener('click', function() {
+        // Получаем userID (пример: из localStorage)
+        const userID = localStorage.getItem('userID') || sessionStorage.getItem('userID') || '';
+        // Собираем данные из формы
+        const profileData = {
+            userID: userID,
+            firstName: document.getElementById('firstname-input').value,
+            lastName: document.getElementById('lastname-input').value,
+            number: document.getElementById('phone-input').value,
+            email: document.getElementById('email-input').value,
+            userSex: document.getElementById('gender-input').value === 'male' ? 'Чоловіча' : 'Жіноча',
+            userAllergens: document.getElementById('allergens-input').value
+        };
+        const addressData = {
+            userID: userID,
+            street: document.getElementById('street-input').value,
+            house: document.getElementById('house-input').value,
+            apartment: document.getElementById('apartment-input').value,
+            entrance: document.getElementById('floor-input').value.replace('Підʼїзд ', '') || null
+        };
+        const socialsData = {
+            userID: userID,
+            telegram: document.getElementById('telegram-input').value,
+            instagram: document.getElementById('instagram-input').value
+        };
+
+        // Отправляем три запроса
+        fetch('assets/js/settings.json')
+            .then(response => response.json())
+            .then(settings => {
+                const baseUrl = settings.SERVER_BASE_URL;
+                // Основная информация
+                const infoPromise = fetch(baseUrl + '/user/addinfo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(profileData)
+                });
+                // Адрес
+                const addressPromise = fetch(baseUrl + '/user/address', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(addressData)
+                });
+                // Соцсети
+                const socialsPromise = fetch(baseUrl + '/user/socials', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(socialsData)
+                });
+                return Promise.all([infoPromise, addressPromise, socialsPromise]);
+            })
+            .then(([infoRes, addressRes, socialsRes]) => {
+                if (infoRes.ok && addressRes.ok && socialsRes.ok) {
+                    alert('Профіль, адресу і соцмережі успішно оновлено!');
+                } else {
+                    let errorMsg = 'Помилка оновлення:';
+                    if (!infoRes.ok) errorMsg += ' профілю;';
+                    if (!addressRes.ok) errorMsg += ' адреси;';
+                    if (!socialsRes.ok) errorMsg += ' соцмереж;';
+                    throw new Error(errorMsg);
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Помилка при оновленні: ' + error.message);
+            });
+    });
+
+    // Загрузка данных профиля с сервера и заполнение формы
+    // Сначала очищаем все поля профиля
+    const clearProfileFields = () => {
+        const ids = [
+            'firstname-input', 'lastname-input', 'phone-input', 'email-input',
+            'telegram-input', 'instagram-input', 'street-input', 'house-input',
+            'floor-input', 'apartment-input', 'gender-input', 'allergens-input'
+        ];
+        ids.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+        });
+    };
+    clearProfileFields();
+    fetch('assets/js/settings.json')
+      .then(response => response.json())
+      .then(settings => {
+        const baseUrl = settings.SERVER_BASE_URL;
+        // Здесь можно получить userID из localStorage/sessionStorage/cookie, если нужно
+        // Например: const userID = localStorage.getItem('userID');
+        // Для примера просто делаем GET на /user/profile
+        fetch(baseUrl + '/user/info' + localStorage.getItem('userId'), {
+          credentials: 'include' // если нужны cookie/сессии
+        })
+          .then(response => response.json())
+          .then(data => {
+            // Заполняем поля формы только если значение есть, иначе оставляем пустым
+            const setValue = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) el.value = (value !== undefined && value !== null) ? value : '';
+            };
+            setValue('firstname-input', data.firstName);
+            setValue('lastname-input', data.lastName);
+            setValue('phone-input', data.number);
+            setValue('email-input', data.email);
+            setValue('telegram-input', data.telegram);
+            setValue('instagram-input', data.instagram);
+            setValue('street-input', data.street);
+            setValue('house-input', data.house);
+            setValue('apartment-input', data.apartment);
+            // Для пола (gender)
+            if (data.userSex === 'Мужской' || data.userSex === 'Чоловіча') {
+                setValue('gender-input', 'male');
+            } else if (data.userSex === 'Женский' || data.userSex === 'Жіноча') {
+                setValue('gender-input', 'female');
+            } else {
+                setValue('gender-input', '');
+            }
+            setValue('allergens-input', data.userAllergens);
+            // Для этажа (floor-input) — если entrance есть, иначе пусто
+            setValue('floor-input', data.entrance ? 'Підʼїзд ' + data.entrance : '');
+          })
+          .catch(err => {
+            console.error('Ошибка загрузки профиля:', err);
+          });
+      });
     </script>
 </body>
 </html> 
