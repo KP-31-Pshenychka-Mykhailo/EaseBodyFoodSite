@@ -198,10 +198,15 @@
             userAllergens: document.getElementById('allergens-input').value
         };
         const addressData = {
-            street: document.getElementById('street-input').value,
-            house: document.getElementById('house-input').value,
-            apartment: document.getElementById('apartment-input').value,
-            entrance: document.getElementById('floor-input').value.replace('Підʼїзд ', '') || null
+            street: document.getElementById('street-input').value || null,
+            house: document.getElementById('house-input').value || null,
+            apartment: document.getElementById('apartment-input').value || null,
+            entrance: (() => {
+                const floorValue = document.getElementById('floor-input').value;
+                if (!floorValue) return null;
+                const match = floorValue.match(/Підʼїзд (\d+)/);
+                return match ? parseInt(match[1]) : null;
+            })()
         };
         const socialsData = {
             telegram: document.getElementById('telegram-input').value,
