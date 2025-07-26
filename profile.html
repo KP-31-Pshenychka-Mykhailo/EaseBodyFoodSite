@@ -304,7 +304,17 @@
             if (!response.ok) {
               throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
-            return response.json();
+            // Сначала получаем текст ответа для отладки
+            return response.text().then(text => {
+              console.log('Содержимое ответа сервера:', text.substring(0, 500) + '...');
+              try {
+                return JSON.parse(text);
+              } catch (e) {
+                console.error('Ошибка парсинга JSON:', e);
+                console.error('Полный ответ сервера:', text);
+                throw new Error('Сервер вернул не JSON: ' + text.substring(0, 100));
+              }
+            });
           })
           .then(data => {
             console.log('Данные профиля получены:', data);
