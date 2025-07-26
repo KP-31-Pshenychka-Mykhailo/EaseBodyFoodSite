@@ -57,6 +57,12 @@
                         <div class="profile-label">Алергени <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
                         <input class="profile-input" id="allergens-input" type="text" placeholder="Вкажіть ваші алергени, якщо є">
                     </div>
+                    <div>
+                        <div class="profile-label">Місто <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
+                        <select class="profile-input" id="city-input">
+                            <option value="Київ">Київ</option>
+                        </select>
+                    </div>
                     <div class="profile-form-row">
                         <div style="flex:1;">
                             <div class="profile-label">Telegram <svg class="profile-edit-icon" width="18" height="18" viewBox="0 0 20 20"><path d="M14.846 2.854a2.5 2.5 0 0 1 3.536 3.535l-9.193 9.193a2 2 0 0 1-.707.464l-3.25 1.083a.5.5 0 0 1-.632-.632l1.083-3.25a2 2 0 0 1 .464-.707l9.193-9.193Zm2.122 1.414a1.5 1.5 0 0 0-2.122 0l-9.193 9.193a1 1 0 0 0-.232.354l-.89 2.67 2.67-.89a1 1 0 0 0 .354-.232l9.193-9.193a1.5 1.5 0 0 0 0-2.122Z" fill="#bdbdbd"/></svg></div>
@@ -203,14 +209,18 @@
         const apartment = document.getElementById('apartment-input').value;
         const floorValue = document.getElementById('floor-input').value;
         
-        if (street) addressData.street = street;
-        if (house) addressData.house = house;
-        if (apartment) addressData.apartment = apartment;
+        if (street) addressData.Street = street;
+        if (house) addressData.House = house ? parseInt(house) : undefined;
+        if (apartment) addressData.Apartment = apartment;
+        
+        // Добавляем город
+        const city = document.getElementById('city-input').value;
+        if (city) addressData.Sity = city;
         
         if (floorValue) {
             const match = floorValue.match(/Підʼїзд (\d+)/);
             if (match) {
-                addressData.entrance = parseInt(match[1]);
+                addressData.Enterence = parseInt(match[1]);
             }
         }
         
@@ -293,7 +303,7 @@
         const ids = [
             'firstname-input', 'lastname-input', 'phone-input', 'email-input',
             'telegram-input', 'instagram-input', 'street-input', 'house-input',
-            'floor-input', 'apartment-input', 'gender-input', 'allergens-input'
+            'floor-input', 'apartment-input', 'gender-input', 'allergens-input', 'city-input'
         ];
         ids.forEach(id => {
             const el = document.getElementById(id);
@@ -355,6 +365,8 @@
                             setValue('gender-input', '');
                         }
                         setValue('allergens-input', data.userAllergens);
+                        // Для города
+                        setValue('city-input', data.city);
                         // Для этажа (floor-input) — если entrance есть, иначе пусто
                         setValue('floor-input', data.entrance ? 'Підʼїзд ' + data.entrance : '');
                     } catch (e) {
