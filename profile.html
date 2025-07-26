@@ -299,6 +299,11 @@
         
         // Для примера просто делаем GET на /user/profile
         fetch(fullUrl, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
             // credentials: 'include' // убираем для совместимости с AllowAnyOrigin
         })
           .then(response => {
