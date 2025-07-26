@@ -299,7 +299,7 @@
         
         // Для примера просто делаем POST на /user/profile (так как GET не работает с ngrok)
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', fullUrl, true);
+        xhr.open('POST', fullUrl, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
