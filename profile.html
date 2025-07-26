@@ -194,8 +194,8 @@
             lastName: document.getElementById('lastname-input').value,
             number: document.getElementById('phone-input').value,
             email: document.getElementById('email-input').value,
-            userSex: document.getElementById('gender-input').value === 'male' ? 'Чоловіча' : 'Жіноча',
-            userAllergens: document.getElementById('allergens-input').value
+            gender: document.getElementById('gender-input').value === 'male' ? 'Мужской' : 'Женский',
+            allergies: document.getElementById('allergens-input').value
         };
         const addressData = {};
         const street = document.getElementById('street-input').value;
@@ -214,8 +214,8 @@
             }
         }
         
-        // Добавляем дату, так как поле обязательное в БД
-        addressData.date = new Date().toISOString();
+        // Убираем дату - пусть сервер сам устанавливает в UTC
+        // addressData.Date = new Date().toISOString();
 
         const socialsData = {
             telegram: document.getElementById('telegram-input').value,
@@ -225,6 +225,7 @@
         console.log('Отправляем данные профиля:', profileData);
         console.log('Отправляем данные адреса:', addressData);
         console.log('Отправляем данные соцсетей:', socialsData);
+        console.log('JSON для адреса:', JSON.stringify(addressData));
 
         // Отправляем три запроса
         fetch('assets/js/settings.json')
