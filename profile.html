@@ -283,8 +283,18 @@
         const baseUrl = settings.SERVER_BASE_URL;
         // Здесь можно получить userID из localStorage/sessionStorage/cookie, если нужно
         const userId = localStorage.getItem('userId');
+        
+        // Проверяем, что userId существует
+        if (!userId) {
+          console.error('userId не найден в localStorage');
+          alert('Помилка: користувач не авторизований. Будь ласка, увійдіть в систему.');
+          return;
+        }
+        
         // Для примера просто делаем GET на /user/profile
-        fetch(baseUrl + '/user/info/' + userId)
+        fetch(baseUrl + '/user/info/' + userId, {
+            
+        })
           .then(response => response.json())
           .then(data => {
             // Заполняем поля формы только если значение есть, иначе оставляем пустым
