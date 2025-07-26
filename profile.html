@@ -188,10 +188,10 @@
     // Обработчик для кнопки "Змінити" - сохранение профиля
     document.getElementById('save-profile-btn').addEventListener('click', function() {
         // Получаем userID (пример: из localStorage)
-        const userID = localStorage.getItem('userID') || sessionStorage.getItem('userID') || '';
+        const userID = localStorage.getItem('userId') || sessionStorage.getItem('userId') || '';
         // Собираем данные из формы
         const profileData = {
-            userID: userID,
+            userID: userId,
             firstName: document.getElementById('firstname-input').value,
             lastName: document.getElementById('lastname-input').value,
             number: document.getElementById('phone-input').value,
@@ -200,14 +200,14 @@
             userAllergens: document.getElementById('allergens-input').value
         };
         const addressData = {
-            userID: userID,
+            userID: userId,
             street: document.getElementById('street-input').value,
             house: document.getElementById('house-input').value,
             apartment: document.getElementById('apartment-input').value,
             entrance: document.getElementById('floor-input').value.replace('Підʼїзд ', '') || null
         };
         const socialsData = {
-            userID: userID,
+            userID: userId,
             telegram: document.getElementById('telegram-input').value,
             instagram: document.getElementById('instagram-input').value
         };
@@ -284,7 +284,7 @@
         // Здесь можно получить userID из localStorage/sessionStorage/cookie, если нужно
         // Например: const userID = localStorage.getItem('userID');
         // Для примера просто делаем GET на /user/profile
-        fetch(baseUrl + '/user/info/' + localStorage.getItem('userID'), {
+        fetch(baseUrl + '/user/info/' + localStorage.getItem('userId'), {
           credentials: 'include' // если нужны cookie/сессии
         })
           .then(response => response.json())
