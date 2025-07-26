@@ -282,11 +282,9 @@
       .then(settings => {
         const baseUrl = settings.SERVER_BASE_URL;
         // Здесь можно получить userID из localStorage/sessionStorage/cookie, если нужно
-        // Например: const userID = localStorage.getItem('userID');
+        const userId = localStorage.getItem('userId');
         // Для примера просто делаем GET на /user/profile
-        fetch(baseUrl + '/user/info/' + localStorage.getItem('userId'), {
-          credentials: 'include' // если нужны cookie/сессии
-        })
+        fetch(baseUrl + '/user/info/' + userId)
           .then(response => response.json())
           .then(data => {
             // Заполняем поля формы только если значение есть, иначе оставляем пустым
