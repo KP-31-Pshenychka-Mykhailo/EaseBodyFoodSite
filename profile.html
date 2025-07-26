@@ -220,10 +220,7 @@
         if (city) addressData.Sity = city;
         
         if (entrance) {
-            const match = entrance.match(/Підʼїзд (\d+)/);
-            if (match) {
-                addressData.Entrance = parseInt(match[1]);
-            }
+            addressData.Entrance = parseInt(entrance);
         }
         
         // Убираем дату - пусть сервер сам устанавливает в UTC
