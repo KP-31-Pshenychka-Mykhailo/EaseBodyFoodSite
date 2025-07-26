@@ -187,8 +187,7 @@
 
     // Обработчик для кнопки "Змінити" - сохранение профиля
     document.getElementById('save-profile-btn').addEventListener('click', function() {
-        // Получаем userID (пример: из localStorage)
-        const userID = localStorage.getItem('userId') || sessionStorage.getItem('userId') || '';
+        const userId = localStorage.getItem('userId');
         // Собираем данные из формы
         const profileData = {
             userID: userId,
