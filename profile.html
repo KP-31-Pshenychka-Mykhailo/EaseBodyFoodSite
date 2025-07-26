@@ -208,6 +208,10 @@
             instagram: document.getElementById('instagram-input').value
         };
 
+        console.log('Отправляем данные профиля:', profileData);
+        console.log('Отправляем данные адреса:', addressData);
+        console.log('Отправляем данные соцсетей:', socialsData);
+
         // Отправляем три запроса
         fetch('assets/js/settings.json')
             .then(response => response.json())
@@ -230,6 +234,15 @@
                     },
                     credentials: 'include',
                     body: JSON.stringify(addressData)
+                }).then(response => {
+                    console.log('Ответ сервера для адреса:', response.status, response.statusText);
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            console.error('Ошибка адреса - ответ сервера:', text);
+                            throw new Error('Ошибка адреса: ' + text);
+                        });
+                    }
+                    return response;
                 });
                 // Соцсети
                 const socialsPromise = fetch(baseUrl + '/user/social?userId=' + userId, {
