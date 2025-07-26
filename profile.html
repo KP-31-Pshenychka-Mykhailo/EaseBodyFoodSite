@@ -213,6 +213,9 @@
                 addressData.entrance = parseInt(match[1]);
             }
         }
+        
+        // Добавляем дату, так как поле обязательное в БД
+        addressData.date = new Date().toISOString();
 
         const socialsData = {
             telegram: document.getElementById('telegram-input').value,
