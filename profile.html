@@ -190,7 +190,6 @@
         const userId = localStorage.getItem('userId');
         // Собираем данные из формы
         const profileData = {
-            userID: userId,
             firstName: document.getElementById('firstname-input').value,
             lastName: document.getElementById('lastname-input').value,
             number: document.getElementById('phone-input').value,
@@ -199,14 +198,12 @@
             userAllergens: document.getElementById('allergens-input').value
         };
         const addressData = {
-            userID: userId,
             street: document.getElementById('street-input').value,
             house: document.getElementById('house-input').value,
             apartment: document.getElementById('apartment-input').value,
             entrance: document.getElementById('floor-input').value.replace('Підʼїзд ', '') || null
         };
         const socialsData = {
-            userID: userId,
             telegram: document.getElementById('telegram-input').value,
             instagram: document.getElementById('instagram-input').value
         };
@@ -217,30 +214,30 @@
             .then(settings => {
                 const baseUrl = settings.SERVER_BASE_URL;
                 // Основная информация
-                const infoPromise = fetch(baseUrl + '/user/addinfo', {
+                const infoPromise = fetch(baseUrl + '/user/addinfo?userId=' + userId, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                
+                    credentials: 'include',
                     body: JSON.stringify(profileData)
                 });
                 // Адрес
-                const addressPromise = fetch(baseUrl + '/user/address', {
+                const addressPromise = fetch(baseUrl + '/user/address?userId=' + userId, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    
+                    credentials: 'include',
                     body: JSON.stringify(addressData)
                 });
                 // Соцсети
-                const socialsPromise = fetch(baseUrl + '/user/socials', {
+                const socialsPromise = fetch(baseUrl + '/user/social?userId=' + userId, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-              
+                    credentials: 'include',
                     body: JSON.stringify(socialsData)
                 });
                 return Promise.all([infoPromise, addressPromise, socialsPromise]);
