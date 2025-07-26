@@ -197,17 +197,23 @@
             userSex: document.getElementById('gender-input').value === 'male' ? 'Чоловіча' : 'Жіноча',
             userAllergens: document.getElementById('allergens-input').value
         };
-        const addressData = {
-            street: document.getElementById('street-input').value || null,
-            house: document.getElementById('house-input').value || null,
-            apartment: document.getElementById('apartment-input').value || null,
-            entrance: (() => {
-                const floorValue = document.getElementById('floor-input').value;
-                if (!floorValue) return null;
-                const match = floorValue.match(/Підʼїзд (\d+)/);
-                return match ? parseInt(match[1]) : null;
-            })()
-        };
+        const addressData = {};
+        const street = document.getElementById('street-input').value;
+        const house = document.getElementById('house-input').value;
+        const apartment = document.getElementById('apartment-input').value;
+        const floorValue = document.getElementById('floor-input').value;
+        
+        if (street) addressData.street = street;
+        if (house) addressData.house = house;
+        if (apartment) addressData.apartment = apartment;
+        
+        if (floorValue) {
+            const match = floorValue.match(/Підʼїзд (\d+)/);
+            if (match) {
+                addressData.entrance = parseInt(match[1]);
+            }
+        }
+
         const socialsData = {
             telegram: document.getElementById('telegram-input').value,
             instagram: document.getElementById('instagram-input').value
