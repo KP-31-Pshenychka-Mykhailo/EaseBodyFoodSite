@@ -1,5 +1,3 @@
-console.log('Layout.js loaded!');
-
 document.addEventListener('DOMContentLoaded', function() {
 
   const headerElement = document.getElementById('header');
