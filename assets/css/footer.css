@@ -92,6 +92,68 @@
     font-size: 16px;
     margin-top: 40px;
 }
+/* Toggle button styles */
+.footer-toggle-contact {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 1000;
+}
+.footer-toggle-btn {
+    background: #fff;
+    border: 2px solid #4CAF50;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(76, 175, 80, 0.15);
+    cursor: pointer;
+    transition: background 0.2s, border 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+.footer-toggle-btn:hover, .footer-toggle-btn.active {
+    background: #4CAF50;
+    border-color: #388E3C;
+}
+.footer-toggle-btn svg {
+    transition: stroke 0.2s;
+}
+.footer-toggle-btn:hover svg, .footer-toggle-btn.active svg {
+    stroke: #fff;
+}
+
+.footer-popup-socials {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(76, 175, 80, 0.18);
+    padding: 18px 18px 12px 18px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px) scale(0.95);
+    transition: opacity 0.25s, transform 0.25s;
+}
+.footer-popup-socials.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+.footer-popup-socials .footer-social svg {
+    width: 36px;
+    height: 36px;
+    fill: #7fc47f;
+    transition: fill 0.2s;
+}
+.footer-popup-socials .footer-social:hover svg {
+    fill: #4CAF50;
+}
 @media (max-width: 900px) {
     .footer-content {
         flex-direction: column;
@@ -108,5 +170,23 @@
     }
     .footer-socials {
         justify-content: center;
+    }
+}
+@media (max-width: 600px) {
+    .footer-toggle-contact {
+        bottom: 16px;
+        right: 16px;
+    }
+    .footer-popup-socials {
+        right: -10px;
+        padding: 14px 10px 8px 10px;
+    }
+    .footer-toggle-btn {
+        width: 48px;
+        height: 48px;
+    }
+    .footer-popup-socials .footer-social svg {
+        width: 28px;
+        height: 28px;
     }
 }

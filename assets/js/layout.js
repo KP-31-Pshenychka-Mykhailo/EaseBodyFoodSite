@@ -144,4 +144,28 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     console.log('Burger menu setup complete!');
   }
+
+  // --- Footer toggle contact ---
+  document.addEventListener('click', function(e) {
+    const toggleBtn = document.getElementById('footerToggleBtn');
+    const popup = document.getElementById('footerPopupSocials');
+    if (!toggleBtn || !popup) return;
+    if (toggleBtn.contains(e.target)) {
+      popup.classList.toggle('open');
+      toggleBtn.classList.toggle('active');
+    } else if (!popup.contains(e.target)) {
+      popup.classList.remove('open');
+      toggleBtn.classList.remove('active');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const popup = document.getElementById('footerPopupSocials');
+      const toggleBtn = document.getElementById('footerToggleBtn');
+      if (popup && toggleBtn) {
+        popup.classList.remove('open');
+        toggleBtn.classList.remove('active');
+      }
+    }
+  });
 }); 
