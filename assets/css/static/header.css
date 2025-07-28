@@ -301,8 +301,9 @@ body {
   border-bottom: 1px solid #e0e0e0;
 }
 .logo {
-  margin: 0 auto;
   height: 40px;
+  width: auto;
+  flex-shrink: 0;
 }
 
 .logo-link {
