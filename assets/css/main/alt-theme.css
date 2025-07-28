@@ -1185,6 +1185,75 @@ a.gallery-btn {
     }
 }
 
+/* ===== СТИЛИ ДЛЯ КНОПКИ ЗВОНКА В ФУТЕРЕ ===== */
+.footer-call-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+}
+
+.footer-call-btn:hover {
+    background: #fff;
+    color: #4CAF50;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.footer-call-btn:active {
+    transform: scale(0.95);
+}
+
+.footer-call-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.footer-call-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+/* Адаптивность для кнопки звонка */
+@media (max-width: 700px) {
+    .footer-call-btn {
+        font-size: 14px;
+        padding: 10px 20px;
+        border-radius: 25px;
+    }
+    
+    .footer-call-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 400px) {
+    .footer-call-btn {
+        font-size: 12px;
+        padding: 8px 16px;
+        border-radius: 20px;
+    }
+    
+    .footer-call-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
 /* Улучшение доступности для пользователей с высоким контрастом */
 @media (prefers-contrast: high) {
     .menu-day-alt {
@@ -1194,5 +1263,9 @@ a.gallery-btn {
     .menu-day-alt:hover,
     .menu-day-alt:focus {
         border-width: 3px;
+    }
+    
+    .footer-call-btn {
+        border: 2px solid #4CAF50;
     }
 }
