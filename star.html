@@ -1,87 +1,188 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Зіркове меню | Easy Body Food</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rubik:wght@900&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="EaseBodyFoodSite/assets/img/logo.png">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/static/header.css">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/static/footer.css">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/pages/index.css">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/main/alt-theme.css">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/main/main-theme.css">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/pages/calculator.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Зіркове меню | Easy Body Food</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rubik:wght@900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <link rel="stylesheet" href="assets/css/static/header.css">
+  <link rel="stylesheet" href="assets/css/static/footer.css">
+  <link rel="stylesheet" href="assets/css/pages/index.css">
+  <link rel="stylesheet" href="assets/css/main/alt-theme.css">
+  <link rel="stylesheet" href="assets/css/main/main-theme.css">
+  <link rel="stylesheet" href="assets/css/pages/calculator.css">
+  
 </head>
 <body>
-    <div id="header"></div>
-    <main class="main-content">
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Зіркове меню</h1>
-                <p>Ексклюзивні раціони від нашого головного нутриціолога</p>
-            </div>
-        </section>
+<div id="header"></div>
 
-        <section class="team">
-            <div class="container">
-                <h2>Наш експерт</h2>
-                <div class="team-grid">
-                    <div class="team-main">
-                        <img src="EaseBodyFoodSite/assets/img/nutritionist.jpg" alt="Микита Бондаренко" class="team-main-photo-star">
-                        <div class="team-main-info">
-                            <h3>Микита Бондаренко</h3>
-                            <p>Головний нутриціолог</p>
-                        </div>
-                    </div>
+<section class="section1">
+    <h2>Зіркове меню</h2>
+    <div class="text24">
+      Спеціально розроблене нутриціологом Микитою Бондаренком для активного та збалансованого способу життя
+    </div>
+    <div class="team-top">
+      <img src="assets/img/nutritionist.jpg" alt="Микита Бондаренко" class="team-main-photo-star">
+      <div class="team-main-info">
+        <h3>Микита Бондаренко</h3>
+        <div>
+          Експерт з харчування, якому довіряють медіа, спортсмени та тисячі людей по всій Україні.<br>
+          Працює з професійними атлетами, активними людьми, молодими мамами — та кожному підбирає раціон, як костюм: по фігурі, меті й темпу життя.<br>
+          <br>
+          Його філософія проста:
+        </div>
+        <h4 class="light" style="color:#fff; margin-top:16px;">
+          "Раціон має бути не про жертви, а про свободу".
+        </h4>
+      </div>
+    </div>
+</section>
+
+    <section class="menu-hero-alt section1" id="personal-diet-section">  
+        <div class="menu-days-alt">
+          <button class="menu-day-alt active" data-day="monday">Пн</button>
+          <button class="menu-day-alt" data-day="tuesday">Вт</button>
+          <button class="menu-day-alt" data-day="wednesday">Ср</button>
+          <button class="menu-day-alt" data-day="thursday">Чт</button>
+          <button class="menu-day-alt" data-day="friday">Пт</button>
+          <button class="menu-day-alt" data-day="saturday">Сб</button>
+          <button class="menu-day-alt" data-day="sunday">Нд</button>
+        </div>
+        <div class="menu-slider-wrapper-alt">
+          <button class="gallery-arrow-alt gallery-arrow-left-alt menu-slider-arrow-alt left" id="dietLeft">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow-left">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <div class="menu-slider-alt" id="dietCards">
+            <!-- Пример карточек еды -->
+            <div class="menu-card-alt" data-day="monday">
+              <div class="menu-card-img-wrap-alt">
+                <img src="assets/img/food1.jpg" alt="Сніданок" class="menu-card-img">
+                <div class="gallery-card-icons-alt">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart-alt icon-heart">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                  </svg>
                 </div>
+                <span class="menu-card-plus">+</span>
+              </div>
+              <div class="menu-card-content-alt">
+                <div class="menu-card-title-alt">Сніданок</div>
+                <div class="menu-card-macros-alt">Б: 6 г, Ж: 17 г, В: 8 г; 215 ккал</div>
+                <div class="menu-card-desc-alt">Цільнозерновий тост з хумусом, мікрозеленою та томатами. Ідеальний старт дня — білки, клітковина, ніжний смак.</div>
+              </div>
             </div>
-        </section>
-
-        <section class="star-menu">
-            <div class="container">
-                <h2>Зіркові раціони</h2>
-                <div class="menu-cards">
-                    <div class="menu-card">
-                        <img src="EaseBodyFoodSite/assets/img/food1.jpg" alt="Сніданок" class="menu-card-img">
-                        <div class="menu-card-content">
-                            <h3>Сніданок</h3>
-                            <p>Смачний та поживний початок дня</p>
-                            <div class="menu-card-macros">Б: 25г, Ж: 15г, В: 45г</div>
-                        </div>
-                    </div>
-                    <div class="menu-card">
-                        <img src="EaseBodyFoodSite/assets/img/food2.jpg" alt="Полуденок" class="menu-card-img">
-                        <div class="menu-card-content">
-                            <h3>Полуденок</h3>
-                            <p>Легкий перекус між основними прийомами їжі</p>
-                            <div class="menu-card-macros">Б: 18г, Ж: 12г, В: 30г</div>
-                        </div>
-                    </div>
-                    <div class="menu-card">
-                        <img src="EaseBodyFoodSite/assets/img/food4.jpg" alt="Обід" class="menu-card-img">
-                        <div class="menu-card-content">
-                            <h3>Обід</h3>
-                            <p>Основний прийом їжі з повним набором поживних речовин</p>
-                            <div class="menu-card-macros">Б: 35г, Ж: 25г, В: 55г</div>
-                        </div>
-                    </div>
-                    <div class="menu-card">
-                        <img src="EaseBodyFoodSite/assets/img/food3.jpg" alt="Сніданок" class="menu-card-img">
-                        <div class="menu-card-content">
-                            <h3>Вечеря</h3>
-                            <p>Легка вечеря для завершення дня</p>
-                            <div class="menu-card-macros">Б: 20г, Ж: 10г, В: 25г</div>
-                        </div>
-                    </div>
+            <div class="menu-card-alt" data-day="monday">
+              <div class="menu-card-img-wrap-alt">
+                <img src="assets/img/food2.jpg" alt="Полуденок" class="menu-card-img">
+                <div class="gallery-card-icons">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                  </svg>
                 </div>
+                <span class="menu-card-plus">+</span>
+              </div>
+              <div class="menu-card-content-alt">
+                <div class="menu-card-title-alt">Полуденок</div>
+                <div class="menu-card-macros-alt">Б: 6 г, Ж: 17 г, В: 8 г; 215 ккал</div>
+                <div class="menu-card-desc-alt">Горіховий мікс (фундук, кеш'ю, мигдаль) з вівсяними пластівцями. Повільні вуглеводи, здорова енергія.</div>
+              </div>
             </div>
-        </section>
-    </main>
+            <div class="menu-card-alt" data-day="monday">
+              <div class="menu-card-img-wrap-alt">
+                <img src="assets/img/food4.jpg" alt="Обід" class="menu-card-img">
+                <div class="gallery-card-icons">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                  </svg>
+                </div>
+                <span class="menu-card-plus">+</span>
+              </div>
+              <div class="menu-card-content-alt">
+                <div class="menu-card-title-alt">Обід</div>
+                <div class="menu-card-macros-alt">Б: 6 г, Ж: 17 г, В: 8 г; 215 ккал</div>
+                <div class="menu-card-desc-alt">Лазанья з соусом бешамель, цільнозерновим листом та індичкою. Збалансована страва.</div>
+              </div>
+            </div>
+            <!-- Пример для вторника (скрыт по умолчанию) -->
+            <div class="menu-card-alt" data-day="tuesday" style="display:none;">
+              <div class="menu-card-img-wrap-alt">
+                <img src="assets/img/food3.jpg" alt="Сніданок" class="menu-card-img">
+                <div class="gallery-card-icons-alt">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart-alt icon-heart">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                  </svg>
+                </div>
+                <span class="menu-card-plus">+</span>
+              </div>
+              <div class="menu-card-content-alt">
+                <div class="menu-card-title-alt">Сніданок (Вт)</div>
+                <div class="menu-card-macros-alt">Б: 8 г, Ж: 12 г, В: 15 г; 245 ккал</div>
+                <div class="menu-card-desc-alt">Омлет з овочами та сиром. Багато білку, мінімум вуглеводів, максимум смаку.</div>
+              </div>
+            </div>
+            <!-- Добавьте аналогично для других дней недели -->
+          </div>
+          <button class="gallery-arrow-alt gallery-arrow-right-alt menu-slider-arrow-alt right" id="dietRight">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+        <div class="menu-total-alt">Б: 18 г, Ж: 51 г, В: 24 г; 645 ккал</div>
 
-    <div id="footer"></div>
+<script>
+  // Переключение дней недели для персонального меню
+  document.querySelectorAll('.menu-day-alt').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      // Снять active со всех кнопок
+      document.querySelectorAll('.menu-day-alt').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      btn.classList.add('active');
+      // Получить выбранный день
+      var day = btn.getAttribute('data-day');
+      // Скрыть все карточки
+      document.querySelectorAll('.menu-card-alt').forEach(function(card) {
+        if (card.getAttribute('data-day') === day) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
 
-    <script src="EaseBodyFoodSite/assets/js/layout.js"></script>
-    <script src="EaseBodyFoodSite/assets/js/calculator.js"></script>
+  // При загрузке показать только карточки для первого дня
+  document.addEventListener('DOMContentLoaded', function() {
+    var activeBtn = document.querySelector('.menu-day-alt.active');
+    if (activeBtn) {
+      var day = activeBtn.getAttribute('data-day');
+      document.querySelectorAll('.menu-card-alt').forEach(function(card) {
+        if (card.getAttribute('data-day') === day) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  });
+</script>
+        
+      </section>
+  
+  <section class="section2"></section>
+  <section class="menu-personal">
+    <div class="menu-personal-title">Хочеться персоналізації?</div>
+    <div class="menu-personal-subtitle">Сконструюй власне меню!</div>
+    <button class="menu-personal-btn">Конструктор меню</button>
+  </section>
+
+
+
+  <div id="footer"></div>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/calculator.js"></script>
 </body>
 </html>

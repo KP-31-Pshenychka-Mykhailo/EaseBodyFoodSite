@@ -3,205 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy Body Food - Персональний раціон</title>
-    <link rel="icon" type="image/png" href="EaseBodyFoodSite/assets/img/logo.png">
+    <title>Головна | Easy Body Food</title>
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rubik:wght@900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/static/header.css">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/static/footer.css">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/pages/index.css">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/main/alt-theme.css">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/main/main-theme.css">
+    <link rel="stylesheet" href="assets/css/static/header.css">
+    <link rel="stylesheet" href="assets/css/static/footer.css">
+    <link rel="stylesheet" href="assets/css/pages/index.css">
+    <link rel="stylesheet" href="assets/css/main/alt-theme.css">
+    <link rel="stylesheet" href="assets/css/main/main-theme.css">
 </head>
+
 <body>
-    <header class="main-header">
-        <div class="header-content">
-            <a href="EaseBodyFoodSite/index.html" class="logo-link">
-                <img src="EaseBodyFoodSite/assets/img/logo.png" alt="Logo" class="logo">
-            </a>
-            <nav class="main-nav" id="mainNav">
-                <a href="EaseBodyFoodSite/index.html">Головна</a>
-                <a href="EaseBodyFoodSite/constructor.html">Конструктор меню</a>
-                <a href="EaseBodyFoodSite/calculator.html">Калькулятор раціону</a>
-                <a href="EaseBodyFoodSite/standart.html">Стандартне меню</a>
-            </nav>
-            <div class="header-actions">
-                <a href="EaseBodyFoodSite/cart.html" class="icon-button basket-big">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 6H21L20 14H7L6 6Z" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="9" cy="20" r="1" stroke="#4CAF50" stroke-width="2"/>
-                        <circle cx="18" cy="20" r="1" stroke="#4CAF50" stroke-width="2"/>
-                        <path d="M9 6V4C9 2.89543 9.89543 2 11 2H16C17.1046 2 18 2.89543 18 4V6" stroke="#4CAF50" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </a>
-                <a href="#" class="icon-button icon-button--wide" id="loginBtn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M10 17L15 12L10 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M15 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    Увійти
-                </a>
-            </div>
-            <button class="burger" id="burgerBtn" aria-label="Открыть меню">
-                <span></span>
-                <span></span>
-                <span></span>
+    <div id="header"></div>
+    <main class="main-content">
+        <section class = "hero">
+            <h1>Персональний раціон<br>без клопоту</h1>
+            <p>Розрахуйте калорії за хвилину та отримайте готове меню прямо до дверей.</p>
+            <button class="button">
+                Вибрати план
+                <svg class="btn-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
             </button>
-        </div>
-    </header>
+        </section>
 
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Персональний раціон</h1>
-                <p>Отримайте індивідуальний план харчування, розроблений експертами з урахуванням ваших цілей та уподобань</p>
-                <a href="EaseBodyFoodSite/calculator.html" class="cta-button">Розрахувати раціон</a>
+        <section class="section2">
+            <h2>Ми - це:</h2>
+            <h4 class="light">Наші основні переваги</h4>
+            <div class="list">
+                <div class="list-item"><span class="list-item-number">01</span> <span class="list-item-text">Індивідуальний підхід</span></div>
+                <div class="list-item"><span class="list-item-number">02</span> <span class="list-item-text">Швидка доставка</span></div>
+                <div class="list-item"><span class="list-item-number">03</span> <span class="list-item-text">Здорова та смачна їжа</span></div>
             </div>
         </section>
 
-        <section class="team">
-            <div class="container">
-                <h2>Наша команда</h2>
-                <div class="team-grid">
-                    <div class="team-main">
-                        <img src="EaseBodyFoodSite/assets/img/team1.png" alt="Богдан Шевченко" class="team-main-photo">
-                        <div class="team-main-info">
-                            <h3>Богдан Шевченко</h3>
-                            <p>Засновник та головний нутриціолог</p>
-                        </div>
+        <section class="section1">
+            <h2>Наша команда</h2>
+            <div class="team-top">
+                <img src="assets/img/team1.png" alt="Богдан Шевченко" class="team-main-photo">
+                <div class="team-main-info">
+                    <h3>Богдан Шевченко</h3>
+                    <div class="team-main-info">Засновник компанії</div>
+                    <div class="text24">Богдан — керівник кухні, відповідальний за логіку, злагодженість і бездоганну упаковку кожного замовлення.<br><br>Він не просто готує — він думає на кілька кроків уперед, аналізує процеси, викреслює слабкі місця і шукає, як зробити краще.</div>
+                </div>
+            </div>
+            <div class="team-gallery" id="teamGallery">
+                <div class="team-card">
+                    <img src="assets/img/team2.jpg" class="team-photo" alt="Team member 2">
+                    <div class="hover-info">
+                        <div class="team-card-name">Ім'я 1</div>
+                        <div class="team-card-desc">Опис учасника 1</div>
                     </div>
-                    <div class="team-photos">
-                        <img src="EaseBodyFoodSite/assets/img/team2.jpg" class="team-photo" alt="Team member 2">
-                        <img src="EaseBodyFoodSite/assets/img/team3.jpg" class="team-photo" alt="Team member 3">
-                        <img src="EaseBodyFoodSite/assets/img/team4.jpg" class="team-photo" alt="Team member 4">
-                        <img src="EaseBodyFoodSite/assets/img/team5.jpg" class="team-photo" alt="Team member 5">
+                </div>
+                <div class="team-card">
+                    <img src="assets/img/team3.jpg" class="team-photo" alt="Team member 3">
+                    <div class="hover-info">
+                        <div class="team-card-name">Ім'я 2</div>
+                        <div class="team-card-desc">Опис учасника 2</div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="assets/img/team4.jpg" class="team-photo" alt="Team member 4">
+                    <div class="hover-info">
+                        <div class="team-card-name">Ім'я 3</div>
+                        <div class="team-card-desc">Опис учасника 3</div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="assets/img/team5.jpg" class="team-photo" alt="Team member 5">
+                    <div class="hover-info">
+                        <div class="team-card-name">Ім'я 4</div>
+                        <div class="team-card-desc">Опис учасника 4</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="reviews">
-            <div class="container">
-                <h2>Відгуки клієнтів</h2>
-                <div class="reviews-grid">
-                    <div class="review-card">
-                        <div class="review-header">
-                            <img src="EaseBodyFoodSite/assets/img/review1.jpg" alt="Анна Левицька" class="review-avatar">
-                            <div class="review-info">
-                                <h4>Анна Левицька</h4>
-                                <div class="stars">★★★★★</div>
-                            </div>
+        <section class="section2">
+            <h2 >Відгуки клієнтів</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="assets/img/review1.jpg" alt="Анна Левицька" class="review-avatar">
+                        <div>
+                            <h4 class="white">Анна Левицька</h4>
+                            <div class="review-info">Київ, 35 років</div>
                         </div>
-                        <p>"Завдяки Easy Body Food я нарешті досягла своєї цілі! Раціон був смачним та ефективним. Втратила 8 кг за 3 місяці."</p>
                     </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <img src="EaseBodyFoodSite/assets/img/review2.jpg" alt="Ігор Павленко" class="review-avatar">
-                            <div class="review-info">
-                                <h4>Ігор Павленко</h4>
-                                <div class="stars">★★★★★</div>
-                            </div>
-                        </div>
-                        <p>"Професійний підхід та індивідуальний план. Набрав 5 кг м'язової маси за 4 місяці. Рекомендую!"</p>
+                    <div class="review-text">
+                        Було страшно, що буде дорого, але коли я підрахувала, скільки грошей я витрачала на перекуси — EasyBody вийшов навіть дешевше. І ще смачніше. Дякую!
                     </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <img src="EaseBodyFoodSite/assets/img/review3.jpg" alt="Ярослав Демчук" class="review-avatar">
-                            <div class="review-info">
-                                <h4>Ярослав Демчук</h4>
-                                <div class="stars">★★★★★</div>
-                            </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="assets/img/review2.jpg" alt="Ігор Павленко" class="review-avatar">
+                        <div>
+                            <h4 class="white">Ігор Павленко</h4>
+                            <div class="review-info">Харків, 28 років</div>
                         </div>
-                        <p>"Відмінний сервіс! Раціон адаптується під мої потреби. Здоров'я покращилося, енергії стало більше."</p>
                     </div>
-                    <div class="review-card">
-                        <div class="review-header">
-                            <img src="EaseBodyFoodSite/assets/img/review4.jpg" alt="Марія Коваль" class="review-avatar">
-                            <div class="review-info">
-                                <h4>Марія Коваль</h4>
-                                <div class="stars">★★★★★</div>
-                            </div>
+                    <div class="review-text">
+                        Я айтішник. Харчування — завжди було хаосом. Тепер відкриваю Telegram, обираю раціон, і все. За мене все пораховано, все доставлено. Це сервіс, якому я довіряю.
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="assets/img/review3.jpg" alt="Ярослав Демчук" class="review-avatar">
+                        <div>
+                            <h4 class="white">Ярослав Демчук</h4>
+                            <div class="review-info">Львів, 26 років</div>
                         </div>
-                        <p>"Зручний калькулятор та смачні страви. Допомогло нормалізувати вагу та покращити самопочуття."</p>
+                    </div>
+                    <div class="review-text">
+                        В мене 3 роботи, я взагалі не готую. А тут — відкрив контейнер, з'їв, пішов. Смачно, сито, і мозок не болить. Люблю
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="assets/img/review4.jpg" alt="Марія Коваль" class="review-avatar">
+                        <div>
+                            <h4 class="white">Марія Коваль</h4>
+                            <div class="review-info">Житомир, 24 роки</div>
+                        </div>
+                    </div>
+                    <div class="review-text">
+                        У мене були дуже складні стосунки із їжею — то переїдаю, то забуваю поїсти. EasyBody дав мені не просто раціон, а відчуття, ніби хтось нарешті подбав про мене. Навіть мій психотерапевт схвалив :)
                     </div>
                 </div>
             </div>
+
         </section>
 
-        <section class="gallery">
-            <div class="container">
-                <h2>Наші страви</h2>
-                <div class="gallery-grid" id="galleryGrid">
-                    <!-- Галерея будет загружена через JavaScript -->
+        <section class="section1">
+            <h2 >Галерея страв</h2>
+            <h4>Ось як виглядає правильне харчування від EasyBody — смачно, яскраво, збалансовано.</h4>
+            <div class="gallery-cards-wrapper">
+                <button class="gallery-arrow gallery-arrow-left" id="galleryLeft">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow-left">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <div class="gallery-cards" id="galleryCards"></div>
+                <button class="gallery-arrow gallery-arrow-right" id="galleryRight">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+            <div class="gallery-bottom">
+                <h3 class="center">Хочете більше варіантів?</h3>
+                <div class="gallery-bottom-subtitle">Персоналізуйте меню під себе або спробуйте зірковий раціон!</div>
+                <div class="gallery-bottom-buttons">
+                    <button class="gallery-btn gallery-btn-main">Конструктор меню</button>
+                    <button class="gallery-btn gallery-btn-secondary">Калькулятор раціону</button>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <img src="EaseBodyFoodSite/assets/img/logo.png" alt="Easy Body Food" class="footer-logo">
-                <p>Персональний раціон для здорового життя</p>
-            </div>
-            <div class="footer-section">
-                <h4>Навігація</h4>
-                <ul>
-                    <li><a href="EaseBodyFoodSite/index.html">Головна</a></li>
-                    <li><a href="EaseBodyFoodSite/standart.html">Стандартне меню</a></li>
-                    <li><a href="EaseBodyFoodSite/star.html">Зіркове меню</a></li>
-                    <li><a href="EaseBodyFoodSite/calculator.html">Калькулятор раціону</a></li>
-                    <li><a href="EaseBodyFoodSite/constructor.html">Конструктор меню</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Соціальні мережі</h4>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/easybodyfood/" aria-label="Instagram" class="footer-social" target="_blank">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                    </a>
-                    <a href="https://t.me/easybodyfood" aria-label="Telegram" class="footer-social" target="_blank">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.27-.48.74-.74 2.87-1.25 4.79-2.08 5.76-2.5 2.7-1.15 3.26-1.36 3.63-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.tiktok.com/@easybodyfood?_t=ZM-8xlw6SB4iqj&_r=1" aria-label="TikTok" class="footer-social" target="_blank">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.7-1.35 3.83-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.2.3-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="footer-bottom-content">
-                    <div class="footer-bottom-left">
-                        <img src="EaseBodyFoodSite/assets/img/logo.png" alt="Easy Body Food" class="footer-logo-small">
-                        <p>© 2024 Easy Body Food. Всі права захищені.</p>
-                    </div>
-                    <div class="footer-bottom-right">
-                        <div class="social-links">
-                            <a href="https://www.instagram.com/easybodyfood/" aria-label="Instagram" class="footer-social" target="_blank">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                                </svg>
-                            </a>
-                            <a href="https://t.me/easybodyfood" aria-label="Telegram" class="footer-social" target="_blank">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.27-.48.74-.74 2.87-1.25 4.79-2.08 5.76-2.5 2.7-1.15 3.26-1.36 3.63-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <script src="assets/js/gallery.js"></script>
 
-    <script src="EaseBodyFoodSite/assets/js/layout.js"></script>
-    <script src="EaseBodyFoodSite/assets/js/gallery.js"></script>
+    <div id="footer"></div>
+    <script src="assets/js/layout.js"></script>
 </body>
 </html>

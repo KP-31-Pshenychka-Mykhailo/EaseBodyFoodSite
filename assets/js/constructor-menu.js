@@ -27,12 +27,8 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Загрузка блюд
   let dishesData = [];
   async function loadDishes() {
-    try {
-        const resp = await fetch('EaseBodyFoodSite/assets/data/dishes.json').catch(() => fetch('assets/data/dishes.json'));
-        const dishes = await resp.json();
-    } catch (error) {
-        console.error('Error loading dishes:', error);
-    }
+    const resp = await fetch('assets/data/dishes.json').catch(() => fetch('../assets/data/dishes.json'));
+    dishesData = await resp.json();
   }
 
   // Сохраняем состояние плюса/минуса для каждого блюда по id и дню недели

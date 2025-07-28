@@ -62,18 +62,11 @@ function getClosestMenuType(calories) {
 }
 
 async function loadMenuData() {
-    try {
-        const menuResp = await fetch('EaseBodyFoodSite/assets/data/menu.json').catch(() => fetch('assets/data/menu.json'));
-        const menuData = await menuResp.json();
-        
-        const dishesResp = await fetch('EaseBodyFoodSite/assets/data/dishes.json').catch(() => fetch('assets/data/dishes.json'));
-        const dishesData = await dishesResp.json();
-        
-        return { menuData, dishesData };
-    } catch (error) {
-        console.error('Error loading data:', error);
-        return { menuData: [], dishesData: [] };
-    }
+  const menuResp = await fetch('assets/data/menu.json').catch(() => fetch('../assets/data/menu.json'));
+  const menuData = await menuResp.json();
+  const dishesResp = await fetch('assets/data/dishes.json').catch(() => fetch('../assets/data/dishes.json'));
+  const dishesData = await dishesResp.json();
+  return { menuData, dishesData };
 }
 
 function getMenuForDay(menuArr, day) {

@@ -1,11 +1,12 @@
-<link rel="stylesheet" href="EaseBodyFoodSite/assets/css/static/auth.css">
+<link rel="stylesheet" href="../assets/css/static/auth.css">
 <div class="auth-modal">
-    <h2>Вхід</h2>
-    <div class="auth-modal__switch">Немає акаунта? <a href="#" id="openRegisterModal">Реєстрація</a></div>
-    <form id="loginForm">
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Пароль" required>
-        <button type="submit">Увійти</button>
-    </form>
+  <button class="auth-modal__close">&times;</button>
+  <div class="auth-modal__title">Вхід</div>
+  <div class="auth-modal__switch">Немає акаунта? <a href="#" id="openRegisterModal">Реєстрація</a></div>
+  <form class="auth-modal__form" id="loginForm">
+    <input class="auth-modal__input" type="email" name="Email" placeholder="E-mail" required>
+    <input class="auth-modal__input" type="password" name="Password" placeholder="Пароль" required>
+    <button class="auth-modal__button" type="submit">Увійти</button>
+  </form>
 </div>
-<script src="EaseBodyFoodSite/assets/js/header.js"></script>
+<script src="../assets/js/header.js"></script>

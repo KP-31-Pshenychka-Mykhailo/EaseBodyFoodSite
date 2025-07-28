@@ -5,60 +5,148 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Конструктор меню | Easy Body Food</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rubik:wght@900&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="EaseBodyFoodSite/assets/img/logo.png">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/static/header.css">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/static/footer.css">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/pages/index.css">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/main/alt-theme.css">
-    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/main/main-theme.css">
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <link rel="stylesheet" href="assets/css/static/header.css">
+    <link rel="stylesheet" href="assets/css/static/footer.css">
+    <link rel="stylesheet" href="assets/css/pages/index.css">
+    <link rel="stylesheet" href="assets/css/main/alt-theme.css">
+    <link rel="stylesheet" href="assets/css/main/main-theme.css">
 </head>
 <body>
     <div id="header"></div>
-    <main class="main-content">
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Конструктор меню</h1>
-                <p>Створіть свій ідеальний раціон з нашими смачними стравами</p>
+    <main>
+        <section class="section2">
+            <h2>Конструктор меню</h2>
+            <h4 class="light">Зберіть меню за своїми вподобаннями</h4>
+            <h4 class="green"><b>Як це працює?</b></h4>
+            <div class="list" style="margin: 32px 0 24px 0;">
+                <div class="list-item">
+                    <span class="list-item-number">01</span>
+                    <span class="list-item-text">Оберіть день та прийом їжі</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-item-number">02</span>
+                    <span class="list-item-text">Додайте страви</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-item-number">03</span>
+                    <span class="list-item-text">Налаштуйте інгредієнти</span>
+                </div>
+                <div class="list-item">
+                    <span class="list-item-number">04</span>
+                    <span class="list-item-text">Оформіть доставку</span>
+                </div>
             </div>
         </section>
-
-        <section class="team">
-            <div class="container">
-                <h2>Наша команда</h2>
-                <div class="team-grid">
-                    <div class="team-main">
-                        <img src="EaseBodyFoodSite/assets/img/nutritionist.jpg" alt="Нутриціолог" class="team-main-photo-star">
-                        <div class="team-main-info">
-                            <h3>Микита Бондаренко</h3>
-                            <p>Головний нутриціолог</p>
-                        </div>
+        <section class="menu-hero">
+            <div class="menu-days">
+                <button class="menu-day active">Пн</button>
+                <button class="menu-day">Вт</button>
+                <button class="menu-day">Ср</button>
+                <button class="menu-day">Чт</button>
+                <button class="menu-day">Пт</button>
+                <button class="menu-day">Сб</button>
+                <button class="menu-day">Нд</button>
+            </div>
+            <div class="menu-type-tabs">
+                <button class="menu-type-tab active">Сніданок</button>
+                <button class="menu-type-tab">Полуденок</button>
+                <button class="menu-type-tab">Обід</button>
+                <button class="menu-type-tab">Вечеря</button>
+            </div>
+            <div class="menu-slider-wrapper">
+                <button class="gallery-arrow gallery-arrow-left menu-slider-arrow left">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow-left">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <div class="menu-slider">
+                    <!-- Карточки будут подгружаться динамически через JS -->
+                </div>
+                <button class="gallery-arrow gallery-arrow-right menu-slider-arrow right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+            <div class="menu-total">Загалом у меню: 0 Білки 0 Жири 0 Вуглеводи, 000 ккал.</div>
+            <button class="menu-choose-btn">Затвердити шаблон</button>
+        </section>
+        <section class="section1">
+            <h2>Не хочеш обирати?</h2>
+            <h4 class="light">Спробуй меню від нашого нутриціолога</h4>
+            <div class="team-top">
+                <img src="assets/img/nutritionist.jpg" alt="Нутриціолог" class="team-main-photo-star">
+            <div class="team-main-info">
+                <div class="menu-nutritionist-info">
+                    <h3>Микита Бондаренко</h3>
+                    <div class="team-main-info">Нутриціолог</div>
+                    <div class="text24">Експерт з харчування, якому довіряють медіа, спортсмени та тисячі людей по всій Україні.<br><br>Працює з професійними атлетами, активними людьми, молодими мамами — та кожному підбирає раціон.<br>Його філософія проста:<br><b>"Раціон має бути не про жертви, а про свободу".</b></div>
+                    <div class="gallery-bottom-buttons">
+                        <button class="gallery-btn gallery-btn-main">Зіркове меню</button>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="constructor">
-            <div class="container">
-                <h2>Виберіть страви</h2>
-                <div class="constructor-grid" id="constructorGrid">
-                    <!-- Конструктор будет загружен через JavaScript -->
                 </div>
             </div>
+
+            
+            <section class="menu-standard-choice">
+                <div class="menu-standard-choice-inner">
+                    <div class="menu-standard-choice-title">Або ж обирай наше стандартне меню</div>
+                    <div class="menu-standard-choice-desc">Ми вже сформували збалансоване меню на день, щоб вам не довелося нічого обирати.</div>
+                    <button class="menu-standard-choice-btn">Стандартне меню</button>
+                </div>
+            </section>
         </section>
+
     </main>
-
+    <style>
+#order-modal-content::-webkit-scrollbar { display: none; }
+#order-modal-content { scrollbar-width: none; }
+</style>
     <div id="footer"></div>
-
-    <script src="EaseBodyFoodSite/assets/js/layout.js"></script>
-    <script src="EaseBodyFoodSite/assets/js/constructor-menu.js"></script>
+    <!-- Модальное окно заказа -->
+    <div id="order-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); align-items:center; justify-content:center;">
+      <div id="order-modal-content" style="background:#fff; border-radius:24px; max-width:900px; width:98vw; max-height:95vh; overflow-y:auto; overflow-x:hidden; position:relative; box-sizing:border-box; padding:32px 32px 24px 32px; scrollbar-width:none;">
+        <button id="order-modal-close" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:32px; color:#4CAF50; cursor:pointer;">&times;</button>
+        <div id="order-modal-body"></div>
+      </div>
+    </div>
+    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/constructor-menu.js"></script>
     <script>
-        // Добавляем CSS для страницы заказа если его нет
-        if (!document.querySelector('link[href="EaseBodyFoodSite/assets/css/pages/order.css"]')) {
-            const link = document.createElement('link');
+    // Открытие модального окна заказа
+    document.addEventListener('DOMContentLoaded', function() {
+      var orderBtn = document.querySelector('.menu-choose-btn');
+      if(orderBtn) {
+        orderBtn.addEventListener('click', function() {
+          // Подключаем order.css, если не подключён
+          if (!document.querySelector('link[href="assets/css/pages/order.css"]')) {
+            var link = document.createElement('link');
             link.rel = 'stylesheet';
-            link.href = 'EaseBodyFoodSite/assets/css/pages/order.css';
+            link.href = 'assets/css/pages/order.css';
             document.head.appendChild(link);
+          }
+          fetch('partials/order.html')
+            .then(r => r.text())
+            .then(html => {
+              var mainMatch = html.match(/<main[\s\S]*?<\/main>/);
+              document.getElementById('order-modal-body').innerHTML = mainMatch ? mainMatch[0] : html;
+              document.getElementById('order-modal').style.display = 'flex';
+            });
+        });
+      }
+      // Закрытие модального окна
+      var closeBtn = document.getElementById('order-modal-close');
+      document.getElementById('order-modal').addEventListener('click', function(e) {
+        if(e.target === this) {
+          this.style.display = 'none';
         }
+      });
+      if(closeBtn) closeBtn.addEventListener('click', function() {
+        document.getElementById('order-modal').style.display = 'none';
+      });
+    });
     </script>
 </body>
 </html> 
