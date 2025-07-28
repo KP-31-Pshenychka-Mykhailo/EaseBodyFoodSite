@@ -42,27 +42,50 @@ header img {
     color: #4CAF50;
     font-weight: 600;
 }
+.main-nav a.active:hover::after {
+    animation: expandUnderlineActive 0.3s ease forwards;
+}
+@keyframes expandUnderlineActive {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 100%;
+  }
+}
 .main-nav a.active::after {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: 50%;
     width: 100%;
     height: 2px;
     background-color: #4CAF50;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
 }
 .main-nav a:not(.active):hover {
   background: transparent;
   color: #4CAF50;
 }
-.main-nav a:not(.active):hover::after {
+.main-nav a:not(.active)::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  width: 0;
   height: 2px;
   background-color: #4CAF50;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+.main-nav a:not(.active):hover::after {
+  animation: expandUnderline 0.3s ease forwards;
+}
+@keyframes expandUnderline {
+  to {
+    width: 100%;
+  }
 }
 
 .icon-button {
