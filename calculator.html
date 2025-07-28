@@ -117,13 +117,13 @@
       <h2>Ваш персоналізований раціон</h2>
       <h4 class="light">Сформовано на основі ваших даних: стать, вік, мета, активність</h4>
       
-      <div class="menu-days-alt">
-        <button class="menu-day-alt active" data-day="monday">Пн</button>
-        <button class="menu-day-alt" data-day="tuesday">Вт</button>
-        <button class="menu-day-alt" data-day="wednesday">Ср</button>
-        <button class="menu-day-alt" data-day="thursday">Чт</button>
-        <button class="menu-day-alt" data-day="friday">Пт</button>
-        <button class="menu-day-alt" data-day="saturday">Сб</button>
+      <div class="menu-days-alt" role="tablist" aria-label="Дні тижня">
+        <button class="menu-day-alt active" data-day="monday" role="tab" aria-selected="true" aria-label="Понеділок">Пн</button>
+        <button class="menu-day-alt" data-day="tuesday" role="tab" aria-selected="false" aria-label="Вівторок">Вт</button>
+        <button class="menu-day-alt" data-day="wednesday" role="tab" aria-selected="false" aria-label="Середа">Ср</button>
+        <button class="menu-day-alt" data-day="thursday" role="tab" aria-selected="false" aria-label="Четвер">Чт</button>
+        <button class="menu-day-alt" data-day="friday" role="tab" aria-selected="false" aria-label="П'ятниця">Пт</button>
+        <button class="menu-day-alt" data-day="saturday" role="tab" aria-selected="false" aria-label="Субота">Сб</button>
       </div>
       <div class="menu-slider-wrapper-alt">
         <button class="gallery-arrow-alt gallery-arrow-left-alt menu-slider-arrow-alt left" id="dietLeft">

@@ -56,7 +56,7 @@
             </svg>
           </button>
           <div class="menu-slider-alt" id="dietCards">
-            <!-- Пример карточек еды -->
+      
             <div class="menu-card-alt" data-day="monday">
               <div class="menu-card-img-wrap-alt">
                 <img src="assets/img/food1.jpg" alt="Сніданок" class="menu-card-img">
@@ -105,7 +105,7 @@
                 <div class="menu-card-desc-alt">Лазанья з соусом бешамель, цільнозерновим листом та індичкою. Збалансована страва.</div>
               </div>
             </div>
-            <!-- Пример для вторника (скрыт по умолчанию) -->
+          
             <div class="menu-card-alt" data-day="tuesday" style="display:none;">
               <div class="menu-card-img-wrap-alt">
                 <img src="assets/img/food3.jpg" alt="Сніданок" class="menu-card-img">
@@ -122,7 +122,7 @@
                 <div class="menu-card-desc-alt">Омлет з овочами та сиром. Багато білку, мінімум вуглеводів, максимум смаку.</div>
               </div>
             </div>
-            <!-- Добавьте аналогично для других дней недели -->
+         
           </div>
           <button class="gallery-arrow-alt gallery-arrow-right-alt menu-slider-arrow-alt right" id="dietRight">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow">
@@ -133,17 +133,17 @@
         <div class="menu-total-alt">Б: 18 г, Ж: 51 г, В: 24 г; 645 ккал</div>
 
 <script>
-  // Переключение дней недели для персонального меню
+
   document.querySelectorAll('.menu-day-alt').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      // Снять active со всех кнопок
+
       document.querySelectorAll('.menu-day-alt').forEach(function(b) {
         b.classList.remove('active');
       });
       btn.classList.add('active');
-      // Получить выбранный день
+    
       var day = btn.getAttribute('data-day');
-      // Скрыть все карточки
+   
       document.querySelectorAll('.menu-card-alt').forEach(function(card) {
         if (card.getAttribute('data-day') === day) {
           card.style.display = '';
@@ -154,7 +154,7 @@
     });
   });
 
-  // При загрузке показать только карточки для первого дня
+  
   document.addEventListener('DOMContentLoaded', function() {
     var activeBtn = document.querySelector('.menu-day-alt.active');
     if (activeBtn) {
