@@ -233,6 +233,7 @@ a.gallery-btn {
     transform: scale(1.05);
     box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
     outline: none;
+    z-index: 1;
 }
 .menu-slider-wrapper-alt {
     display: flex;
@@ -919,7 +920,7 @@ a.gallery-btn {
         margin-bottom: 20px;
         flex-wrap: wrap;
         justify-content: center;
-        padding: 0 15px;
+        padding: 8px 15px;
         max-width: 100%;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
@@ -941,6 +942,7 @@ a.gallery-btn {
         scroll-snap-align: center;
         touch-action: manipulation;
         position: relative;
+        margin: 2px;
     }
     .menu-day-alt:active {
         transform: scale(0.95);
@@ -1127,7 +1129,7 @@ a.gallery-btn {
     }
     .menu-days-alt {
         gap: 4px;
-        padding: 0 10px;
+        padding: 6px 10px;
     }
     .menu-day-alt:focus-visible {
         outline: 2px solid #fff;
@@ -1143,6 +1145,7 @@ a.gallery-btn {
         flex-shrink: 0;
         scroll-snap-align: center;
         touch-action: manipulation;
+        margin: 1px;
     }
     .menu-card-content-alt {
         padding: 8px 10px 8px 10px;

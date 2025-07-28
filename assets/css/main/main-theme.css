@@ -421,6 +421,7 @@ body {
     transform: scale(1.05);
     box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
     outline: none;
+    z-index: 1;
 }
 .menu-slider-wrapper {
     display: flex;
@@ -1186,7 +1187,7 @@ body {
         margin-bottom: 20px;
         flex-wrap: wrap;
         justify-content: center;
-        padding: 0 15px;
+        padding: 8px 15px;
         max-width: 100%;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
@@ -1208,6 +1209,7 @@ body {
         scroll-snap-align: center;
         touch-action: manipulation;
         position: relative;
+        margin: 2px;
     }
     .menu-day:active {
         transform: scale(0.95);
@@ -1394,7 +1396,7 @@ body {
     }
     .menu-days {
         gap: 4px;
-        padding: 0 10px;
+        padding: 6px 10px;
     }
     .menu-day:focus-visible {
         outline: 2px solid #4CAF50;
@@ -1410,6 +1412,7 @@ body {
         flex-shrink: 0;
         scroll-snap-align: center;
         touch-action: manipulation;
+        margin: 1px;
     }
     .menu-card-content {
         padding: 8px 10px 8px 10px;
