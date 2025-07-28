@@ -124,6 +124,21 @@
     stroke: #fff;
 }
 
+@keyframes footerPopupIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.85);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-8px) scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .footer-popup-socials {
     position: absolute;
     bottom: 70px;
@@ -139,11 +154,13 @@
     pointer-events: none;
     transform: translateY(20px) scale(0.95);
     transition: opacity 0.25s, transform 0.25s;
+    animation: none;
 }
 .footer-popup-socials.open {
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0) scale(1);
+    animation: footerPopupIn 0.45s cubic-bezier(.4,0,.2,1);
 }
 .footer-popup-socials .footer-social svg {
     width: 36px;
@@ -153,6 +170,10 @@
 }
 .footer-popup-socials .footer-social:hover svg {
     fill: #4CAF50;
+}
+.footer-toggle-btn:active {
+  transform: scale(0.92);
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.10);
 }
 @media (max-width: 900px) {
     .footer-content {
