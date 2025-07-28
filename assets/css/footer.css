@@ -144,27 +144,31 @@
 }
 
 .footer-popup-socials {
-    position: absolute;
-    bottom: 70px;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(76, 175, 80, 0.18);
-    padding: 18px 18px 12px 18px;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(20px) scale(0.95);
-    transition: opacity 0.25s, transform 0.25s;
-    animation: none;
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #232323;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(76, 175, 80, 0.18), 0 2px 8px rgba(0,0,0,0.10);
+  padding: 0 0 18px 0;
+  max-width: 340px;
+  min-width: 290px;
+  width: max-content;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px) scale(0.95);
+  transition: opacity 0.25s, transform 0.25s;
+  animation: none;
+  overflow: hidden;
 }
 .footer-popup-socials.open {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0) scale(1);
-    animation: footerPopupIn 0.45s cubic-bezier(.4,0,.2,1);
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+  animation: footerPopupIn 0.45s cubic-bezier(.4,0,.2,1);
 }
 .footer-popup-socials .footer-social svg {
     width: 36px;
@@ -180,11 +184,25 @@
   box-shadow: 0 2px 8px rgba(76, 175, 80, 0.10);
 }
 .footer-popup-title {
-  font-size: 17px;
-  font-weight: 500;
-  color: #388E3C;
-  text-align: center;
-  margin-bottom: 14px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  background: #232323;
+  width: 100%;
+  padding: 18px 24px 8px 24px;
+  box-sizing: border-box;
+  border-radius: 18px 18px 0 0;
+  margin-bottom: 0;
+  line-height: 1.1;
+}
+.footer-popup-subtitle {
+  font-size: 1.15rem;
+  color: #6d7b8a;
+  font-weight: 400;
+  padding: 12px 24px 0 24px;
+  margin-bottom: 18px;
+  width: 100%;
+  box-sizing: border-box;
   line-height: 1.3;
 }
 .footer-popup-icons {
@@ -192,6 +210,8 @@
   flex-direction: row;
   justify-content: center;
   gap: 22px;
+  width: 100%;
+  padding: 0 0 0 0;
 }
 @media (max-width: 900px) {
     .footer-content {
