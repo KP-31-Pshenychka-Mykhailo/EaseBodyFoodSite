@@ -234,6 +234,7 @@ body {
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
+    text-decoration: none;
 }
 
 .section1 .gallery-btn-main {
@@ -595,6 +596,7 @@ body {
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
+    text-decoration: none;
 }
 .menu-personal-btn:hover {
     background: #4CAF50;
@@ -904,6 +906,7 @@ body {
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s;
+    text-decoration: none;
 }
 .menu-standard-choice-btn:hover {
     background: #388e3c;

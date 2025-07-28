@@ -4,6 +4,11 @@ body-alt {
     background: #4CAF50;
 }
 
+/* Убираем подчеркивание у всех ссылок-кнопок */
+a.gallery-btn {
+    text-decoration: none;
+}
+
 /* ===== СЕКЦИИ ===== */
 .section2 {
     padding: clamp(20px, 5vw, 40px) 0 clamp(10px, 2vw, 20px) clamp(50px, 10vw, 100px);
@@ -405,6 +410,7 @@ body-alt {
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
+    text-decoration: none;
 }
 .menu-personal-btn-alt:hover {
     background: #fff;
@@ -708,6 +714,7 @@ body-alt {
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s;
+    text-decoration: none;
 }
 .menu-standard-choice-btn-alt:hover {
     background: #4CAF50;
