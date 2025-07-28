@@ -1,243 +1,128 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Калькулятор раціону | Easy Body Food</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rubik:wght@900&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="assets/img/logo.png">
-  <link rel="stylesheet" href="assets/css/static/header.css">
-  <link rel="stylesheet" href="assets/css/static/footer.css">
-  <link rel="stylesheet" href="assets/css/main/main-theme.css">
-  <link rel="stylesheet" href="assets/css/main/alt-theme.css">
-  <link rel="stylesheet" href="assets/css/pages/calculator.css">
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор раціону | Easy Body Food</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rubik:wght@900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="EaseBodyFoodSite/assets/img/logo.png">
+    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/static/header.css">
+    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/static/footer.css">
+    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/main/main-theme.css">
+    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/main/alt-theme.css">
+    <link rel="stylesheet" href="EaseBodyFoodSite/assets/css/pages/calculator.css">
 </head>
 <body>
-  <div id="header"></div>
-  <main>
-    <section class="section2">
-        <h2>Калькулятор раціону</h2>
-        <h4 class="light">Заповніть дані для розрахунку</h4>
-    </section>
-    <section class="container">
-        <div class="calculator-center"></div>
-        <div class="steps">
-          <div class="step active" id="step-1">1</div>
-          <div class="step-line"></div>
-          <div class="step" id="step-2">2</div>
-          <div class="step-line"></div>
-          <div class="step" id="step-3">3</div>
-          <div class="step-line"></div>
-          <div class="step" id="step-4">4</div>
-        </div>
-        <form id="calculator-form">
-          <div class="form-box" id="form-step-1">
-            <legend>Ваша стать:</legend>
-            <div class="custom-radio-group">
-              <label class="custom-radio">
-                <input type="radio" name="gender" value="male" required>
-                <span class="custom-radio-indicator"></span>
-                Чоловіча
-              </label>
-              <label class="custom-radio">
-                <input type="radio" name="gender" value="female" required>
-                <span class="custom-radio-indicator"></span>
-                Жіноча
-              </label>
+    <div id="header"></div>
+    <main class="main-content">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Калькулятор раціону</h1>
+                <p>Розрахуйте свій персональний раціон за кілька кліків</p>
             </div>
-            <button type="button" onclick="nextStep()">Далі</button>
-          </div>
-          <div class="form-box" id="form-step-2" style="display:none;">
-            <legend>Рівень активності:</legend>
-            <div class="custom-radio-group">
-              <label class="custom-radio">
-                <input type="radio" name="activity" value="1" required>
-                <span class="custom-radio-indicator"></span>
-                Дуже низький
-              </label>
-              <label class="custom-radio">
-                <input type="radio" name="activity" value="2" required>
-                <span class="custom-radio-indicator"></span>
-                Низький
-              </label>
-              <label class="custom-radio">
-                <input type="radio" name="activity" value="3" required>
-                <span class="custom-radio-indicator"></span>
-                Середній
-              </label>
-              <label class="custom-radio">
-                <input type="radio" name="activity" value="4" required>
-                <span class="custom-radio-indicator"></span>
-                Високий
-              </label>
-              <label class="custom-radio">
-                <input type="radio" name="activity" value="5" required>
-                <span class="custom-radio-indicator"></span>
-                Дуже високий
-              </label>
+        </section>
+
+        <section class="calculator">
+            <div class="container">
+                <form id="calculator-form">
+                    <div class="step" id="step1">
+                        <h2>Крок 1: Основна інформація</h2>
+                        <div class="form-group">
+                            <label for="gender">Стать:</label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Оберіть стать</option>
+                                <option value="male">Чоловіча</option>
+                                <option value="female">Жіноча</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Вік:</label>
+                            <input type="number" id="age" name="age" min="18" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Вага (кг):</label>
+                            <input type="number" id="weight" name="weight" min="30" max="300" step="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Зріст (см):</label>
+                            <input type="number" id="height" name="height" min="100" max="250" required>
+                        </div>
+                        <button type="button" onclick="nextStep()">Далі</button>
+                    </div>
+
+                    <div class="step" id="step2" style="display: none;">
+                        <h2>Крок 2: Активність та цілі</h2>
+                        <div class="form-group">
+                            <label for="activity">Рівень активності:</label>
+                            <select id="activity" name="activity" required>
+                                <option value="">Оберіть рівень активності</option>
+                                <option value="1.2">Сидячий спосіб життя</option>
+                                <option value="1.375">Легка активність (1-3 рази на тиждень)</option>
+                                <option value="1.55">Помірна активність (3-5 разів на тиждень)</option>
+                                <option value="1.725">Висока активність (6-7 разів на тиждень)</option>
+                                <option value="1.9">Дуже висока активність</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="goal">Мета:</label>
+                            <select id="goal" name="goal" required>
+                                <option value="">Оберіть мету</option>
+                                <option value="lose">Схуднути</option>
+                                <option value="maintain">Підтримувати вагу</option>
+                                <option value="gain">Набрати вагу</option>
+                            </select>
+                        </div>
+                        <button type="button" onclick="showStep(1)">Назад</button>
+                        <button type="submit">Розрахувати</button>
+                    </div>
+                </form>
+
+                <div id="results" style="display: none;">
+                    <h2>Ваш персональний раціон</h2>
+                    <div class="results-summary">
+                        <div class="result-item">
+                            <h3>Денна норма калорій</h3>
+                            <p id="dailyCalories">0 ккал</p>
+                        </div>
+                        <div class="result-item">
+                            <h3>Рекомендований тип меню</h3>
+                            <p id="menuType">-</p>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-preview">
+                        <h3>Приклад меню на день</h3>
+                        <div class="menu-tabs">
+                            <button class="menu-tab active" data-day="monday">Понеділок</button>
+                            <button class="menu-tab" data-day="tuesday">Вівторок</button>
+                            <button class="menu-tab" data-day="wednesday">Середа</button>
+                            <button class="menu-tab" data-day="thursday">Четвер</button>
+                            <button class="menu-tab" data-day="friday">П'ятниця</button>
+                        </div>
+                        <div class="menu-cards" id="dietCards">
+                            <!-- Меню будет загружено через JavaScript -->
+                        </div>
+                        <div class="menu-total-alt">
+                            Б: 0 г, Ж: 0 г, В: 0 г
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button type="button" onclick="nextStep()">Далі</button>
-          </div>
-          <div class="form-box" id="form-step-3" style="display:none;">
-            <legend>Фізичні дані:</legend>
-            <input type="number" name="age" placeholder="Вік" min="10" max="100" required><br>
-            <input type="number" name="weight" placeholder="Вага (кг)" min="30" max="200" required><br>
-            <input type="number" name="height" placeholder="Зріст (см)" min="120" max="230" required><br>
-            <button type="button" onclick="nextStep()">Далі</button>
-          </div>
-          <div class="form-box" id="form-step-4" style="display:none;">
-            <legend>Мета:</legend>
-            <div class="custom-radio-group">
-              <label class="custom-radio">
-                <input type="radio" name="goal" value="lose" required>
-                <span class="custom-radio-indicator"></span>
-                Схуднення
-              </label>
-              <label class="custom-radio">
-                <input type="radio" name="goal" value="gain">
-                <span class="custom-radio-indicator"></span>
-                Набір ваги
-              </label>
-              <label class="custom-radio">
-                <input type="radio" name="goal" value="keep">
-                <span class="custom-radio-indicator"></span>
-                Підтримка фізичної форми
-              </label>
-            </div>
-            <button type="submit">Отримати результат</button>
-          </div>
-        </form>
-        <div class="result" id="result" style="display:none;"></div>
-      </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Персоналізований раціон -->
-    <section class="menu-hero-alt section1" id="personal-diet-section" style="display:none;">
-      <h2>Ваш персоналізований раціон</h2>
-      <h4 class="light">Сформовано на основі ваших даних: стать, вік, мета, активність</h4>
-      
-      <div class="menu-days-alt">
-        <button class="menu-day-alt active" data-day="monday">Пн</button>
-        <button class="menu-day-alt" data-day="tuesday">Вт</button>
-        <button class="menu-day-alt" data-day="wednesday">Ср</button>
-        <button class="menu-day-alt" data-day="thursday">Чт</button>
-        <button class="menu-day-alt" data-day="friday">Пт</button>
-        <button class="menu-day-alt" data-day="saturday">Сб</button>
-      </div>
-      <div class="menu-slider-wrapper-alt">
-        <button class="gallery-arrow-alt gallery-arrow-left-alt menu-slider-arrow-alt left" id="dietLeft">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow-left">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-        <div class="menu-slider-alt" id="dietCards">
-          <!-- Карточки будут подгружаться динамически через JS -->
-        </div>
-        <button class="gallery-arrow-alt gallery-arrow-right-alt menu-slider-arrow-alt right" id="dietRight">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-arrow">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
-      </div>
-      <div class="menu-total-alt">Б: 18 г, Ж: 51 г, В: 24 г; 645 ккал</div>
-      <div style="display: flex; justify-content: center; width: 100%;"><button class="menu-choose-btn-alt">Замовити це меню</button></div>
-    </section>
+    <div id="footer"></div>
 
-    <section class="section2"></section>
-
-    <!-- Блок персоналізації -->
-    <section class="menu-personal">
-      <h2 class="menu-personal-title">Хочеться персоналізації?</h2>
-      <p class="menu-personal-subtitle">Сконструюй власне меню!</p>
-      <div class="menu-personal-btns">
-        <button class="menu-personal-btn">Конструктор меню</button>
-      </div>
-    </section>
-  </main>
-  <style>
-#order-modal-content::-webkit-scrollbar { display: none; }
-#order-modal-content { scrollbar-width: none; }
-</style>
-  <div id="footer"></div>
-  <!-- Модальное окно заказа -->
-  <div id="order-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); align-items:center; justify-content:center;">
-    <div id="order-modal-content" style="background:#fff; border-radius:24px; max-width:900px; width:98vw; max-height:95vh; overflow-y:auto; overflow-x:hidden; position:relative; box-sizing:border-box; padding:32px 32px 24px 32px; scrollbar-width:none;">
-      <button id="order-modal-close" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:32px; color:#4CAF50; cursor:pointer;">&times;</button>
-      <div id="order-modal-body"></div>
-    </div>
-  </div>
-  <script src="assets/js/layout.js"></script>
-  <script src="assets/js/calculator.js"></script>
-  <script>
-    // Переключение дней недели для персонального меню
-    document.querySelectorAll('.menu-day-alt').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        // Снять active со всех кнопок
-        document.querySelectorAll('.menu-day-alt').forEach(function(b) {
-          b.classList.remove('active');
-        });
-        btn.classList.add('active');
-        // Получить выбранный день
-        var day = btn.getAttribute('data-day');
-        // Скрыть все карточки
-        document.querySelectorAll('.menu-card-alt').forEach(function(card) {
-          if (card.getAttribute('data-day') === day) {
-            card.style.display = '';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      });
-    });
-
-    // При загрузке показать только карточки для первого дня
-    document.addEventListener('DOMContentLoaded', function() {
-      var activeBtn = document.querySelector('.menu-day-alt.active');
-      if (activeBtn) {
-        var day = activeBtn.getAttribute('data-day');
-        document.querySelectorAll('.menu-card-alt').forEach(function(card) {
-          if (card.getAttribute('data-day') === day) {
-            card.style.display = '';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      }
-    });
-
-    // Открытие модального окна заказа
-    document.addEventListener('DOMContentLoaded', function() {
-      var orderBtn = document.querySelector('.menu-choose-btn-alt');
-      if(orderBtn) {
-        orderBtn.addEventListener('click', function() {
-          // Подключаем order.css, если не подключён
-          if (!document.querySelector('link[href="assets/css/pages/order.css"]')) {
-            var link = document.createElement('link');
+    <script src="EaseBodyFoodSite/assets/js/layout.js"></script>
+    <script src="EaseBodyFoodSite/assets/js/calculator.js"></script>
+    <script>
+        // Добавляем CSS для страницы заказа если его нет
+        if (!document.querySelector('link[href="EaseBodyFoodSite/assets/css/pages/order.css"]')) {
+            const link = document.createElement('link');
             link.rel = 'stylesheet';
-            link.href = 'assets/css/pages/order.css';
+            link.href = 'EaseBodyFoodSite/assets/css/pages/order.css';
             document.head.appendChild(link);
-          }
-          fetch('partials/order.html')
-            .then(r => r.text())
-            .then(html => {
-              var mainMatch = html.match(/<main[\s\S]*?<\/main>/);
-              document.getElementById('order-modal-body').innerHTML = mainMatch ? mainMatch[0] : html;
-              document.getElementById('order-modal').style.display = 'flex';
-            });
-        });
-      }
-      // Закрытие модального окна
-      var closeBtn = document.getElementById('order-modal-close');
-      document.getElementById('order-modal').addEventListener('click', function(e) {
-        if(e.target === this) {
-          this.style.display = 'none';
         }
-      });
-      if(closeBtn) closeBtn.addEventListener('click', function() {
-        document.getElementById('order-modal').style.display = 'none';
-      });
-    });
-  </script>
+    </script>
 </body>
 </html>

@@ -5,79 +5,52 @@ document.addEventListener('DOMContentLoaded', function() {
   const headerElement = document.getElementById('header');
   if (headerElement && headerElement.innerHTML.trim() === '') {
   
-    // Пробуем разные пути для header
-    fetch('partials/header.html')
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        return res.text();
-      })
-      .then(html => {
-        document.getElementById('header').innerHTML = html;
-        // Подключаем header.js после вставки header
-        const script = document.createElement('script');
-        script.src = 'assets/js/header.js';
-        document.body.appendChild(script);
-        setTimeout(() => {
-          setActiveNav();
-          setupBurgerMenu();
-          // Принудительно применяем стили
-          const headerElement = document.querySelector('.main-header');
-          if (headerElement) {
-            headerElement.style.display = 'flex';
-            headerElement.style.alignItems = 'center';
-            headerElement.style.justifyContent = 'space-between';
-            headerElement.style.padding = '0 16px';
-            headerElement.style.height = '64px';
-          }
-        }, 100);
-      })
-      .catch(error => {
-        // Если не получилось, пробуем с ../partials/
-        fetch('../partials/header.html')
-          .then(res => {
-            if (!res.ok) {
-              throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            return res.text();
-          })
-          .then(html => {
+    // Загрузка header
+    fetch('EaseBodyFoodSite/partials/header.html')
+        .catch(() => fetch('partials/header.html'))
+        .then(response => response.text())
+        .then(html => {
             document.getElementById('header').innerHTML = html;
-            // Подключаем header.js после вставки header
+            
+            // Загружаем скрипт header.js
             const script = document.createElement('script');
-            script.src = '../assets/js/header.js';
-            document.body.appendChild(script);
-            setTimeout(() => {
-              setActiveNav();
-              setupBurgerMenu();
-              // Принудительно применяем стили
-              const headerElement = document.querySelector('.main-header');
-              if (headerElement) {
-                headerElement.style.display = 'flex';
-                headerElement.style.alignItems = 'center';
-                headerElement.style.justifyContent = 'space-between';
-                headerElement.style.padding = '0 16px';
-                headerElement.style.height = '64px';
-              }
-            }, 100);
-          })
-          .catch(error => {
-            insertHeaderDirectly();
-          });
-      });
+            script.src = 'EaseBodyFoodSite/assets/js/header.js';
+            document.head.appendChild(script);
+            
+            // Настройка активной навигации
+            setActiveNav();
+            
+            // Настройка бургер меню
+            setupBurgerMenu();
+        })
+        .catch(error => {
+            console.error('Ошибка загрузки header:', error);
+            // Fallback - попробуем другой путь
+            fetch('../partials/header.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('header').innerHTML = html;
+                    
+                    const script = document.createElement('script');
+                    script.src = '../assets/js/header.js';
+                    document.head.appendChild(script);
+                    
+                    setActiveNav();
+                    setupBurgerMenu();
+                })
+                .catch(err => {
+                    console.error('Ошибка загрузки header (fallback):', err);
+                    insertHeaderDirectly();
+                });
+        });
   } else {
     setActiveNav();
   }
     
   // Пробуем разные пути для footer
-  fetch('partials/footer.html')
-    .then(res => {
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      return res.text();
-    })
+  fetch('EaseBodyFoodSite/partials/footer.html')
+    .catch(() => fetch('partials/footer.html'))
+    .then(response => response.text())
     .then(html => {
       document.getElementById('footer').innerHTML = html;
     })
@@ -101,17 +74,17 @@ document.addEventListener('DOMContentLoaded', function() {
   function insertHeaderDirectly() {
     const headerHTML = `
       <header class="main-header">
-          <a href="index.html" class="logo-link">
-              <img src="assets/img/logo.png" alt="Logo" class="logo">
+          <a href="EaseBodyFoodSite/index.html" class="logo-link">
+              <img src="EaseBodyFoodSite/assets/img/logo.png" alt="Logo" class="logo">
           </a>
           <nav class="main-nav" id="mainNav">
-              <a href="index.html">Головна</a>
-              <a href="constructor.html">Конструктор меню</a>
-              <a href="calculator.html">Калькулятор раціону</a>
-              <a href="standart.html">Стандартне меню</a>
+              <a href="EaseBodyFoodSite/index.html">Головна</a>
+              <a href="EaseBodyFoodSite/constructor.html">Конструктор меню</a>
+              <a href="EaseBodyFoodSite/calculator.html">Калькулятор раціону</a>
+              <a href="EaseBodyFoodSite/standart.html">Стандартне меню</a>
           </nav>
           <div class="header-actions">
-              <a href="cart.html" class="icon-button basket-big">
+              <a href="EaseBodyFoodSite/cart.html" class="icon-button basket-big">
                   <svg class="icon-img basket-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M6 6H21L20 14H7L6 6Z" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                       <circle cx="9" cy="20" r="1" stroke="#4CAF50" stroke-width="2"/>

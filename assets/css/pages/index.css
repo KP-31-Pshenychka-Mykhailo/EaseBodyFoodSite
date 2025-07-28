@@ -1,6 +1,6 @@
 .hero {
     position: relative;
-    background-image: url('../../assets/img/2S1B9796.jpg');
+    background-image: url('EaseBodyFoodSite/assets/img/2S1B9796.jpg');
     background-size: cover;
     background-position: center;
     color: #fff;
@@ -13,7 +13,7 @@
 /* Альтернативный путь если основной не работает */
 @media (max-width: 1000px) {
     .hero {
-        background-image: url('../../../assets/img/2S1B9796.jpg');
+        background-image: url('EaseBodyFoodSite/assets/img/2S1B9796.jpg');
     }
 }
 
@@ -25,7 +25,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../../../assets/img/2S1B9796.jpg');
+    background-image: url('EaseBodyFoodSite/assets/img/2S1B9796.jpg');
     background-size: cover;
     background-position: center;
     z-index: -1;

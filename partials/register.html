@@ -1,17 +1,13 @@
-<link rel="stylesheet" href="../assets/css/static/auth.css">
+<link rel="stylesheet" href="EaseBodyFoodSite/assets/css/static/auth.css">
 <div class="auth-modal">
-  <button class="auth-modal__close">&times;</button>
-  <div class="auth-modal__title">Реєстрація</div>
-  <div class="auth-modal__switch">Є акаунт? <a href="#" id="openLoginModal">Увійти</a></div>
-  <form class="auth-modal__form" id="registerForm">
-    <input class="auth-modal__input" type="text" name="FirstName" placeholder="Ім'я" required>
-    <input class="auth-modal__input" type="text" name="SecondName" placeholder="Прізвище" required>
-    <input class="auth-modal__input" type="email" name="Email" placeholder="E-mail" required>
-    <input class="auth-modal__input" type="tel" name="PhoneNumber" placeholder="Телефон" required>
-    <input class="auth-modal__input" type="password" name="Password" placeholder="Пароль" required>
-    <input class="auth-modal__input" type="password" name="ConfirmPassword" placeholder="Повторити пароль" required>
-    <button class="auth-modal__button" type="submit">Реєстрація</button>
-  </form>
+    <h2>Реєстрація</h2>
+    <div class="auth-modal__switch">Є акаунт? <a href="#" id="openLoginModal">Увійти</a></div>
+    <form id="registerForm">
+        <input type="text" name="name" placeholder="Ім'я" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Пароль" required>
+        <input type="password" name="confirmPassword" placeholder="Підтвердіть пароль" required>
+        <button type="submit">Зареєструватися</button>
+    </form>
 </div>
-
-<script src="../assets/js/header.js"></script>
+<script src="EaseBodyFoodSite/assets/js/header.js"></script>

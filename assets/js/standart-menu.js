@@ -33,10 +33,15 @@ document.addEventListener('DOMContentLoaded', async function() {
   let menuData = {};
   let dishesData = [];
   async function loadData() {
-    const menuResp = await fetch('assets/data/menu.json').catch(() => fetch('../assets/data/menu.json'));
-    menuData = await menuResp.json();
-    const dishesResp = await fetch('assets/data/dishes.json').catch(() => fetch('../assets/data/dishes.json'));
-    dishesData = await dishesResp.json();
+    try {
+        const menuResp = await fetch('EaseBodyFoodSite/assets/data/menu.json').catch(() => fetch('assets/data/menu.json'));
+        const menu = await menuResp.json();
+        
+        const dishesResp = await fetch('EaseBodyFoodSite/assets/data/dishes.json').catch(() => fetch('assets/data/dishes.json'));
+        const dishes = await dishesResp.json();
+    } catch (error) {
+        console.error('Error loading data:', error);
+    }
   }
 
   // Получить объект меню по калорийности и дню

@@ -5,11 +5,16 @@ let loginModalHTML = null;
 
 // Добавим загрузку настроек
 let SERVER_BASE_URL = '';
-fetch('assets/data/settings.json')
-  .then(r => r.json())
-  .then(settings => {
-    SERVER_BASE_URL = settings.SERVER_BASE_URL;
-  });
+// Загрузка настроек
+fetch('EaseBodyFoodSite/assets/data/settings.json')
+    .catch(() => fetch('assets/data/settings.json'))
+    .then(response => response.json())
+    .then(settings => {
+        SERVER_BASE_URL = settings.serverUrl || 'https://api.easybodyfood.com';
+    })
+    .catch(error => {
+        console.error('Ошибка загрузки настроек:', error);
+    });
 
 function setupLoginBtn() {
   const userName = localStorage.getItem('userName');
