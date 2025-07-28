@@ -68,4 +68,25 @@
     <div class="footer-copyright">
         Copyright: © 2025 EasyBodyFood
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleBtn = document.getElementById('footerToggleBtn');
+        const popup = document.getElementById('footerPopupSocials');
+
+        // Открытие/закрытие popup по клику на кнопку
+        toggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isOpen = popup.classList.toggle('open');
+            toggleBtn.classList.toggle('active', isOpen);
+        });
+
+        // Закрытие popup по клику вне popup и кнопки
+        document.addEventListener('click', function(e) {
+            if (!popup.contains(e.target) && !toggleBtn.contains(e.target)) {
+                popup.classList.remove('open');
+                toggleBtn.classList.remove('active');
+            }
+        });
+    });
+    </script>
 </footer> 
