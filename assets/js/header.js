@@ -5,7 +5,7 @@ let loginModalHTML = null;
 
 // Добавим загрузку настроек
 let SERVER_BASE_URL = '';
-fetch('assets/js/settings.json')
+fetch('assets/data/settings.json')
   .then(r => r.json())
   .then(settings => {
     SERVER_BASE_URL = settings.SERVER_BASE_URL;
@@ -19,18 +19,21 @@ function setupLoginBtn() {
     console.error('[header.js] Не найден элемент с id="loginBtn"');
     return;
   }
+  
   if (userName) {
     loginBtn.innerHTML = `<svg class="icon-img user-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="2"/><path d="M4 20C4 16.6863 7.13401 14 12 14C16.866 14 20 16.6863 20 20" stroke="#fff" stroke-width="2"/></svg>${userName}`;
     loginBtn.href = "#";
   }
+  
   loginBtn.addEventListener('click', function(e) {
     e.preventDefault();
     if (localStorage.getItem('userName')) {
-      window.location.href = '../EaseBodyFoodSite/profile.html';
+      window.location.href = 'profile.html';
     } else {
       showRegisterModal();
     }
   });
+  
   console.log('[header.js] setupLoginBtn завершён');
 }
 
@@ -63,7 +66,7 @@ function showRegisterModal() {
     modal.addEventListener('click', function(e) { e.stopPropagation(); });
   }
   // Переключение на модалку входа
-  const loginLink = overlay.querySelector('.auth-modal__switch a[href], .auth-modal__switch a#openLoginModal');
+  const loginLink = overlay.querySelector('.auth-modal__switch a#openLoginModal');
   if (loginLink) {
     loginLink.addEventListener('click', function(e) {
       e.preventDefault();
@@ -167,7 +170,7 @@ function showLoginModal() {
     modal.addEventListener('click', function(e) { e.stopPropagation(); });
   }
   // Переключение на модалку регистрации
-  const regLink = overlay.querySelector('.auth-modal__switch a[href], .auth-modal__switch a#openRegisterModal');
+  const regLink = overlay.querySelector('.auth-modal__switch a#openRegisterModal');
   if (regLink) {
     regLink.addEventListener('click', function(e) {
       e.preventDefault();
@@ -240,16 +243,38 @@ function showLoginModal() {
 }
 
 // Загружаем HTML модалок (один раз)
-Promise.all([
-  fetch('../EaseBodyFoodSite/partials/register-modal.html').then(r => { console.log('[header.js] register-modal.html статус:', r.status); return r.text(); }),
-  fetch('../EaseBodyFoodSite/partials/login-modal.html').then(r => { console.log('[header.js] login-modal.html статус:', r.status); return r.text(); })
-]).then(([registerHtml, loginHtml]) => {
-  registerModalHTML = registerHtml;
-  loginModalHTML = loginHtml;
-  setupLoginBtn();
-}).catch(err => {
-  console.error('[header.js] Ошибка загрузки модалок:', err);
-});
+function loadModals() {
+  const paths = [
+    'partials/register.html',
+    'partials/login.html',
+    '../partials/register.html',
+    '../partials/login.html'
+  ];
+  
+  // Пробуем разные пути
+  Promise.all([
+    fetch(paths[0]).then(r => r.ok ? r.text() : Promise.reject('not found')),
+    fetch(paths[1]).then(r => r.ok ? r.text() : Promise.reject('not found'))
+  ]).then(([registerHtml, loginHtml]) => {
+    registerModalHTML = registerHtml;
+    loginModalHTML = loginHtml;
+    setupLoginBtn();
+  }).catch(() => {
+    // Если не получилось, пробуем с ../partials/
+    Promise.all([
+      fetch(paths[2]).then(r => r.ok ? r.text() : Promise.reject('not found')),
+      fetch(paths[3]).then(r => r.ok ? r.text() : Promise.reject('not found'))
+    ]).then(([registerHtml, loginHtml]) => {
+      registerModalHTML = registerHtml;
+      loginModalHTML = loginHtml;
+      setupLoginBtn();
+    }).catch(err => {
+      console.error('[header.js] Ошибка загрузки модалок:', err);
+    });
+  });
+}
+
+loadModals();
 
 window.showRegisterModalIfNotAuth = function() {
   if (!localStorage.getItem('userName')) {

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Загрузка блюд
   let dishesData = [];
   async function loadDishes() {
-    const resp = await fetch('../EaseBodyFoodSite/assets/data/dishes.json');
+    const resp = await fetch('assets/data/dishes.json').catch(() => fetch('../assets/data/dishes.json'));
     dishesData = await resp.json();
   }
 
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     return `
       <div class="menu-card">
         <div class="menu-card-img-wrap">
-          <img src="${dish.img || '../EaseBodyFoodSite/assets/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
+          <img src="${dish.img || 'assets/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
           <div class="gallery-card-icons">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 

@@ -1,6 +1,168 @@
+/* ===== АЛЬТЕРНАТИВНАЯ ТЕМА ===== */
+/* Общие стили */
 body-alt {
     background: #4CAF50;
 }
+
+/* ===== СЕКЦИИ ===== */
+.section2 {
+    padding: clamp(20px, 5vw, 40px) 0 clamp(10px, 2vw, 20px) clamp(50px, 10vw, 100px);
+    color: #4CAF50;
+    text-align: left;
+    font-family: 'Montserrat', sans-serif;
+    background: #fff;
+}
+
+.section2 h2 {
+    font-size: clamp(24px, 8vw, 64px);
+    font-weight: 900;
+    color: #4CAF50;
+    margin: 0 0 clamp(12px, 2vw, 24px) 0;
+    line-height: 0.95;
+    letter-spacing: -2px;
+}
+
+.section2 h3 {
+    font-size: 32px;
+    margin: 10px;
+}
+
+.section2 h4, .section2 h4.light {
+    font-size: clamp(14px, 4vw, 24px);
+    font-weight: 500;
+    color: #A3C7A3;
+    margin: 0 0 clamp(10px, 5vw, 30px) 0;
+    letter-spacing: 0.5px;
+}
+
+.section2 h4.white {
+    font-size: 24px;
+    max-width: 900px;
+    margin: 0px 0px 2px 0px;
+    color: #fff;
+}
+
+.section2 h4.green {
+    font-size: 24px;
+    max-width: 900px;
+    margin: 0px 0px 2px 0px;
+    color: #4CAF50;
+}
+
+.section2 .button {
+    margin-top: 150px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 64px;
+    font-size: 24px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.section2 .button:hover {
+    background-color: #45a049;
+}
+
+/* Список с номерами */
+.section2 .list {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    padding-left: 0px;
+    margin: 0;
+    gap: clamp(8px, 5vw, 40px);
+}
+
+.section2 .list-item {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    justify-content: flex-start;
+    flex: 1 1 33%;
+    min-width: 0;
+}
+
+.section2 .list-item-number {
+    font-size: clamp(24px, 7vw, 64px);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: clamp(1.5px, 0.5vw, 3px) #4CAF50;
+    text-stroke: clamp(1.5px, 0.5vw, 3px) #4CAF50;
+    margin-right: clamp(4px, 2vw, 16px);
+    font-family: 'Rubik', sans-serif;
+}
+
+.section2 .list-item-text {
+    font-size: clamp(12px, 3vw, 32px);
+    color: #4CAF50;
+    font-weight: 900;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+    text-align: left;
+    max-width: clamp(120px, 30vw, 280px);
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: normal;
+    hyphens: manual;
+}
+
+/* Отзывы */
+.section2 .review-info {
+    font-size: 18px;
+    color: #c8e6c9;
+    margin: 0px 0px 10px;
+}
+
+.section2 .review-text {
+    font-size: 20px;
+    font-weight: 400;
+    color: #fff;
+    margin: 0px 0px 10px 0px;
+}
+
+.section2 .reviews-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section2 .review-card {
+    background: #4CAF50;
+    border-radius: 36px;
+    color: #fff;
+    padding: 36px 32px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-height: 260px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.section2 .review-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 10px;
+}
+
+.section2 .review-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 0;
+    margin-right: 0;
+    flex-shrink: 0;
+}
+
+/* ===== МЕНЮ ===== */
 .menu-hero-alt {
     width: 100vw;
     max-width: none;
@@ -248,7 +410,8 @@ body-alt {
     background: #fff;
     color: #4CAF50;
 }
-/* --- Конструктор меню: хедер и шаги --- */
+
+/* ===== КОНСТРУКТОР МЕНЮ ===== */
 .menu-constructor-hero-alt {
     max-width: 1100px;
     margin: 0 auto 32px auto;
@@ -439,7 +602,7 @@ body-alt {
     background: #fff;
 }
 
-/* --- Блок нутрициолога --- */
+/* ===== БЛОК НУТРИЦИОЛОГА ===== */
 .menu-nutritionist-alt {
     background: #fff;
     border-radius: 32px;
@@ -550,7 +713,7 @@ body-alt {
     background: #4CAF50;
 }
 
-/* Стили для сердечек как в галерее */
+/* ===== СТИЛИ ДЛЯ ИКОНОК ===== */
 .gallery-card-icons-alt {
     position: absolute;
     top: 18px;
@@ -632,7 +795,59 @@ body-alt {
     align-items: center;
     justify-content: center;
     padding: 0;
-} 
+}
+
+/* Скрыть все скроллбары на сайте (визуально, но оставить прокрутку) */
+*::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; }
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 900px) {
+    .section2 .reviews-grid {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 16px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        margin-left: -12px;
+        margin-right: -12px;
+    }
+    .section2 .review-card {
+        flex: 0 0 80vw;
+        width: 80vw;
+        min-width: 260px;
+        max-width: 400px;
+        scroll-snap-align: start;
+        margin: 0;
+    }
+    .section2 .reviews-title {
+        font-size: 40px;
+        margin-left: 20px;
+    }
+    .section2 .list {
+        flex-wrap: wrap;
+        gap: 32px;
+    }
+    .section2 .list-item {
+        flex: 1 1 100%;
+        min-width: 220px;
+    }
+}
+
+@media (max-width: 1200px) {
+  .section2 .list {
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .section2 .list-item {
+    flex: 1 1 320px;
+    min-width: 220px;
+    max-width: 100%;
+  }
+}
 
 @media (max-width: 1100px) {
     .menu-constructor-hero-alt, .menu-constructor-cards-alt, .menu-nutritionist-alt, .menu-standard-choice-alt {

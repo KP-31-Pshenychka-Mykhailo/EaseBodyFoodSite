@@ -1,57 +1,38 @@
-/* === ORDER PAGE CUSTOM STYLES === */
-
-.order-header-title {
-  font-family: 'Rubik', sans-serif;
-  font-size: 48px;
-  font-weight: 900;
-  color: #36b23a;
-  margin-bottom: 18px;
-  margin-top: 0;
-  letter-spacing: -2px;
-  text-align: left;
-}
-.order-subtitle {
-  color: #A3C7A3;
-  font-size: 24px;
-  font-weight: 500;
-  margin-bottom: 18px;
-  text-align: left;
-}
-.order-info-block {
+/* === ORDER FORM EXTENSIONS === */
+.section2 .order-info-block {
   background: #f8fff8;
-  border-left: 4px solid #36b23a;
+  border-left: 4px solid #4CAF50;
   padding: 18px 24px;
   margin-bottom: 32px;
   color: #388e3c;
   font-size: 15px;
 }
-.order-info-block ul {
+.section2 .order-info-block ul {
   margin: 0;
   padding-left: 18px;
 }
-.order-info-block li {
+.section2 .order-info-block li {
   margin-bottom: 6px;
   line-height: 1.5;
 }
-
-.order-form {
+.section2 .order-form {
   display: flex;
   flex-direction: column;
   gap: 18px;
   margin-top: 0;
 }
-.order-form-title {
-  font-size: 20px;
+.section2 .order-form-title {
+  font-size: 24px;
   font-weight: 700;
-  color: #36b23a;
+  color: #4CAF50;
   margin-bottom: 8px;
   margin-top: 0;
 }
-.order-form-row {
+.section2 .order-form-row {
   display: flex;
   gap: 16px;
 }
-.order-label {
+.section2 .order-label {
   font-size: 15px;
   color: #888;
   margin-bottom: 2px;
@@ -60,7 +41,7 @@
   align-items: center;
   gap: 6px;
 }
-.order-input {
+.section2 .order-input {
   border: none;
   border-bottom: 1.5px solid #bdbdbd;
   padding: 8px 0 8px 0;
@@ -72,27 +53,27 @@
   transition: border 0.2s;
   margin-bottom: 0;
 }
-.order-input:focus {
-  border-bottom: 1.5px solid #36b23a;
+.section2 .order-input:focus {
+  border-bottom: 1.5px solid #4CAF50;
 }
-.order-edit-icon {
+.section2 .order-edit-icon {
   color: #bdbdbd;
   font-size: 18px;
   cursor: pointer;
   vertical-align: middle;
   transition: color 0.2s;
 }
-.order-edit-icon:hover {
-  color: #36b23a;
+.section2 .order-edit-icon:hover {
+  color: #4CAF50;
 }
-.order-error {
+.section2 .order-error {
   color: #E53935;
   font-size: 13px;
   margin-top: 2px;
   margin-bottom: 0;
 }
-.order-submit-btn {
-  background: #36b23a;
+.section2 .order-submit-btn {
+  background: #4CAF50;
   color: #fff;
   border: none;
   border-radius: 30px;
@@ -104,10 +85,10 @@
   width: 100%;
   transition: background 0.2s;
 }
-.order-submit-btn:hover {
-  background: #2e9e2e;
+.section2 .order-submit-btn:hover {
+  background: #45a049;
 }
-select.order-input {
+.section2 select.order-input {
   border: 1.5px solid #bdbdbd;
   border-radius: 18px;
   padding: 8px 18px;
@@ -117,10 +98,10 @@ select.order-input {
   margin-bottom: 0;
   width: 100%;
 }
-select.order-input:focus {
-  border: 1.5px solid #36b23a;
+.section2 select.order-input:focus {
+  border: 1.5px solid #4CAF50;
 }
-textarea.order-input {
+.section2 textarea.order-input {
   border: none;
   border-bottom: 1.5px solid #bdbdbd;
   border-radius: 0;
@@ -135,20 +116,18 @@ textarea.order-input {
   outline: none;
   transition: border 0.2s;
 }
-textarea.order-input:focus {
-  border-bottom: 1.5px solid #36b23a;
+.section2 textarea.order-input:focus {
+  border-bottom: 1.5px solid #4CAF50;
 }
-input[type="checkbox"] {
-  accent-color: #36b23a;
+.section2 input[type="checkbox"] {
+  accent-color: #4CAF50;
 }
 @media (max-width: 900px) {
-  .order-header-title { font-size: 32px; }
-  .order-form-row { flex-direction: column; gap: 8px; }
-  .order-info-block { padding: 12px 8px; }
+  .section2 .order-form-row { flex-direction: column; gap: 8px; }
+  .section2 .order-info-block { padding: 12px 8px; }
 }
 @media (max-width: 600px) {
-  .order-header-title { font-size: 22px; }
-  .order-subtitle { font-size: 16px; }
-  .order-form-title { font-size: 16px; }
-  .order-submit-btn { font-size: 15px; padding: 10px 0; }
+  .section2 .order-form-title { font-size: 16px; }
+  .section2 .order-submit-btn { font-size: 15px; padding: 10px 0; }
+  .section2 .order-info-block { font-size: 13px; }
 } 

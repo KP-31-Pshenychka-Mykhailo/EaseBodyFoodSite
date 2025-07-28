@@ -6,12 +6,11 @@
     <title>Стандартне меню | Easy Body Food</title>
     <link rel="icon" type="image/png" href="assets/img/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/header.css">
-    <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/index.css">
-    <link rel="stylesheet" href="assets/css/section-alt.css">
-    <link rel="stylesheet" href="assets/css/section.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/static/header.css">
+    <link rel="stylesheet" href="assets/css/static/footer.css">
+    <link rel="stylesheet" href="assets/css/pages/index.css">
+    <link rel="stylesheet" href="assets/css/main/alt-theme.css">
+    <link rel="stylesheet" href="assets/css/main/main-theme.css">
 </head>
 <body>
     <div id="header"></div>
@@ -90,13 +89,13 @@
       if(orderBtn) {
         orderBtn.addEventListener('click', function() {
           // Подключаем order.css, если не подключён
-          if (!document.querySelector('link[href="assets/css/order.css"]')) {
+          if (!document.querySelector('link[href="assets/css/pages/order.css"]')) {
             var link = document.createElement('link');
             link.rel = 'stylesheet';
-            link.href = 'assets/css/order.css';
+            link.href = 'assets/css/pages/order.css';
             document.head.appendChild(link);
           }
-          fetch('order.html')
+          fetch('partials/order.html')
             .then(r => r.text())
             .then(html => {
               var mainMatch = html.match(/<main[\s\S]*?<\/main>/);

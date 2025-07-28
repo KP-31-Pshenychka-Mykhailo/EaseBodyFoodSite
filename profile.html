@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мій профіль | Easy Body Food</title>
     <link rel="icon" type="image/png" href="assets/img/logo.png">
-    <link rel="stylesheet" href="assets/css/header.css">
-    <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/profile.css">
+    <link rel="stylesheet" href="assets/css/static/header.css">
+    <link rel="stylesheet" href="assets/css/static/footer.css">
+    <link rel="stylesheet" href="assets/css/pages/profile.css">
 </head>
 <body>
     <div id="header"></div>
@@ -190,7 +190,7 @@
     document.getElementById('logout-btn').addEventListener('click', function() {
         localStorage.clear();
         sessionStorage.clear();
-        window.location.href = '../EaseBodyFoodSite/index.html'; // Измените путь, если у вас другая страница входа
+        window.location.href = 'index.html'; // Измените путь, если у вас другая страница входа
     });
 
     // Обработчик для кнопки "Змінити" - сохранение профиля
@@ -237,7 +237,7 @@
         console.log('JSON для адреса:', JSON.stringify(addressData));
 
         // Отправляем три запроса
-        fetch('assets/js/settings.json')
+        fetch('assets/data/settings.json')
             .then(response => response.json())
             .then(settings => {
                 const baseUrl = settings.SERVER_BASE_URL;
@@ -310,7 +310,7 @@
         });
     };
     clearProfileFields();
-    fetch('assets/js/settings.json')
+    fetch('assets/data/settings.json')
       .then(response => response.json())
       .then(settings => {
         const baseUrl = settings.SERVER_BASE_URL;

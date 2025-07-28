@@ -1,6 +1,6 @@
 .hero {
     position: relative;
-    background-image: url('../img/2S1B9796.jpg');
+    background-image: url('../../assets/img/2S1B9796.jpg');
     background-size: cover;
     background-position: center;
     color: #fff;
@@ -8,6 +8,27 @@
     padding: 80px 20px;
     padding-left: clamp(50px, 10vw, 100px);
     overflow: hidden;
+}
+
+/* Альтернативный путь если основной не работает */
+@media (max-width: 1000px) {
+    .hero {
+        background-image: url('../../../assets/img/2S1B9796.jpg');
+    }
+}
+
+/* Fallback если основное изображение не загружается */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../../assets/img/2S1B9796.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
 }
 .hero::before {
     content: '';
