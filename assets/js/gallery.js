@@ -8,28 +8,62 @@ document.addEventListener('DOMContentLoaded', function() {
   // Пробуем разные пути для dishes.json
   fetch('assets/data/dishes.json')
     .catch(() => fetch('../assets/data/dishes.json'))
-    .then(response => response.json())
+    .catch(() => fetch('./assets/data/dishes.json'))
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
     .then(dishes => {
+      console.log('Loaded dishes:', dishes);
+      
       // Фильтруем только блюда с картинками (если нужно)
       // const filtered = dishes.filter(d => d.img && d.img.trim() !== '');
       // Берём любые блюда:
       const shuffled = dishes.sort(() => 0.5 - Math.random());
       const selected = shuffled.slice(0, 5);
+      console.log('Selected dishes:', selected);
+      
       // Создаем карточки
-      window.cardsHTML = selected.map(dish => `
-        <div class="gallery-card">
-          <img src="${dish.img ? dish.img : 'assets/img/food1.jpg'}" alt="${dish.title}" class="gallery-img">
-          <div class="gallery-card-icons">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-            </svg>
+      window.cardsHTML = selected.map((dish, index) => {
+        // Генерируем дефолтные изображения и описания
+        const defaultImages = [
+          'assets/img/food1.jpg',
+          'assets/img/food2.jpg', 
+          'assets/img/food3.jpg',
+          'assets/img/food4.jpg',
+          'assets/img/food5.jpg'
+        ];
+        
+        const defaultSubtitles = [
+          'Свежие ингредиенты, приготовленные с любовью',
+          'Сбалансированное питание для здорового образа жизни',
+          'Вкусное и полезное блюдо от наших поваров',
+          'Традиционные рецепты с современным подходом',
+          'Питательное блюдо для активного дня'
+        ];
+        
+        const imgSrc = dish.img && dish.img.trim() !== '' ? dish.img : defaultImages[index % defaultImages.length];
+        const subtitle = dish.subtitle && dish.subtitle.trim() !== '' ? dish.subtitle : defaultSubtitles[index % defaultSubtitles.length];
+        
+        return `
+          <div class="gallery-card">
+            <img src="${imgSrc}" alt="${dish.title}" class="gallery-img" onerror="this.src='assets/img/food1.jpg'">
+            <div class="gallery-card-icons">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </div>
+            <div class="gallery-card-info">
+              <div class="gallery-card-title">${dish.title || 'Название блюда'}</div>
+              <div class="gallery-card-desc">${subtitle}</div>
+            </div>
           </div>
-          <div class="gallery-card-info">
-            <div class="gallery-card-title">${dish.title}</div>
-            <div class="gallery-card-desc">${dish.subtitle || ''}</div>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
+      
+      console.log('Generated HTML:', window.cardsHTML);
       
       // Создаем бесконечную карусель: клонируем карточки много раз
       gallery.innerHTML = window.cardsHTML + window.cardsHTML + window.cardsHTML + window.cardsHTML + window.cardsHTML;
@@ -41,6 +75,41 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 100);
       
       // Добавляем обработчики для сердечек
+      addHeartHandlers();
+    })
+    .catch(error => {
+      console.error('Error loading dishes:', error);
+      // Fallback: создаем карточки с дефолтными данными
+      const fallbackDishes = [
+        { title: 'Салат с курицей', subtitle: 'Свежие овощи с нежным мясом', img: 'assets/img/food1.jpg' },
+        { title: 'Паста с морепродуктами', subtitle: 'Итальянская классика', img: 'assets/img/food2.jpg' },
+        { title: 'Стейк из говядины', subtitle: 'Сочное мясо с овощами', img: 'assets/img/food3.jpg' },
+        { title: 'Рыба на гриле', subtitle: 'Полезно и вкусно', img: 'assets/img/food4.jpg' },
+        { title: 'Вегетарианская паста', subtitle: 'Для любителей овощей', img: 'assets/img/food5.jpg' }
+      ];
+      
+      window.cardsHTML = fallbackDishes.map(dish => `
+        <div class="gallery-card">
+          <img src="${dish.img}" alt="${dish.title}" class="gallery-img">
+          <div class="gallery-card-icons">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          </div>
+          <div class="gallery-card-info">
+            <div class="gallery-card-title">${dish.title}</div>
+            <div class="gallery-card-desc">${dish.subtitle}</div>
+          </div>
+        </div>
+      `).join('');
+      
+      gallery.innerHTML = window.cardsHTML + window.cardsHTML + window.cardsHTML + window.cardsHTML + window.cardsHTML;
+      
+      setTimeout(() => {
+        const cardWidth = getCardWidth();
+        gallery.scrollLeft = cardWidth * 10;
+      }, 100);
+      
       addHeartHandlers();
     });
 
