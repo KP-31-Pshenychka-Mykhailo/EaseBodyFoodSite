@@ -961,6 +961,7 @@ a.gallery-btn {
         max-height: 320px;
         border-radius: 12px;
         object-fit: cover;
+        background: #000;
     }
     .section2 .review-card-mobile {
         flex: 0 0 80vw;
