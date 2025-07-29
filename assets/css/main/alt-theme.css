@@ -1220,8 +1220,8 @@ a.gallery-btn {
 }
 
 .footer-call-btn svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 12px;
     stroke: currentColor;
     fill: none;
     stroke-width: 2;
@@ -1236,8 +1236,8 @@ a.gallery-btn {
     }
     
     .footer-call-btn svg {
-        width: 18px;
-        height: 18px;
+        width: 22px;
+        height: 22px;
     }
 }
 
@@ -1249,8 +1249,8 @@ a.gallery-btn {
     }
     
     .footer-call-btn svg {
-        width: 16px;
-        height: 16px;
+        width: 20px;
+        height: 20px;
     }
 }
 
