@@ -16,10 +16,19 @@
   right: 32px;
   font-size: 2rem;
   color: #222;
-  background: none;
+  background: #faf9f6;
   border: none;
   cursor: pointer;
   font-family: inherit;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
 }
 
 .auth-modal__title {
@@ -96,6 +105,12 @@
 
 .auth-modal__button:hover {
   background: #388e3c;
+}
+
+.auth-modal__close:hover {
+  background: #e8e8e8;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 @media (max-width: 600px) {

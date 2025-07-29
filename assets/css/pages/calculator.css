@@ -7,7 +7,7 @@ body {
 .container {
   align-items: center; 
   justify-content: center;
-  margin: 40px auto;
+  margin: 0px ;
   background: #fff;
   border-radius: 8px;
   padding: 32px 24px 40px 24px;
@@ -206,8 +206,8 @@ h1 {
 /* Стили для секции персонализации на странице калькулятора */
 .menu-personal {
   background: #4CAF50 !important;
-  margin-top: 60px !important;
-  margin-bottom: 60px !important;
+  margin-top: 30px !important;
+  margin-bottom: 40px !important;
 }
 
 .menu-personal-title {
