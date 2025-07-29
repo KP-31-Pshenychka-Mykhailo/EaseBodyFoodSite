@@ -118,11 +118,76 @@
                     </div>
                     <div class="review-video-container">
                         <video class="review-video" controls>
-                            <source src="../assets/video/testimonial.mp4" type="video/mp4">
+                            <source src="../EasyBodyFoodSite/assets/video/testimonial.mp4" type="video/mp4">
                             Ваш браузер не підтримує відео.
                         </video>
                     </div>
                 </div>
+                <!-- Мобильные отзывы для карусели -->
+                <div class="review-card review-card-mobile">
+                    <div class="review-header">
+                        <img src="assets/img/review1.jpg" alt="Анна Левицька" class="review-avatar">
+                        <div>
+                            <h4 class="white">Анна Левицька</h4>
+                            <div class="review-info">Київ, 35 років</div>
+                        </div>
+                    </div>
+                    <div class="review-text">
+                        Було страшно, що буде дорого, але коли я підрахувала, скільки грошей я витрачала на перекуси — EasyBody вийшов навіть дешевше. І ще смачніше. Дякую!
+                    </div>
+                </div>
+                <div class="review-card review-card-mobile">
+                    <div class="review-header">
+                        <img src="assets/img/review3.jpg" alt="Ярослав Демчук" class="review-avatar">
+                        <div>
+                            <h4 class="white">Ярослав Демчук</h4>
+                            <div class="review-info">Львів, 26 років</div>
+                        </div>
+                    </div>
+                    <div class="review-text">
+                        В мене 3 роботи, я взагалі не готую. А тут — відкрив контейнер, з'їв, пішов. Смачно, сито, і мозок не болить. Люблю
+                    </div>
+                </div>
+                <div class="review-card review-card-mobile">
+                    <div class="review-header">
+                        <img src="assets/img/review4.jpg" alt="Марія Коваль" class="review-avatar">
+                        <div>
+                            <h4 class="white">Марія Коваль</h4>
+                            <div class="review-info">Житомир, 24 роки</div>
+                        </div>
+                    </div>
+                    <div class="review-text">
+                        У мене були дуже складні стосунки із їжею — то переїдаю, то забуваю поїсти. EasyBody дав мені не просто раціон, а відчуття, ніби хтось нарешті подбав про мене. Навіть мій психотерапевт схвалив :)
+                    </div>
+                </div>
+                <div class="review-card review-card-mobile">
+                    <div class="review-header">
+                        <img src="assets/img/review2.jpg" alt="Ігор Павленко" class="review-avatar">
+                        <div>
+                            <h4 class="white">Ігор Павленко</h4>
+                            <div class="review-info">Харків, 28 років</div>
+                        </div>
+                    </div>
+                    <div class="review-video-container">
+                        <video class="review-video" controls>
+                            <source src="assets/video/testimonial.mp4" type="video/mp4">
+                            Ваш браузер не підтримує відео.
+                        </video>
+                    </div>
+                </div>
+            </div>
+            <div class="reviews-navigation">
+                <button class="review-nav-btn review-nav-prev" id="reviewPrev">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <div class="review-dots" id="reviewDots"></div>
+                <button class="review-nav-btn review-nav-next" id="reviewNext">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
             </div>
         </section>
 
@@ -154,6 +219,7 @@
     </main>
 
     <script src="assets/js/gallery.js"></script>
+    <script src="assets/js/reviews-carousel.js"></script>
 
     <div id="footer"></div>
     <script src="assets/js/layout.js"></script>
