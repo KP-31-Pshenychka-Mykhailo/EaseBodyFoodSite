@@ -1,5 +1,5 @@
 body {
-  background: #f7f6f2;
+  background: #fff;
   font-family: 'Montserrat', Arial, sans-serif;
   margin: 0;
   padding: 0;
@@ -201,4 +201,19 @@ h1 {
   max-width: 540px;
   margin: 0 auto;
   width: 100%;
+}
+
+/* Стили для секции персонализации на странице калькулятора */
+.menu-personal {
+  background: #4CAF50 !important;
+  margin-top: 60px !important;
+  margin-bottom: 60px !important;
+}
+
+.menu-personal-title {
+  color: #fff !important;
+}
+
+.menu-personal-subtitle {
+  color: #fff !important;
 }
