@@ -1308,6 +1308,30 @@ a.gallery-btn {
         height: 280px;
         flex-shrink: 0;
     }
+    
+    /* Показываем информацию только для активной карточки на мобильных */
+    .section1 .gallery-card-info {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+    
+    .section1 .gallery-card.active .gallery-card-info {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    
+    .section1 .gallery-card-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    
+    .section1 .gallery-card-desc {
+        font-size: 14px;
+        font-weight: 400;
+        color: #fff;
+    }
 }
 
 @media (max-width: 400px) {
