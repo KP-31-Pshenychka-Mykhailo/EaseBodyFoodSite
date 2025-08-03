@@ -88,15 +88,35 @@ document.addEventListener('DOMContentLoaded', async function() {
     const rightBtn = favoritesContainer.querySelector('.favorites-arrow-right');
     
     if (slider && leftBtn && rightBtn) {
-      const scrollStep = 320; // ширина одной карточки + gap
+      // Получаем ширину одной карточки + отступ
+      const cardWidth = 400; // ширина карточки из CSS
+      const gap = 16; // отступ между карточками из CSS
+      const scrollStep = cardWidth + gap;
       
       leftBtn.addEventListener('click', function() {
-        slider.scrollBy({ left: -scrollStep, behavior: 'smooth' });
+        const currentScroll = slider.scrollLeft;
+        const targetScroll = Math.max(0, currentScroll - scrollStep);
+        slider.scrollTo({ left: targetScroll, behavior: 'smooth' });
       });
       
       rightBtn.addEventListener('click', function() {
-        slider.scrollBy({ left: scrollStep, behavior: 'smooth' });
+        const currentScroll = slider.scrollLeft;
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+        const targetScroll = Math.min(maxScroll, currentScroll + scrollStep);
+        slider.scrollTo({ left: targetScroll, behavior: 'smooth' });
       });
+      
+      // Показываем/скрываем стрелки в зависимости от позиции
+      function updateArrowVisibility() {
+        leftBtn.style.display = slider.scrollLeft > 0 ? 'flex' : 'none';
+        rightBtn.style.display = slider.scrollLeft < (slider.scrollWidth - slider.clientWidth - 1) ? 'flex' : 'none';
+      }
+      
+      // Обновляем видимость стрелок при прокрутке
+      slider.addEventListener('scroll', updateArrowVisibility);
+      
+      // Инициализируем видимость стрелок
+      updateArrowVisibility();
     }
 
     // Обновляем HeartsManager для новых карточек
