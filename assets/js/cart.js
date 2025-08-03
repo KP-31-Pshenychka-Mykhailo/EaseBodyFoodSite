@@ -111,9 +111,25 @@ window.removeItem = function(index) {
 };
 
 window.proceedToCheckout = function() {
-    // Здесь можно добавить логику для перехода к оформлению заказа
-    // Например, открыть модальное окно или перейти на страницу оформления
-    alert('Функція оформлення замовлення буде додана пізніше');
+    // Открываем модальное окно с формой заказа
+    const modal = document.getElementById('order-modal');
+    if (modal) {
+        // Загружаем содержимое order.html
+        fetch('partials/order.html')
+            .then(response => response.text())
+            .then(html => {
+                // Извлекаем содержимое main из order.html
+                const mainMatch = html.match(/<main[\s\S]*?<\/main>/);
+                if (mainMatch) {
+                    document.getElementById('order-modal-body').innerHTML = mainMatch[0];
+                    modal.style.display = 'flex';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading order form:', error);
+                alert('Помилка завантаження форми замовлення');
+            });
+    }
 };
 
 // Функция для отображения корзины на странице cart.html
@@ -134,8 +150,7 @@ function loadCart() {
                 <div class="profile-cart-empty-title">Упс! Кошик порожній</div>
                 <div class="profile-cart-empty-desc">Саме час для правильного харчування!</div>
                 <div class="profile-cart-btns">
-                    <a href="constructor.html" class="profile-cart-btn">Конструктор меню</a>
-                    <a href="star.html" class="profile-cart-btn">Зіркове меню</a>
+                    <a href="index.html" class="profile-cart-btn">Повернутися на головну</a>
                 </div>
             </div>
         `;
@@ -176,15 +191,15 @@ function loadCart() {
     
     cartHTML += '</div>';
     
-    cartHTML += `
-        <div class="cart-summary">
-            <div class="cart-total">Загалом у меню: ${macros.protein} Білки ${macros.fat} Жири ${macros.carbs} Вуглеводи, ${totalCalories} ккал.</div>
-            <div class="cart-actions">
-                <button class="checkout-btn" onclick="proceedToCheckout()">Оформити замовлення</button>
-                <a href="constructor.html" class="continue-shopping-btn">Продовжити покупки</a>
-            </div>
-        </div>
-    `;
+                    cartHTML += `
+                    <div class="cart-summary">
+                        <div class="cart-total">Загалом у меню: ${macros.protein} Білки ${macros.fat} Жири ${macros.carbs} Вуглеводи, ${totalCalories} ккал.</div>
+                        <div class="cart-actions">
+                            <button class="checkout-btn" onclick="proceedToCheckout()">Оформити замовлення</button>
+                            <a href="index.html" class="continue-shopping-btn">Повернутися на головну</a>
+                        </div>
+                    </div>
+                `;
     
     cartContent.innerHTML = cartHTML;
 }

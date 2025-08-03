@@ -240,7 +240,29 @@
     </main>
     <div id="footer"></div>
     
+    <!-- Модальное окно заказа -->
+    <div id="order-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); align-items:center; justify-content:center;">
+      <div id="order-modal-content" style="background:#fff; border-radius:24px; max-width:900px; width:98vw; max-height:95vh; overflow-y:auto; overflow-x:hidden; position:relative; box-sizing:border-box; padding:32px 32px 24px 32px; scrollbar-width:none;">
+        <button id="order-modal-close" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:32px; color:#4CAF50; cursor:pointer;">&times;</button>
+        <div id="order-modal-body"></div>
+      </div>
+    </div>
+    
     <script src="assets/js/layout.js"></script>
     <script src="assets/js/cart.js"></script>
+    <script>
+    // Закрытие модального окна
+    document.addEventListener('DOMContentLoaded', function() {
+      var closeBtn = document.getElementById('order-modal-close');
+      document.getElementById('order-modal').addEventListener('click', function(e) {
+        if(e.target === this) {
+          this.style.display = 'none';
+        }
+      });
+      if(closeBtn) closeBtn.addEventListener('click', function() {
+        document.getElementById('order-modal').style.display = 'none';
+      });
+    });
+    </script>
 </body>
 </html> 
