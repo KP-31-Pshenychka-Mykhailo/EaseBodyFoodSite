@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                        6.86-8.55 11.54L12 21.35z"/>
             </svg>
           </div>
-          <span class="menu-card-plus">+</span>
         </div>
         <div class="menu-card-content">
           <div class="menu-card-title">${dish.title}</div>
