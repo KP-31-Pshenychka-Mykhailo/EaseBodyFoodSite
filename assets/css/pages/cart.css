@@ -224,13 +224,15 @@
     box-sizing: border-box !important;
     position: relative !important;
     overflow: hidden !important;
+    will-change: transform, background-color, color, box-shadow !important;
 }
 
 .continue-shopping-btn:hover {
     background: #4CAF50 !important;
     color: white !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
+    border-color: #4CAF50 !important;
 }
 
 .continue-shopping-btn:active {
