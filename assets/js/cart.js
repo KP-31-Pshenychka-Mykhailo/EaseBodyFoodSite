@@ -121,33 +121,56 @@ window.clearCart = function() {
 };
 
 window.proceedToCheckout = function() {
+    console.log('=== PROCEED TO CHECKOUT CALLED ===');
+    
     // Открываем модальное окно с формой заказа
     const modal = document.getElementById('order-modal');
+    console.log('Modal element:', modal);
+    
     if (modal) {
+        console.log('Загружаем форму заказа...');
+        
         // Загружаем содержимое order.html
         fetch('partials/order.html')
-            .then(response => response.text())
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.text();
+            })
             .then(html => {
+                console.log('HTML loaded, length:', html.length);
+                
                 // Извлекаем содержимое main из order.html
                 const mainMatch = html.match(/<main[\s\S]*?<\/main>/);
+                console.log('Main match found:', !!mainMatch);
+                
                 if (mainMatch) {
-                    document.getElementById('order-modal-body').innerHTML = mainMatch[0];
+                    const modalBody = document.getElementById('order-modal-body');
+                    console.log('Modal body element:', modalBody);
+                    
+                    modalBody.innerHTML = mainMatch[0];
                     modal.style.display = 'flex';
+                    
+                    console.log('Modal displayed, loading user data...');
                     
                     // После загрузки формы загружаем данные пользователя
                     loadUserDataToOrderForm();
+                } else {
+                    console.error('Main content not found in order.html');
                 }
             })
             .catch(error => {
                 console.error('Error loading order form:', error);
                 alert('Помилка завантаження форми замовлення');
             });
+    } else {
+        console.error('Modal element not found');
     }
 };
 
 // Функция для загрузки и заполнения данных пользователя в форме заказа
 function loadUserDataToOrderForm() {
     console.log('=== LOADING USER DATA TO ORDER FORM ===');
+    console.log('Function called at:', new Date().toISOString());
     
     const userId = localStorage.getItem('userId');
     
@@ -375,18 +398,22 @@ function loadCart() {
                     <div class="cart-summary">
                         <div class="cart-total">Загалом у замовленні: ${macros.protein} Білки ${macros.fat} Жири ${macros.carbs} Вуглеводи, ${totalCalories} ккал.</div>
                         <div class="cart-actions">
-                            <button class="checkout-btn" onclick="proceedToCheckout()">Оформити замовлення</button>
+                            <button class="checkout-btn" onclick="proceedToCheckout()" style="cursor:pointer;">Оформити замовлення</button>
                             <a href="index.html" class="continue-shopping-btn">Повернутися на головну</a>
                         </div>
                     </div>
                 `;
     
     cartContent.innerHTML = cartHTML;
+    console.log('Cart HTML loaded, checkout button should be visible');
+    console.log('Cart items count:', cart.length);
 }
 
 // Инициализация корзины при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Cart.js loaded');
+    console.log('proceedToCheckout function available:', typeof window.proceedToCheckout);
+    
     if (document.getElementById('cart-content')) {
         console.log('Cart content element found, loading cart...');
         loadCart();
