@@ -60,6 +60,7 @@
                 <button onclick="showFavorites()">Показать избранное</button>
                 <button onclick="clearFavorites()">Очистить избранное</button>
                 <button onclick="refreshHearts()">Обновить сердечки</button>
+                <button onclick="testHeartClick()">Тест сердечек</button>
                 <div class="favorites-list" id="favoritesList">
                     <strong>Избранные блюда:</strong> <span id="favoritesCount">0</span>
                 </div>
@@ -82,25 +83,31 @@
             if (window.heartsManager) {
                 const favorites = window.heartsManager.getFavoriteDishes();
                 const count = favorites.length;
-                document.getElementById('favoritesCount').textContent = count;
+                
+                const favoritesCountElement = document.getElementById('favoritesCount');
+                if (favoritesCountElement) {
+                    favoritesCountElement.textContent = count;
+                }
                 
                 // Показываем также полное состояние из localStorage
                 const heartsState = JSON.parse(localStorage.getItem('heartsState') || '{}');
                 
                 const list = document.getElementById('favoritesList');
-                if (count > 0) {
-                    list.innerHTML = `
-                        <strong>Избранные блюда (${count}):</strong><br>
-                        ${favorites.join(', ')}<br><br>
-                        <strong>Полное состояние heartsState:</strong><br>
-                        ${JSON.stringify(heartsState, null, 2)}
-                    `;
-                } else {
-                    list.innerHTML = `
-                        <strong>Избранные блюда:</strong> нет избранных блюд<br><br>
-                        <strong>Полное состояние heartsState:</strong><br>
-                        ${JSON.stringify(heartsState, null, 2)}
-                    `;
+                if (list) {
+                    if (count > 0) {
+                        list.innerHTML = `
+                            <strong>Избранные блюда (${count}):</strong><br>
+                            ${favorites.join(', ')}<br><br>
+                            <strong>Полное состояние heartsState:</strong><br>
+                            <pre>${JSON.stringify(heartsState, null, 2)}</pre>
+                        `;
+                    } else {
+                        list.innerHTML = `
+                            <strong>Избранные блюда:</strong> нет избранных блюд<br><br>
+                            <strong>Полное состояние heartsState:</strong><br>
+                            <pre>${JSON.stringify(heartsState, null, 2)}</pre>
+                        `;
+                    }
                 }
                 
                 console.log('Избранные блюда:', favorites);
@@ -127,6 +134,18 @@
                 window.heartsManager.refresh();
                 console.log('Сердечки обновлены');
             }
+        }
+
+        // Простой тест клика
+        function testHeartClick() {
+            const hearts = document.querySelectorAll('.gallery-heart, .gallery-heart-alt, .menu-card-heart, .menu-card-heart-alt');
+            console.log('Найдено сердечек для теста:', hearts.length);
+            
+            hearts.forEach((heart, index) => {
+                console.log(`Сердечко ${index}:`, heart);
+                console.log(`- data-heart-handler-added:`, heart.hasAttribute('data-heart-handler-added'));
+                console.log(`- classList:`, heart.classList.toString());
+            });
         }
 
         // Загружаем реальные блюда из dishes.json
@@ -229,7 +248,10 @@
         // Показываем избранное при загрузке
         document.addEventListener('DOMContentLoaded', () => {
             loadTestCards();
-            setTimeout(showFavorites, 500);
+            setTimeout(() => {
+                showFavorites();
+                testHeartClick(); // Тестируем сердечки
+            }, 500);
         });
     </script>
 </body>

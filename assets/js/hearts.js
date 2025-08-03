@@ -23,28 +23,39 @@ class HeartsManager {
       '.menu-constructor-card-heart-alt'
     ];
 
+    let totalHearts = 0;
+    let addedHandlers = 0;
+
     heartSelectors.forEach(selector => {
-      document.querySelectorAll(selector).forEach(heart => {
+      const hearts = document.querySelectorAll(selector);
+      totalHearts += hearts.length;
+      
+      hearts.forEach(heart => {
         if (!heart.hasAttribute('data-heart-handler-added')) {
           heart.setAttribute('data-heart-handler-added', 'true');
-          heart.addEventListener('click', this.handleHeartClick.bind(this));
+          heart.addEventListener('click', (e) => this.handleHeartClick(e, heart));
+          addedHandlers++;
         }
       });
     });
+
+    if (addedHandlers > 0) {
+      console.log(`Добавлено обработчиков для сердечек: ${addedHandlers}`);
+    }
   }
 
-  handleHeartClick(e) {
+  handleHeartClick(e, heart) {
     // Проверяем авторизацию перед переключением
-    if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
+    if (typeof window.showRegisterModalIfNotAuth === 'function' && window.showRegisterModalIfNotAuth()) {
       e.preventDefault();
       return;
     }
 
     // Переключаем состояние сердечка
-    this.classList.toggle('active');
+    heart.classList.toggle('active');
     
     // Дополнительная логика при необходимости
-    this.onHeartToggle(this);
+    this.onHeartToggle(heart);
   }
 
   onHeartToggle(heart) {
@@ -59,7 +70,6 @@ class HeartsManager {
       
       if (dishId) {
         this.saveHeartState(dishId, isActive);
-        console.log(`Сердечко для блюда ${dishId} ${isActive ? 'активировано' : 'деактивировано'}`);
       }
     }
   }
@@ -97,15 +107,6 @@ class HeartsManager {
       const heartsState = JSON.parse(localStorage.getItem('heartsState') || '{}');
       heartsState[dishId] = isActive;
       localStorage.setItem('heartsState', JSON.stringify(heartsState));
-      
-      // Выводим информацию в консоль
-      if (isActive) {
-        console.log(`Блюдо ${dishId} добавлено в избранное`);
-      } else {
-        console.log(`Блюдо ${dishId} удалено из избранного`);
-      }
-      
-      console.log('Текущее состояние сердечек:', heartsState);
       
     } catch (error) {
       console.warn('Не удалось сохранить состояние сердечка:', error);
@@ -207,11 +208,14 @@ class HeartsManager {
 
 // Инициализация при загрузке DOM
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM загружен, инициализируем HeartsManager...');
   window.heartsManager = new HeartsManager();
+  console.log('HeartsManager создан:', window.heartsManager);
   
   // Загружаем сохраненные состояния после небольшой задержки
   // чтобы все карточки успели отрендериться
   setTimeout(() => {
+    console.log('Загружаем сохраненные состояния сердечек...');
     window.heartsManager.loadHeartStates();
   }, 100);
 });
