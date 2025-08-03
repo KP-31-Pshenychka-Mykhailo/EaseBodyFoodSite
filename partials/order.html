@@ -145,6 +145,92 @@
             }
         });
     });
+    
+    // Функция для загрузки и заполнения данных пользователя
+    function loadUserData() {
+        const userId = localStorage.getItem('userId');
+        
+        // Если пользователь не зарегистрирован, ничего не делаем
+        if (!userId) {
+            console.log('Пользователь не зарегистрирован, форма остается пустой');
+            return;
+        }
+        
+        console.log('Загружаем данные пользователя для формы заказа, userId:', userId);
+        
+        fetch('../assets/data/settings.json')
+            .then(response => response.json())
+            .then(settings => {
+                const baseUrl = settings.SERVER_BASE_URL;
+                const fullUrl = baseUrl + '/user/info/' + userId;
+                
+                console.log('Отправляем запрос на:', fullUrl);
+                
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', fullUrl, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        console.log('Получен ответ от сервера:', xhr.status, xhr.statusText);
+                        if (xhr.status === 200) {
+                            try {
+                                const data = JSON.parse(xhr.responseText);
+                                console.log('Данные пользователя получены:', data);
+                                
+                                // Функция для безопасного установки значения
+                                const setValue = (id, value) => {
+                                    const el = document.getElementById(id);
+                                    if (el && value !== undefined && value !== null && value !== '') {
+                                        el.value = value;
+                                    }
+                                };
+                                
+                                // Заполняем поля формы данными пользователя
+                                setValue('order-firstname', data.firstName);
+                                setValue('order-lastname', data.lastName);
+                                setValue('order-phone', data.number);
+                                setValue('order-email', data.email);
+                                
+                                // Заполняем социальные сети (Telegram или Instagram)
+                                if (data.telegram) {
+                                    setValue('order-social', data.telegram);
+                                } else if (data.instagram) {
+                                    setValue('order-social', data.instagram);
+                                }
+                                
+                                // Заполняем адрес доставки
+                                setValue('order-street', data.street);
+                                setValue('order-house', data.house);
+                                setValue('order-apartment', data.apartment);
+                                
+                                // Для этажа используем entrance, если есть
+                                if (data.entrance) {
+                                    setValue('order-floor', data.entrance);
+                                }
+                                
+                                console.log('Форма заказа заполнена данными пользователя');
+                                
+                            } catch (e) {
+                                console.error('Ошибка парсинга JSON:', e);
+                                console.error('Полный ответ сервера:', xhr.responseText);
+                            }
+                        } else {
+                            console.error('Ошибка загрузки данных пользователя:', xhr.status, xhr.statusText);
+                        }
+                    }
+                };
+                xhr.send(JSON.stringify({ userId: userId }));
+            })
+            .catch(err => {
+                console.error('Ошибка загрузки settings.json:', err);
+            });
+    }
+    
+    // Загружаем данные пользователя при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        loadUserData();
+    });
+    
     // Базовая отправка формы (заглушка)
     document.querySelector('.order-form').addEventListener('submit', function(e) {
         let valid = true;
