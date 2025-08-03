@@ -149,6 +149,23 @@
     color: white;
 }
 
+.add-to-cart-btn {
+    background: white;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.add-to-cart-btn:hover {
+    background: #4CAF50;
+    color: white;
+}
+
 .cart-summary {
     margin-top: 32px;
     padding: 24px;
@@ -343,6 +360,11 @@
     }
     
     .delete-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    .add-to-cart-btn {
         padding: 8px 16px;
         font-size: 13px;
     }

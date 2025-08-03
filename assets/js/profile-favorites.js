@@ -19,43 +19,89 @@ document.addEventListener('DOMContentLoaded', async function() {
     return dishesData.find(dish => dish.id === parseInt(id));
   }
 
-  // Генерация карточки избранного блюда
+  // Генерация карточки избранного блюда в стиле корзины
   function createFavoriteCard(dish) {
     if (!dish) return '';
     
+    const calories = (dish.p * 4) + (dish.f * 9) + (dish.c * 4);
+    
     return `
-      <div class="menu-card" data-dish-id="${dish.id}">
-        <div class="menu-card-img-wrap">
-          <img src="${dish.img || 'assets/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
-          <div class="gallery-card-icons">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart active">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
-                       4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
-                       14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
-                       6.86-8.55 11.54L12 21.35z"/>
-            </svg>
-          </div>
+      <div class="cart-item" data-dish-id="${dish.id}">
+        <img src="${dish.img || 'assets/img/food1.jpg'}" alt="${dish.title}" class="cart-item-img">
+        <div class="cart-item-content">
+          <div class="cart-item-title">${dish.title}</div>
+          <div class="cart-item-macros">Б: ${dish.p}г Ж: ${dish.f}г В: ${dish.c}г, ${calories} ккал</div>
+          <div class="cart-item-description">${dish.subtitle || ''}</div>
+          ${dish.allergens ? `<div class="cart-item-allergens">Алергени: ${dish.allergens}</div>` : ''}
         </div>
-        <div class="menu-card-content">
-          <div class="menu-card-title">${dish.title}</div>
-          <div class="menu-card-macros">Б: ${dish.p} г, Ж: ${dish.f} г, В: ${dish.c} г</div>
-          <div class="menu-card-desc">${dish.subtitle || ''}</div>
-          ${dish.allergens ? `<div class="menu-card-allergens">Алергени: ${dish.allergens}</div>` : ''}
+        <div class="cart-item-controls">
+          <div class="cart-item-actions">
+            <button class="add-to-cart-btn" onclick="addToCart(${dish.id})">Додати в кошик</button>
+            <button class="delete-btn" onclick="removeFromFavorites(${dish.id})">Видалити з улюблених</button>
+          </div>
         </div>
       </div>
     `;
   }
 
-  // Отображение избранных блюд
-  function renderFavorites() {
+  // Функция добавления в корзину
+  window.addToCart = function(dishId) {
+    const dish = getDishById(dishId);
+    if (!dish) return;
+
+    const cartItem = {
+      id: dish.id,
+      title: dish.title,
+      subtitle: dish.subtitle,
+      img: dish.img,
+      p: dish.p,
+      f: dish.f,
+      c: dish.c,
+      quantity: 1,
+      day: 'today',
+      dayName: 'Сьогодні'
+    };
+
+    if (window.cartManager) {
+      window.cartManager.addItem(cartItem);
+      alert('Блюдо додано до кошика!');
+    } else {
+      // Fallback если cartManager не загружен
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      cart.push(cartItem);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert('Блюдо додано до кошика!');
+    }
+  };
+
+  // Функция удаления из избранного
+  window.removeFromFavorites = function(dishId) {
+    if (confirm('Ви впевнені, що хочете видалити це блюдо з улюблених?')) {
+      const heartsState = JSON.parse(localStorage.getItem('heartsState') || '{}');
+      heartsState[dishId] = false;
+      localStorage.setItem('heartsState', JSON.stringify(heartsState));
+      renderFavorites();
+    }
+  };
+
+  // Отображение избранных блюд в стиле корзины
+  window.renderFavorites = function() {
     const heartsState = JSON.parse(localStorage.getItem('heartsState') || '{}');
     const favoriteIds = Object.keys(heartsState).filter(id => heartsState[id] === true);
     
     if (favoriteIds.length === 0) {
       favoritesContainer.innerHTML = `
-        <div class="profile-cart-title">Улюблені страви</div>
-        <div class="profile-cart-empty" style="background:#f8fff8;color:#36b23a;">
-          У вас поки немає улюблених страв. Додайте їх, натиснувши на сердечко біля блюда!
+        <div class="cart-container">
+          <div class="cart-header">
+            <h1 class="profile-header-title">Улюблені страви</h1>
+          </div>
+          <div class="profile-cart-empty">
+            <div class="profile-cart-empty-title">У вас поки немає улюблених страв</div>
+            <div class="profile-cart-empty-desc">Додайте їх, натиснувши на сердечко біля блюда!</div>
+            <div class="profile-cart-btns">
+              <a href="index.html" class="profile-cart-btn">Переглянути меню</a>
+            </div>
+          </div>
         </div>
       `;
       return;
@@ -63,67 +109,88 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     const favoriteDishes = favoriteIds.map(id => getDishById(id)).filter(dish => dish);
     
+    // Подсчет общих макронутриентов
+    const totalMacros = favoriteDishes.reduce((total, dish) => ({
+      protein: total.protein + dish.p,
+      fat: total.fat + dish.f,
+      carbs: total.carbs + dish.c
+    }), { protein: 0, fat: 0, carbs: 0 });
+    
+    const totalCalories = favoriteDishes.reduce((total, dish) => {
+      const calories = (dish.p * 4) + (dish.f * 9) + (dish.c * 4);
+      return total + calories;
+    }, 0);
+    
     favoritesContainer.innerHTML = `
-      <div class="profile-cart-title">Улюблені страви</div>
-      <div class="favorites-carousel">
-        <button class="favorites-arrow favorites-arrow-left">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-        <div class="favorites-slider">
+      <div class="cart-container">
+        <div class="cart-header">
+          <h1 class="profile-header-title">Улюблені страви</h1>
+          <button class="clear-cart-btn" onclick="clearAllFavorites()">Очистити улюблені</button>
+        </div>
+        
+        <div class="cart-items">
           ${favoriteDishes.map(dish => createFavoriteCard(dish)).join('')}
         </div>
-        <button class="favorites-arrow favorites-arrow-right">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
+        
+        <div class="cart-summary">
+          <div class="cart-total">Загалом у улюблених: ${totalMacros.protein} Білки ${totalMacros.fat} Жири ${totalMacros.carbs} Вуглеводи, ${totalCalories} ккал.</div>
+          <div class="cart-actions">
+            <button class="checkout-btn" onclick="addAllToCart()">Додати все в кошик</button>
+            <a href="index.html" class="continue-shopping-btn">Переглянути меню</a>
+          </div>
+        </div>
       </div>
     `;
-
-    // Добавляем обработчики для стрелок карусели
-    const slider = favoritesContainer.querySelector('.favorites-slider');
-    const leftBtn = favoritesContainer.querySelector('.favorites-arrow-left');
-    const rightBtn = favoritesContainer.querySelector('.favorites-arrow-right');
-    
-    if (slider && leftBtn && rightBtn) {
-      // Получаем ширину одной карточки + отступ
-      const cardWidth = 400; // ширина карточки из CSS
-      const gap = 16; // отступ между карточками из CSS
-      const scrollStep = cardWidth + gap;
-      
-      leftBtn.addEventListener('click', function() {
-        const currentScroll = slider.scrollLeft;
-        const targetScroll = Math.max(0, currentScroll - scrollStep);
-        slider.scrollTo({ left: targetScroll, behavior: 'smooth' });
-      });
-      
-      rightBtn.addEventListener('click', function() {
-        const currentScroll = slider.scrollLeft;
-        const maxScroll = slider.scrollWidth - slider.clientWidth;
-        const targetScroll = Math.min(maxScroll, currentScroll + scrollStep);
-        slider.scrollTo({ left: targetScroll, behavior: 'smooth' });
-      });
-      
-      // Показываем/скрываем стрелки в зависимости от позиции
-      function updateArrowVisibility() {
-        leftBtn.style.display = slider.scrollLeft > 0 ? 'flex' : 'none';
-        rightBtn.style.display = slider.scrollLeft < (slider.scrollWidth - slider.clientWidth - 1) ? 'flex' : 'none';
-      }
-      
-      // Обновляем видимость стрелок при прокрутке
-      slider.addEventListener('scroll', updateArrowVisibility);
-      
-      // Инициализируем видимость стрелок
-      updateArrowVisibility();
-    }
-
-    // Обновляем HeartsManager для новых карточек
-    if (window.heartsManager) {
-      window.heartsManager.refresh();
-    }
   }
+
+  // Функция очистки всех избранных
+  window.clearAllFavorites = function() {
+    if (confirm('Ви впевнені, що хочете видалити всі улюблені страви?')) {
+      localStorage.setItem('heartsState', '{}');
+      renderFavorites();
+    }
+  };
+
+  // Функция добавления всех избранных в корзину
+  window.addAllToCart = function() {
+    const heartsState = JSON.parse(localStorage.getItem('heartsState') || '{}');
+    const favoriteIds = Object.keys(heartsState).filter(id => heartsState[id] === true);
+    
+    if (favoriteIds.length === 0) {
+      alert('У вас немає улюблених страв для додавання в кошик');
+      return;
+    }
+
+    let addedCount = 0;
+    favoriteIds.forEach(id => {
+      const dish = getDishById(id);
+      if (dish) {
+        const cartItem = {
+          id: dish.id,
+          title: dish.title,
+          subtitle: dish.subtitle,
+          img: dish.img,
+          p: dish.p,
+          f: dish.f,
+          c: dish.c,
+          quantity: 1,
+          day: 'today',
+          dayName: 'Сьогодні'
+        };
+
+        if (window.cartManager) {
+          window.cartManager.addItem(cartItem);
+        } else {
+          const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+          cart.push(cartItem);
+          localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        addedCount++;
+      }
+    });
+
+    alert(`Додано ${addedCount} страв до кошика!`);
+  };
 
   // Инициализация
   await loadDishesData();

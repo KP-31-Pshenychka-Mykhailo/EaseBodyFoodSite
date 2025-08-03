@@ -177,6 +177,13 @@
             if (tab === 'cart') {
                 loadCart();
             }
+            // Если открыта вкладка избранных, обновляем избранные
+            if (tab === 'favorites') {
+                // Вызываем функцию renderFavorites из profile-favorites.js
+                if (typeof renderFavorites === 'function') {
+                    renderFavorites();
+                }
+            }
         });
     });
     
