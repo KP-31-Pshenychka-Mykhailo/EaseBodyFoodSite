@@ -44,12 +44,12 @@ document.addEventListener('DOMContentLoaded', async function() {
   function createMenuCard(dish) {
     if (!cardState[currentDay]) cardState[currentDay] = {};
     
-    // По умолчанию все блюда выбраны (показываем плюс)
+    // По умолчанию все блюда НЕ выбраны (неактивны)
     if (cardState[currentDay][dish.id] === undefined) {
-      cardState[currentDay][dish.id] = true;
+      cardState[currentDay][dish.id] = false;
     }
     
-    const isSelected = cardState[currentDay][dish.id] === true;
+    const isActive = cardState[currentDay][dish.id] === true;
     
     return `
       <div class="menu-card" data-dish-id="${dish.id}">
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                        6.86-8.55 11.54L12 21.35z"/>
             </svg>
           </div>
-          <span class="menu-card-plus${isSelected ? ' active' : ''}" data-dish-id="${dish.id}">${isSelected ? '+' : '−'}</span>
+          <span class="menu-card-plus${isActive ? ' active' : ''}" data-dish-id="${dish.id}">${isActive ? '−' : '+'}</span>
         </div>
         <div class="menu-card-content">
           <div class="menu-card-title">${dish.title}</div>
@@ -97,17 +97,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (!cardState[currentDay]) cardState[currentDay] = {};
         
         // Переключаем состояние
-        const isCurrentlySelected = this.classList.contains('active');
+        const isCurrentlyActive = this.classList.contains('active');
         
-        if (isCurrentlySelected) {
-          // Если выбрано (плюс), то убираем из выбранных (становится минус)
+        if (isCurrentlyActive) {
+          // Если активно (минус), то убираем из меню
           this.classList.remove('active');
-          this.textContent = '−';
+          this.textContent = '+';
           cardState[currentDay][dishId] = false;
         } else {
-          // Если не выбрано (минус), то добавляем в выбранные (становится плюс)
+          // Если неактивно (плюс), то добавляем в меню
           this.classList.add('active');
-          this.textContent = '+';
+          this.textContent = '−';
           cardState[currentDay][dishId] = true;
         }
       });
@@ -177,16 +177,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         'saturday': 'Субота'
       };
       
-      let message = `Мінімум потрібно обрати 3 дні.\n\n`;
+      const selectedDayNames = Array.from(uniqueDays).map(day => dayMap[day]).join(', ');
       
-      if (daysCount === 0) {
-        message += `Ви ще не обрали жодного дня.\n\nВам потрібно обрати ${remainingDays} ${dayNames[remainingDays]}.`;
-      } else {
-        const selectedDayNames = Array.from(uniqueDays).map(day => dayMap[day]).join(', ');
-        message += `Ви обрали: ${selectedDayNames}\n\nВам залишилося обрати ще ${remainingDays} ${dayNames[remainingDays]}.`;
-      }
-      
-      alert(message);
+      alert(`Мінімум потрібно додати страви для 3 днів.\n\nВи додали страви для: ${selectedDayNames}\n\nВам залишилося додати страви ще для ${remainingDays} ${dayNames[remainingDays]}.`);
       return false;
     }
     
@@ -201,7 +194,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log('Card state:', cardState);
     
     if (selectedDishes.length === 0) {
-      alert('Будь ласка, оберіть хоча б одну страву для шаблону');
+      alert('Будь ласка, додайте хоча б одну страву до меню, натиснувши на "+" біля страви');
       return;
     }
 
