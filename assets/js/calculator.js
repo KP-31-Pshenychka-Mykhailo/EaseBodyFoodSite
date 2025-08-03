@@ -90,7 +90,7 @@ const mealMap = [
 function createMenuCardAlt(dish, mealType) {
   if (!dish) return '';
   return `
-    <div class="menu-card-alt">
+    <div class="menu-card-alt" data-dish-id="${dish.id}">
       <div class="menu-card-img-wrap-alt">
         <img src="${dish.img || 'assets/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
         <div class="gallery-card-icons-alt">
@@ -134,16 +134,10 @@ function renderPersonalMenu(menuArr, dishes, day) {
   });
   menuSlider.innerHTML = cardsHTML;
   if (menuTotal) menuTotal.textContent = `Б: ${totalP} г, Ж: ${totalF} г, В: ${totalC} г`;
-  // Интерактивность
-  document.querySelectorAll('.gallery-heart-alt').forEach(function(heart) {
-    heart.addEventListener('click', function(e) {
-      if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
-        e.preventDefault();
-        return;
-      }
-      heart.classList.toggle('active');
-    });
-  });
+  // Интерактивность (сердечки обрабатываются универсальным HeartsManager)
+  if (window.heartsManager) {
+    window.heartsManager.refresh();
+  }
   document.querySelectorAll('.menu-card-plus').forEach(function(plus) {
     plus.addEventListener('click', function() {
       plus.classList.toggle('active');
@@ -274,34 +268,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // --- Сердечки ---
-  document.querySelectorAll('.gallery-heart-alt').forEach(function(heart) {
-    heart.addEventListener('click', function(e) {
-      if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
-        e.preventDefault();
-        return;
-      }
-      heart.classList.toggle('active');
-    });
-  });
-  document.querySelectorAll('.gallery-heart').forEach(function(heart) {
-    heart.addEventListener('click', function(e) {
-      if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
-        e.preventDefault();
-        return;
-      }
-      heart.classList.toggle('active');
-    });
-  });
-  document.querySelectorAll('#personal-diet-section .gallery-heart').forEach(function(heart) {
-    heart.addEventListener('click', function(e) {
-      if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
-        e.preventDefault();
-        return;
-      }
-      heart.classList.toggle('active');
-    });
-  });
+  // --- Сердечки (обрабатываются универсальным HeartsManager) ---
+  if (window.heartsManager) {
+    window.heartsManager.refresh();
+  }
 
   // --- Плюсики ---
   document.querySelectorAll('#personal-diet-section .menu-card-plus').forEach(function(plus) {

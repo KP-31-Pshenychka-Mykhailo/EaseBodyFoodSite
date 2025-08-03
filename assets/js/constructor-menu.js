@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (!cardState[currentDay]) cardState[currentDay] = {};
     const isActive = cardState[currentDay][dish.id] !== false; // по умолчанию active (минус)
     return `
-      <div class="menu-card">
+      <div class="menu-card" data-dish-id="${dish.id}">
         <div class="menu-card-img-wrap">
           <img src="${dish.img || 'assets/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
           <div class="gallery-card-icons">
@@ -73,15 +73,11 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
 
   function attachCardEvents() {
-    document.querySelectorAll('.gallery-heart').forEach(heart => {
-      heart.addEventListener('click', function(e) {
-        if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
-          e.preventDefault();
-          return;
-        }
-        this.classList.toggle('active');
-      });
-    });
+    // Сердечки обрабатываются универсальным HeartsManager
+    if (window.heartsManager) {
+      window.heartsManager.refresh();
+    }
+    
     document.querySelectorAll('.menu-card-plus').forEach(plus => {
       plus.addEventListener('click', function() {
         const dishId = this.getAttribute('data-dish-id');

@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (!dish) return '';
     // mealType: название приёма пищи ("Сніданок", "Обід" и т.д.)
     return `
-      <div class="menu-card">
+      <div class="menu-card" data-dish-id="${dish.id}">
         <div class="menu-card-img-wrap">
           <img src="${dish.img || 'assets/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
           <div class="gallery-card-icons">
@@ -124,16 +124,11 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   // Восстановление интерактивности для сердечек и плюсиков
   function attachCardEvents() {
-    const hearts = document.querySelectorAll('.gallery-heart');
-    hearts.forEach(heart => {
-      heart.addEventListener('click', function(e) {
-        if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
-          e.preventDefault();
-          return;
-        }
-        this.classList.toggle('active');
-      });
-    });
+    // Сердечки обрабатываются универсальным HeartsManager
+    if (window.heartsManager) {
+      window.heartsManager.refresh();
+    }
+    
     const plusIcons = document.querySelectorAll('.menu-card-plus');
     plusIcons.forEach(plus => {
       plus.addEventListener('click', function() {

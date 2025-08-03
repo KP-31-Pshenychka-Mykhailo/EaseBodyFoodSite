@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const selected = shuffled.slice(0, 5);
       // Создаем карточки
       window.cardsHTML = selected.map(dish => `
-        <div class="gallery-card">
+        <div class="gallery-card" data-dish-id="${dish.id}">
           <img src="${dish.img ? dish.img : 'assets/img/food1.jpg'}" alt="${dish.title}" class="gallery-img">
           <div class="gallery-card-icons">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
@@ -81,20 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
     return window.innerWidth > 700 ? 377 : 280; // fallback (345 + 32 для десктопа, 220 + 60 для мобильных)
   }
 
-  // Функция для добавления обработчиков сердечек
+  // Функция для добавления обработчиков сердечек (теперь использует универсальный HeartsManager)
   function addHeartHandlers() {
-    document.querySelectorAll('.gallery-heart').forEach(function(heart) {
-      if (!heart.hasAttribute('data-handler-added')) {
-        heart.setAttribute('data-handler-added', 'true');
-        heart.addEventListener('click', function(e) {
-          if (window.showRegisterModalIfNotAuth && window.showRegisterModalIfNotAuth()) {
-            e.preventDefault();
-            return;
-          }
-          heart.classList.toggle('active');
-        });
-      }
-    });
+    if (window.heartsManager) {
+      window.heartsManager.refresh();
+    }
   }
 
   // Функция для центрирования карточек на десктопе
