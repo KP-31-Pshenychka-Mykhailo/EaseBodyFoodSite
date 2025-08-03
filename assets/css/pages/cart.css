@@ -171,31 +171,40 @@
 }
 
 .checkout-btn {
-    background: #4CAF50;
-    color: white;
-    border: none;
-    padding: 16px 32px;
-    border-radius: 25px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
+    background: #4CAF50 !important;
+    color: white !important;
+    border: none !important;
+    padding: 16px 32px !important;
+    border-radius: 25px !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: background 0.2s !important;
+    display: inline-block !important;
+    text-align: center !important;
+    width: 280px !important;
+    box-sizing: border-box !important;
 }
 
 .checkout-btn:hover {
-    background: #45a049;
+    background: #45a049 !important;
 }
 
 .continue-shopping-btn {
-    background: white;
-    color: #4CAF50;
-    border: 1px solid #4CAF50;
-    padding: 16px 32px;
-    border-radius: 25px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
+    background: white !important;
+    color: #4CAF50 !important;
+    border: 1px solid #4CAF50 !important;
+    padding: 16px 32px !important;
+    border-radius: 25px !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    text-align: center !important;
+    width: 280px !important;
+    box-sizing: border-box !important;
 }
 
 .continue-shopping-btn:hover {
@@ -282,9 +291,10 @@
     
     .checkout-btn,
     .continue-shopping-btn {
-        width: 100%;
-        padding: 14px 24px;
-        font-size: 16px;
+        width: 100% !important;
+        padding: 14px 24px !important;
+        font-size: 16px !important;
+        text-align: center !important;
     }
 }
 
@@ -347,8 +357,9 @@
     
     .checkout-btn,
     .continue-shopping-btn {
-        padding: 12px 20px;
-        font-size: 15px;
+        padding: 12px 20px !important;
+        font-size: 15px !important;
+        text-align: center !important;
     }
 }
 

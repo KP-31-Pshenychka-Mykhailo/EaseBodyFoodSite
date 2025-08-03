@@ -217,7 +217,7 @@ function loadCart() {
                         <div class="cart-total">Загалом у замовленні: ${macros.protein} Білки ${macros.fat} Жири ${macros.carbs} Вуглеводи, ${totalCalories} ккал.</div>
                         <div class="cart-actions">
                             <button class="checkout-btn" onclick="proceedToCheckout()">Оформити замовлення</button>
-                            <a href="index.html" class="continue-shopping-btn">Замовити як гість</a>
+                            <a href="index.html" class="continue-shopping-btn">Повернутися на головну</a>
                         </div>
                     </div>
                 `;
