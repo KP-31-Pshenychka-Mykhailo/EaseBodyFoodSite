@@ -121,73 +121,44 @@ window.clearCart = function() {
 };
 
 window.proceedToCheckout = function() {
-    console.log('=== PROCEED TO CHECKOUT CALLED ===');
-    
     // Открываем модальное окно с формой заказа
     const modal = document.getElementById('order-modal');
-    console.log('Modal element:', modal);
-    
     if (modal) {
-        console.log('Загружаем форму заказа...');
-        
         // Загружаем содержимое order.html
         fetch('partials/order.html')
-            .then(response => {
-                console.log('Response status:', response.status);
-                return response.text();
-            })
+            .then(response => response.text())
             .then(html => {
-                console.log('HTML loaded, length:', html.length);
-                
                 // Извлекаем содержимое main из order.html
                 const mainMatch = html.match(/<main[\s\S]*?<\/main>/);
-                console.log('Main match found:', !!mainMatch);
-                
                 if (mainMatch) {
-                    const modalBody = document.getElementById('order-modal-body');
-                    console.log('Modal body element:', modalBody);
-                    
-                    modalBody.innerHTML = mainMatch[0];
+                    document.getElementById('order-modal-body').innerHTML = mainMatch[0];
                     modal.style.display = 'flex';
-                    
-                    console.log('Modal displayed, loading user data...');
                     
                     // После загрузки формы загружаем данные пользователя
                     loadUserDataToOrderForm();
-                } else {
-                    console.error('Main content not found in order.html');
                 }
             })
             .catch(error => {
                 console.error('Error loading order form:', error);
                 alert('Помилка завантаження форми замовлення');
             });
-    } else {
-        console.error('Modal element not found');
     }
 };
 
 // Функция для загрузки и заполнения данных пользователя в форме заказа
 function loadUserDataToOrderForm() {
-    console.log('=== LOADING USER DATA TO ORDER FORM ===');
-    console.log('Function called at:', new Date().toISOString());
-    
     const userId = localStorage.getItem('userId');
     
     // Проверяем, что форма заказа существует
     const orderForm = document.querySelector('.order-form');
     if (!orderForm) {
-        console.error('Форма заказа не найдена на странице');
         return;
     }
     
     // Если пользователь не зарегистрирован, ничего не делаем
     if (!userId) {
-        console.log('Пользователь не зарегистрирован, форма остается пустой');
         return;
     }
-    
-    console.log('Загружаем данные пользователя для формы заказа, userId:', userId);
     
     fetch('assets/data/settings.json')
         .then(response => response.json())
@@ -202,20 +173,15 @@ function loadUserDataToOrderForm() {
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
-                    console.log('Получен ответ от сервера:', xhr.status, xhr.statusText);
                     if (xhr.status === 200) {
                         try {
                             const data = JSON.parse(xhr.responseText);
-                            console.log('Данные пользователя получены:', data);
                             
                             // Функция для безопасного установки значения
                             const setValue = (id, value) => {
                                 const el = document.getElementById(id);
                                 if (el && value !== undefined && value !== null && value !== '') {
                                     el.value = value;
-                                    console.log(`Заполнено поле ${id}: ${value}`);
-                                } else if (!el) {
-                                    console.warn(`Элемент с id ${id} не найден`);
                                 }
                             };
                             
@@ -242,17 +208,12 @@ function loadUserDataToOrderForm() {
                                 setValue('order-floor', data.entrance);
                             }
                             
-                            console.log('Форма заказа заполнена данными пользователя');
-                            
                             // Настраиваем валидацию полей формы
                             setupOrderFormValidation();
                             
                         } catch (e) {
                             console.error('Ошибка парсинга JSON:', e);
-                            console.error('Полный ответ сервера:', xhr.responseText);
                         }
-                    } else {
-                        console.error('Ошибка загрузки данных пользователя:', xhr.status, xhr.statusText);
                     }
                 }
             };
@@ -265,7 +226,6 @@ function loadUserDataToOrderForm() {
 
 // Функция для настройки валидации формы заказа
 function setupOrderFormValidation() {
-    console.log('Настраиваем валидацию формы заказа...');
     
     // Валидация обязательных полей
     const requiredFields = [
@@ -398,26 +358,18 @@ function loadCart() {
                     <div class="cart-summary">
                         <div class="cart-total">Загалом у замовленні: ${macros.protein} Білки ${macros.fat} Жири ${macros.carbs} Вуглеводи, ${totalCalories} ккал.</div>
                         <div class="cart-actions">
-                            <button class="checkout-btn" onclick="proceedToCheckout()" style="cursor:pointer;">Оформити замовлення</button>
+                            <button class="checkout-btn" onclick="proceedToCheckout()">Оформити замовлення</button>
                             <a href="index.html" class="continue-shopping-btn">Повернутися на головну</a>
                         </div>
                     </div>
                 `;
     
     cartContent.innerHTML = cartHTML;
-    console.log('Cart HTML loaded, checkout button should be visible');
-    console.log('Cart items count:', cart.length);
 }
 
 // Инициализация корзины при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Cart.js loaded');
-    console.log('proceedToCheckout function available:', typeof window.proceedToCheckout);
-    
     if (document.getElementById('cart-content')) {
-        console.log('Cart content element found, loading cart...');
         loadCart();
-    } else {
-        console.log('Cart content element not found');
     }
 }); 
