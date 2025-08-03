@@ -216,17 +216,26 @@
     font-size: 16px !important;
     font-weight: 500 !important;
     cursor: pointer !important;
-    transition: all 0.2s !important;
+    transition: all 0.3s ease !important;
     text-decoration: none !important;
     display: inline-block !important;
     text-align: center !important;
     width: 280px !important;
     box-sizing: border-box !important;
+    position: relative !important;
+    overflow: hidden !important;
 }
 
 .continue-shopping-btn:hover {
-    background: #4CAF50;
-    color: white;
+    background: #4CAF50 !important;
+    color: white !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3) !important;
+}
+
+.continue-shopping-btn:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 6px rgba(76, 175, 80, 0.2) !important;
 }
 
 /* Убираем подчеркивание у всех кнопок и ссылок в корзине */
