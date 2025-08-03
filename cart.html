@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="assets/css/static/footer.css">
     <link rel="stylesheet" href="assets/css/pages/profile.css">
     <link rel="stylesheet" href="assets/css/static/order.css">
+    <link rel="stylesheet" href="assets/css/main/alt-theme.css">
+
     <style>
         .cart-container {
             max-width: 1200px;
@@ -29,9 +31,9 @@
         }
         
         .cart-item-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 12px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
             object-fit: cover;
             flex-shrink: 0;
         }
@@ -41,9 +43,9 @@
         }
         
         .cart-item-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
-            color: #222;
+            color: #4CAF50;
             margin-bottom: 8px;
         }
         
@@ -57,6 +59,7 @@
             font-size: 14px;
             color: #888;
             line-height: 1.4;
+            margin-bottom: 16px;
         }
         
         .cart-item-day {
@@ -79,7 +82,13 @@
         .quantity-controls {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+        }
+        
+        .quantity-label {
+            font-size: 14px;
+            color: #666;
+            margin-right: 8px;
         }
         
         .quantity-btn {
@@ -116,25 +125,10 @@
             gap: 12px;
         }
         
-        .customize-btn {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        
-        .customize-btn:hover {
-            background: #45a049;
-        }
-        
         .delete-btn {
             background: white;
-            color: #E53935;
-            border: 1px solid #E53935;
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
             padding: 8px 16px;
             border-radius: 8px;
             font-size: 14px;
@@ -143,7 +137,7 @@
         }
         
         .delete-btn:hover {
-            background: #E53935;
+            background: #4CAF50;
             color: white;
         }
         
@@ -157,14 +151,16 @@
         .cart-total {
             font-size: 18px;
             font-weight: 600;
-            color: #222;
+            color: #4CAF50;
             margin-bottom: 16px;
+            text-align: center;
         }
         
         .cart-actions {
             display: flex;
             gap: 16px;
             flex-wrap: wrap;
+            justify-content: center;
         }
         
         .checkout-btn {

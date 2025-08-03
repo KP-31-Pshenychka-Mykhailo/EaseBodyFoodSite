@@ -164,39 +164,38 @@ function loadCart() {
     cart.forEach((item, index) => {
         const calories = (item.p * 4) + (item.f * 9) + (item.c * 4);
         
-        cartHTML += `
-            <div class="cart-item" data-index="${index}">
-                <img src="${item.img || 'assets/img/food1.jpg'}" alt="${item.title}" class="cart-item-img">
-                <div class="cart-item-content">
-                    <div class="cart-item-day">${item.dayName}</div>
-                    <div class="cart-item-title">${item.title}</div>
-                    <div class="cart-item-macros">Б: ${item.p}г Ж: ${item.f}г В: ${item.c}г, ${calories} ккал</div>
-                    <div class="cart-item-description">${item.subtitle || ''}</div>
-                </div>
-                <div class="cart-item-controls">
-                    <div class="quantity-controls">
-                        <span>Кількість:</span>
-                        <button class="quantity-btn" onclick="changeQuantity(${index}, -1)">-</button>
-                        <input type="number" class="quantity-input" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
-                        <button class="quantity-btn" onclick="changeQuantity(${index}, 1)">+</button>
-                    </div>
-                    <div class="cart-item-actions">
-                        <button class="customize-btn">Налаштувати інгредієнти</button>
-                        <button class="delete-btn" onclick="removeItem(${index})">Видалити</button>
-                    </div>
-                </div>
-            </div>
-        `;
+                            cartHTML += `
+                        <div class="cart-item" data-index="${index}">
+                            <img src="${item.img || 'assets/img/food1.jpg'}" alt="${item.title}" class="cart-item-img">
+                            <div class="cart-item-content">
+                                <div class="cart-item-day">${item.dayName}</div>
+                                <div class="cart-item-title">${item.title}</div>
+                                <div class="cart-item-macros">Б: ${item.p}г Ж: ${item.f}г В: ${item.c}г, ${calories} ккал</div>
+                                <div class="cart-item-description">${item.subtitle || ''}</div>
+                            </div>
+                            <div class="cart-item-controls">
+                                <div class="quantity-controls">
+                                    <span class="quantity-label">Кількість:</span>
+                                    <button class="quantity-btn" onclick="changeQuantity(${index}, -1)">-</button>
+                                    <input type="number" class="quantity-input" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
+                                    <button class="quantity-btn" onclick="changeQuantity(${index}, 1)">+</button>
+                                </div>
+                                <div class="cart-item-actions">
+                                    <button class="delete-btn" onclick="removeItem(${index})">Видалити</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
     });
     
     cartHTML += '</div>';
     
                     cartHTML += `
                     <div class="cart-summary">
-                        <div class="cart-total">Загалом у меню: ${macros.protein} Білки ${macros.fat} Жири ${macros.carbs} Вуглеводи, ${totalCalories} ккал.</div>
+                        <div class="cart-total">Загалом у замовленні: ${macros.protein} Білки ${macros.fat} Жири ${macros.carbs} Вуглеводи, ${totalCalories} ккал.</div>
                         <div class="cart-actions">
                             <button class="checkout-btn" onclick="proceedToCheckout()">Оформити замовлення</button>
-                            <a href="index.html" class="continue-shopping-btn">Повернутися на головну</a>
+                            <a href="index.html" class="continue-shopping-btn">Замовити як гість</a>
                         </div>
                     </div>
                 `;
