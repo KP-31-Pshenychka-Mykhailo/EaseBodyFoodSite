@@ -90,23 +90,33 @@ window.cartManager = new CartManager();
 
 // Функции для работы с корзиной на странице
 window.changeQuantity = function(index, change) {
-    window.cartManager.changeQuantity(index, change);
-    if (typeof loadCart === 'function') {
+    const cart = window.cartManager.loadCart();
+    if (cart[index]) {
+        const newQuantity = Math.max(1, cart[index].quantity + change);
+        window.cartManager.updateQuantity(index, newQuantity);
         loadCart();
     }
 };
 
 window.updateQuantity = function(index, value) {
-    window.cartManager.updateQuantity(index, value);
-    if (typeof loadCart === 'function') {
-        loadCart();
-    }
+    const newQuantity = Math.max(1, parseInt(value) || 1);
+    window.cartManager.updateQuantity(index, newQuantity);
+    loadCart();
 };
 
 window.removeItem = function(index) {
     window.cartManager.removeItem(index);
     if (typeof loadCart === 'function') {
         loadCart();
+    }
+};
+
+window.clearCart = function() {
+    if (confirm('Ви впевнені, що хочете очистити кошик?')) {
+        window.cartManager.clearCart();
+        if (typeof loadCart === 'function') {
+            loadCart();
+        }
     }
 };
 
@@ -176,8 +186,8 @@ function loadCart() {
                             <div class="cart-item-controls">
                                 <div class="quantity-controls">
                                     <span class="quantity-label">Кількість:</span>
-                                    <button class="quantity-btn" onclick="changeQuantity(${index}, -1)">-</button>
-                                    <input type="number" class="quantity-input" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
+                                    <button class="quantity-btn" onclick="changeQuantity(${index}, -1)">−</button>
+                                    <input type="number" class="quantity-input" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)" oninput="updateQuantity(${index}, this.value)">
                                     <button class="quantity-btn" onclick="changeQuantity(${index}, 1)">+</button>
                                 </div>
                                 <div class="cart-item-actions">

@@ -18,6 +18,30 @@
             padding: 0 20px;
         }
         
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+        
+        .clear-cart-btn {
+            background: white;
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .clear-cart-btn:hover {
+            background: #4CAF50;
+            color: white;
+        }
+        
         .cart-items {
             margin-top: 32px;
         }
@@ -26,14 +50,14 @@
             display: flex;
             align-items: center;
             padding: 24px;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #4CAF50;
             gap: 20px;
         }
         
         .cart-item-img {
             width: 150px;
             height: 150px;
-            border-radius: 50%;
+            border-radius: 12px;
             object-fit: cover;
             flex-shrink: 0;
         }
@@ -51,13 +75,13 @@
         
         .cart-item-macros {
             font-size: 14px;
-            color: #666;
+            color: #222;
             margin-bottom: 8px;
         }
         
         .cart-item-description {
             font-size: 14px;
-            color: #888;
+            color: #222;
             line-height: 1.4;
             margin-bottom: 16px;
         }
@@ -82,42 +106,38 @@
         .quantity-controls {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
         }
         
         .quantity-label {
             font-size: 14px;
-            color: #666;
+            color: #222;
             margin-right: 8px;
         }
         
         .quantity-btn {
-            width: 32px;
-            height: 32px;
-            border: 1px solid #4CAF50;
-            background: white;
-            color: #4CAF50;
-            border-radius: 8px;
-            cursor: pointer;
+            background: none;
+            border: none;
+            color: #222;
             font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            cursor: pointer;
+            padding: 4px;
             transition: all 0.2s;
         }
         
         .quantity-btn:hover {
-            background: #4CAF50;
-            color: white;
+            color: #4CAF50;
         }
         
         .quantity-input {
-            width: 50px;
+            width: 60px;
             height: 32px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            border: 1px solid #222;
+            border-radius: 25px;
             text-align: center;
             font-size: 16px;
+            background: white;
+            color: #222;
         }
         
         .cart-item-actions {
@@ -125,13 +145,16 @@
             gap: 12px;
         }
         
+
+        
         .delete-btn {
             background: white;
             color: #4CAF50;
             border: 1px solid #4CAF50;
-            padding: 8px 16px;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-radius: 25px;
             font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -167,8 +190,8 @@
             background: #4CAF50;
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 16px 32px;
+            border-radius: 25px;
             font-size: 16px;
             font-weight: 500;
             cursor: pointer;
@@ -183,8 +206,8 @@
             background: white;
             color: #4CAF50;
             border: 1px solid #4CAF50;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 16px 32px;
+            border-radius: 25px;
             font-size: 16px;
             font-weight: 500;
             cursor: pointer;
@@ -227,7 +250,10 @@
     <div id="header"></div>
     <main style="background:#fff;">
         <div class="cart-container">
-            <h1 class="profile-header-title">Кошик</h1>
+            <div class="cart-header">
+                <h1 class="profile-header-title">Кошик</h1>
+                <button class="clear-cart-btn" onclick="clearCart()">Очистити кошик</button>
+            </div>
             
             <div id="cart-content">
                 <!-- Содержимое корзины будет загружено через JavaScript -->

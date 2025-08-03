@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демо корзины | Easy Body Food</title>
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <link rel="stylesheet" href="assets/css/static/header.css">
+    <link rel="stylesheet" href="assets/css/static/footer.css">
+    <link rel="stylesheet" href="assets/css/pages/profile.css">
+    <link rel="stylesheet" href="assets/css/static/order.css">
+    <link rel="stylesheet" href="assets/css/main/alt-theme.css">
+
+    <style>
+        .cart-container {
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
+            padding: 0 20px;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+        
+        .clear-cart-btn {
+            background: white;
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .clear-cart-btn:hover {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .cart-items {
+            margin-top: 32px;
+        }
+        
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid #4CAF50;
+            gap: 20px;
+        }
+        
+        .cart-item-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 12px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        
+        .cart-item-content {
+            flex: 1;
+        }
+        
+        .cart-item-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #4CAF50;
+            margin-bottom: 8px;
+        }
+        
+        .cart-item-macros {
+            font-size: 14px;
+            color: #222;
+            margin-bottom: 8px;
+        }
+        
+        .cart-item-description {
+            font-size: 14px;
+            color: #222;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+        
+        .cart-item-day {
+            background: #4CAF50;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .quantity-label {
+            font-size: 14px;
+            color: #222;
+            margin-right: 8px;
+        }
+        
+        .quantity-btn {
+            background: none;
+            border: none;
+            color: #222;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px;
+            transition: all 0.2s;
+        }
+        
+        .quantity-btn:hover {
+            color: #4CAF50;
+        }
+        
+        .quantity-input {
+            width: 60px;
+            height: 32px;
+            border: 1px solid #222;
+            border-radius: 25px;
+            text-align: center;
+            font-size: 16px;
+            background: white;
+            color: #222;
+        }
+        
+        .cart-item-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .delete-btn {
+            background: white;
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .delete-btn:hover {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .cart-summary {
+            margin-top: 32px;
+            padding: 24px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .cart-total {
+            font-size: 18px;
+            font-weight: 600;
+            color: #4CAF50;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .cart-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .checkout-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .checkout-btn:hover {
+            background: #45a049;
+        }
+        
+        .continue-shopping-btn {
+            background: white;
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+            padding: 16px 32px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .continue-shopping-btn:hover {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        /* Убираем подчеркивание у всех кнопок и ссылок в корзине */
+        .cart-container a {
+            text-decoration: none;
+        }
+        
+        .cart-container button {
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .cart-item-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .cart-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header"></div>
+    <main style="background:#fff;">
+        <div class="cart-container">
+            <div class="cart-header">
+                <h1 class="profile-header-title">Демо корзины</h1>
+                <button class="clear-cart-btn">Очистити кошик</button>
+            </div>
+            <p style="text-align: center; color: #666; margin-bottom: 32px;">Пример использования стиля корзины с блюдами</p>
+            
+            <div class="cart-items">
+                <!-- Первое блюдо -->
+                <div class="cart-item">
+                    <img src="assets/img/food1.jpg" alt="Індичка з грибами" class="cart-item-img">
+                    <div class="cart-item-content">
+                        <div class="cart-item-day">Понеділок</div>
+                        <div class="cart-item-title">Індичка з грибами в бальзамічному соусі</div>
+                        <div class="cart-item-macros">Б: 32г Ж: 9г В: 4г, 280 ккал</div>
+                        <div class="cart-item-description">Ніжне філе індички, обсмажене до золотистої скоринки, подається з печерицями та міксом листових овочів. Заправлено бальзамічним соусом для яскравого смаку</div>
+                    </div>
+                    <div class="cart-item-controls">
+                        <div class="quantity-controls">
+                            <span class="quantity-label">Кількість:</span>
+                            <button class="quantity-btn" onclick="demoChangeQuantity(0, -1)">−</button>
+                            <input type="number" class="quantity-input" value="1" min="1" onchange="demoUpdateQuantity(0, this.value)" oninput="demoUpdateQuantity(0, this.value)">
+                            <button class="quantity-btn" onclick="demoChangeQuantity(0, 1)">+</button>
+                        </div>
+                        <div class="cart-item-actions">
+                            <button class="delete-btn">Видалити</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Второе блюдо -->
+                <div class="cart-item">
+                    <img src="assets/img/food2.jpg" alt="Лосось з овочами" class="cart-item-img">
+                    <div class="cart-item-content">
+                        <div class="cart-item-day">Вівторок</div>
+                        <div class="cart-item-title">Лосось з овочами та рисом</div>
+                        <div class="cart-item-macros">Б: 28г Ж: 12г В: 6г, 320 ккал</div>
+                        <div class="cart-item-description">Свіжий лосось, запечений з овочами та подається з бурим рисом. Богатий на омега-3 жирні кислоти та білок</div>
+                    </div>
+                    <div class="cart-item-controls">
+                        <div class="quantity-controls">
+                            <span class="quantity-label">Кількість:</span>
+                            <button class="quantity-btn" onclick="demoChangeQuantity(1, -1)">−</button>
+                            <input type="number" class="quantity-input" value="2" min="1" onchange="demoUpdateQuantity(1, this.value)" oninput="demoUpdateQuantity(1, this.value)">
+                            <button class="quantity-btn" onclick="demoChangeQuantity(1, 1)">+</button>
+                        </div>
+                        <div class="cart-item-actions">
+                            <button class="delete-btn">Видалити</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Третье блюдо -->
+                <div class="cart-item">
+                    <img src="assets/img/food3.jpg" alt="Куряча грудка" class="cart-item-img">
+                    <div class="cart-item-content">
+                        <div class="cart-item-day">Середа</div>
+                        <div class="cart-item-title">Куряча грудка з кіноа та овочами</div>
+                        <div class="cart-item-macros">Б: 35г Ж: 8г В: 8г, 290 ккал</div>
+                        <div class="cart-item-description">Ніжна куряча грудка з кіноа та свіжими овочами. Високий вміст білка та повільних вуглеводів</div>
+                    </div>
+                    <div class="cart-item-controls">
+                        <div class="quantity-controls">
+                            <span class="quantity-label">Кількість:</span>
+                            <button class="quantity-btn" onclick="demoChangeQuantity(2, -1)">−</button>
+                            <input type="number" class="quantity-input" value="1" min="1" onchange="demoUpdateQuantity(2, this.value)" oninput="demoUpdateQuantity(2, this.value)">
+                            <button class="quantity-btn" onclick="demoChangeQuantity(2, 1)">+</button>
+                        </div>
+                        <div class="cart-item-actions">
+                            <button class="delete-btn">Видалити</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Итоговая секция -->
+            <div class="cart-summary">
+                <div class="cart-total">Загалом у замовленні: 95 Білки 29 Жири 18 Вуглеводи, 890 ккал.</div>
+                <div class="cart-actions">
+                    <button class="checkout-btn">Оформити замовлення</button>
+                    <a href="index.html" class="continue-shopping-btn">Замовити як гість</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="footer"></div>
+    
+    <script src="assets/js/layout.js"></script>
+    <script>
+        // Демо функции для управления количеством
+        let demoQuantities = [1, 2, 1];
+        
+        function demoChangeQuantity(index, change) {
+            demoQuantities[index] = Math.max(1, demoQuantities[index] + change);
+            updateDemoDisplay();
+        }
+        
+        function demoUpdateQuantity(index, value) {
+            demoQuantities[index] = Math.max(1, parseInt(value) || 1);
+            updateDemoDisplay();
+        }
+        
+        function updateDemoDisplay() {
+            const inputs = document.querySelectorAll('.quantity-input');
+            inputs.forEach((input, index) => {
+                if (demoQuantities[index] !== undefined) {
+                    input.value = demoQuantities[index];
+                }
+            });
+        }
+    </script>
+</body>
+</html> 
