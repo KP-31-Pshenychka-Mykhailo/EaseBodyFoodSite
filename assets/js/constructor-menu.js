@@ -34,10 +34,23 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Сохраняем состояние плюса/минуса для каждого блюда по id и дню недели
   const cardState = {};
   let currentDay = 'monday';
+  
+  // Инициализируем cardState для всех дней недели (с понедельника по субботу)
+  const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  days.forEach(day => {
+    cardState[day] = {};
+  });
 
   function createMenuCard(dish) {
     if (!cardState[currentDay]) cardState[currentDay] = {};
-    const isActive = cardState[currentDay][dish.id] !== false; // по умолчанию active (минус)
+    
+    // По умолчанию все блюда выбраны (активны)
+    if (cardState[currentDay][dish.id] === undefined) {
+      cardState[currentDay][dish.id] = true;
+    }
+    
+    const isActive = cardState[currentDay][dish.id] === true;
+    
     return `
       <div class="menu-card" data-dish-id="${dish.id}">
         <div class="menu-card-img-wrap">
@@ -103,13 +116,16 @@ document.addEventListener('DOMContentLoaded', async function() {
       'wednesday': 'Ср',
       'thursday': 'Чт',
       'friday': 'Пт',
-      'saturday': 'Сб',
-      'sunday': 'Нд'
+      'saturday': 'Сб'
     };
+
+    console.log('Getting selected dishes from cardState:', cardState);
 
     Object.keys(cardState).forEach(day => {
       if (cardState[day]) {
+        console.log(`Checking day ${day}:`, cardState[day]);
         Object.keys(cardState[day]).forEach(dishId => {
+          console.log(`Dish ${dishId} in ${day}:`, cardState[day][dishId]);
           if (cardState[day][dishId] === true) {
             const dish = dishesData.find(d => d.id == dishId);
             if (dish) {
@@ -125,15 +141,58 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
     });
 
+    console.log('Final selected dishes:', selectedDishes);
     return selectedDishes;
+  }
+
+  // Функция для проверки минимального количества дней
+  function checkMinimumDays(selectedDishes) {
+    const uniqueDays = new Set(selectedDishes.map(dish => dish.day));
+    const daysCount = uniqueDays.size;
+    
+    console.log('Unique days selected:', Array.from(uniqueDays));
+    console.log('Days count:', daysCount);
+    
+    if (daysCount < 3) {
+      const remainingDays = 3 - daysCount;
+      const dayNames = {
+        1: 'день',
+        2: 'дні',
+        3: 'днів'
+      };
+      
+      const dayMap = {
+        'monday': 'Понеділок',
+        'tuesday': 'Вівторок',
+        'wednesday': 'Середа',
+        'thursday': 'Четвер',
+        'friday': 'П\'ятниця',
+        'saturday': 'Субота'
+      };
+      
+      const selectedDayNames = Array.from(uniqueDays).map(day => dayMap[day]).join(', ');
+      
+      alert(`Мінімум потрібно обрати 3 дні.\n\nВи обрали: ${selectedDayNames}\n\nВам залишилося обрати ще ${remainingDays} ${dayNames[remainingDays]}.`);
+      return false;
+    }
+    
+    return true;
   }
 
   // Функция для сохранения шаблона в корзину
   function saveTemplateToCart() {
     const selectedDishes = getSelectedDishes();
     
+    console.log('Selected dishes:', selectedDishes);
+    console.log('Card state:', cardState);
+    
     if (selectedDishes.length === 0) {
       alert('Будь ласка, оберіть хоча б одну страву для шаблону');
+      return;
+    }
+
+    // Проверяем минимальное количество дней
+    if (!checkMinimumDays(selectedDishes)) {
       return;
     }
 
@@ -161,6 +220,8 @@ document.addEventListener('DOMContentLoaded', async function() {
       localStorage.setItem('cart', JSON.stringify(cart));
     }
     
+    console.log('Cart after saving:', localStorage.getItem('cart'));
+    
     // Перенаправляем в корзину
     window.location.href = 'cart.html';
   }
@@ -184,8 +245,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     'ср': 'wednesday',
     'чт': 'thursday',
     'пт': 'friday',
-    'сб': 'saturday',
-    'нд': 'sunday'
+    'сб': 'saturday'
   };
   dayButtons.forEach(button => {
     button.addEventListener('click', function() {

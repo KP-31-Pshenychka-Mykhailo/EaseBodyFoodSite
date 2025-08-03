@@ -119,11 +119,16 @@ window.proceedToCheckout = function() {
 // Функция для отображения корзины на странице cart.html
 function loadCart() {
     const cartContent = document.getElementById('cart-content');
-    if (!cartContent) return;
+    if (!cartContent) {
+        console.log('Cart content element not found in loadCart');
+        return;
+    }
 
     const cart = window.cartManager.loadCart();
+    console.log('Cart loaded from localStorage:', cart);
     
     if (cart.length === 0) {
+        console.log('Cart is empty, showing empty state');
         cartContent.innerHTML = `
             <div class="profile-cart-empty">
                 <div class="profile-cart-empty-title">Упс! Кошик порожній</div>
@@ -186,7 +191,11 @@ function loadCart() {
 
 // Инициализация корзины при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Cart.js loaded');
     if (document.getElementById('cart-content')) {
+        console.log('Cart content element found, loading cart...');
         loadCart();
+    } else {
+        console.log('Cart content element not found');
     }
 }); 
