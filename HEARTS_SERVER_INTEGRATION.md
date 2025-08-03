@@ -10,52 +10,49 @@
 
 При изменении состояния сердечка (добавление/удаление из избранного) автоматически отправляется запрос на сервер:
 
-- **Добавление в избранное**: `POST /favorite/add`
-- **Удаление из избранного**: `POST /favorite/remove`
+- **Добавление в избранное**: `POST /user/favorite/add`
+- **Удаление из избранного**: `POST /user/favorite/remove`
 
 ### 2. Загрузка избранных блюд с сервера
 
 При загрузке страницы система автоматически загружает избранные блюда с сервера:
 
-- **Получение избранного**: `GET /favorite/get?userId={userId}`
+- **Получение избранного**: `POST /user/favorite/{userId}`
 
 ### 3. Очистка избранного
 
 При очистке избранного данные удаляются как локально, так и на сервере:
 
-- **Очистка избранного**: `POST /favorite/clear`
+- **Очистка избранного**: `POST /user/favorite/clear`
 
 ## Структура запросов
 
 ### Добавление в избранное
 ```json
-POST /favorite/add
+POST /user/favorite/add
 {
   "UserId": 123,
-  "DishId": "67"
+  "DishId": 67
 }
 ```
 
 ### Удаление из избранного
 ```json
-POST /favorite/remove
+POST /user/favorite/remove
 {
   "UserId": 123,
-  "DishId": "67"
+  "DishId": 67
 }
 ```
 
 ### Получение избранного
 ```
-POST /favorite
-{
-  "userId": 123
-}
+POST /user/favorite/{userId}
 ```
 
 ### Очистка избранного
 ```json
-POST /favorite/clear
+POST /user/favorite/clear
 {
   "UserId": 123
 }
@@ -105,9 +102,9 @@ POST /favorite/clear
 
 Сервер должен поддерживать следующие endpoints:
 
-- `POST /favorite/add` - добавление блюда в избранное
-- `POST /favorite/remove` - удаление блюда из избранного  
-- `POST /favorite` - получение списка избранных блюд
-- `POST /favorite/clear` - очистка всего избранного
+- `POST /user/favorite/add` - добавление блюда в избранное
+- `POST /user/favorite/remove` - удаление блюда из избранного  
+- `POST /user/favorite/{userId}` - получение списка избранных блюд
+- `POST /user/favorite/clear` - очистка всего избранного
 
 Все endpoints должны принимать и возвращать JSON данные. 

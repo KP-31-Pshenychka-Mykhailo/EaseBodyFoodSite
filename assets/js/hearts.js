@@ -129,10 +129,10 @@ class HeartsManager {
       const settings = await settingsResponse.json();
       const baseUrl = settings.SERVER_BASE_URL;
 
-      const endpoint = isActive ? '/favorite/add' : '/favorite/remove';
+      const endpoint = isActive ? '/user/favorite/add' : '/user/favorite/remove';
       const requestData = {
         UserId: userId,
-        DishId: dishId.toString()
+        DishId: parseInt(dishId)
       };
 
       const response = await fetch(`${baseUrl}${endpoint}`, {
@@ -175,13 +175,12 @@ class HeartsManager {
       const settings = await settingsResponse.json();
       const baseUrl = settings.SERVER_BASE_URL;
 
-      const response = await fetch(`${baseUrl}/favorite`, {
+      const response = await fetch(`${baseUrl}/user/favorite/${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
-        body: JSON.stringify({ userId: userId })
+        credentials: 'include'
       });
 
       if (!response.ok) {
@@ -316,7 +315,7 @@ class HeartsManager {
       const settings = await settingsResponse.json();
       const baseUrl = settings.SERVER_BASE_URL;
 
-      const response = await fetch(`${baseUrl}/favorite/clear`, {
+      const response = await fetch(`${baseUrl}/user/favorite/clear`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -335,6 +334,7 @@ class HeartsManager {
       console.warn('Ошибка при очистке избранного на сервере:', error);
     }
   }
+
 }
 
 // Инициализация при загрузке DOM
