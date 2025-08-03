@@ -155,6 +155,12 @@ function loadCart() {
     
     if (cart.length === 0) {
         console.log('Cart is empty, showing empty state');
+        // Скрываем кнопку "Очистити кошик"
+        const clearCartBtn = document.querySelector('.clear-cart-btn');
+        if (clearCartBtn) {
+            clearCartBtn.style.display = 'none';
+        }
+        
         cartContent.innerHTML = `
             <div class="profile-cart-empty">
                 <div class="profile-cart-empty-title">Упс! Кошик порожній</div>
@@ -165,6 +171,12 @@ function loadCart() {
             </div>
         `;
         return;
+    }
+    
+    // Показываем кнопку "Очистити кошик" если корзина не пуста
+    const clearCartBtn = document.querySelector('.clear-cart-btn');
+    if (clearCartBtn) {
+        clearCartBtn.style.display = 'block';
     }
     
     let cartHTML = '<div class="cart-items">';
