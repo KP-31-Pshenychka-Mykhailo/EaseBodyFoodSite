@@ -133,6 +133,9 @@ window.proceedToCheckout = function() {
                 if (mainMatch) {
                     document.getElementById('order-modal-body').innerHTML = mainMatch[0];
                     modal.style.display = 'flex';
+                    
+                    // После загрузки формы загружаем данные пользователя
+                    loadUserDataToOrderForm();
                 }
             })
             .catch(error => {
@@ -141,6 +144,162 @@ window.proceedToCheckout = function() {
             });
     }
 };
+
+// Функция для загрузки и заполнения данных пользователя в форме заказа
+function loadUserDataToOrderForm() {
+    console.log('=== LOADING USER DATA TO ORDER FORM ===');
+    
+    const userId = localStorage.getItem('userId');
+    
+    // Проверяем, что форма заказа существует
+    const orderForm = document.querySelector('.order-form');
+    if (!orderForm) {
+        console.error('Форма заказа не найдена на странице');
+        return;
+    }
+    
+    // Если пользователь не зарегистрирован, ничего не делаем
+    if (!userId) {
+        console.log('Пользователь не зарегистрирован, форма остается пустой');
+        return;
+    }
+    
+    console.log('Загружаем данные пользователя для формы заказа, userId:', userId);
+    
+    fetch('assets/data/settings.json')
+        .then(response => response.json())
+        .then(settings => {
+            const baseUrl = settings.SERVER_BASE_URL;
+            const fullUrl = baseUrl + '/user/info/' + userId;
+            
+            console.log('Отправляем запрос на:', fullUrl);
+            
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', fullUrl, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    console.log('Получен ответ от сервера:', xhr.status, xhr.statusText);
+                    if (xhr.status === 200) {
+                        try {
+                            const data = JSON.parse(xhr.responseText);
+                            console.log('Данные пользователя получены:', data);
+                            
+                            // Функция для безопасного установки значения
+                            const setValue = (id, value) => {
+                                const el = document.getElementById(id);
+                                if (el && value !== undefined && value !== null && value !== '') {
+                                    el.value = value;
+                                    console.log(`Заполнено поле ${id}: ${value}`);
+                                } else if (!el) {
+                                    console.warn(`Элемент с id ${id} не найден`);
+                                }
+                            };
+                            
+                            // Заполняем поля формы данными пользователя
+                            setValue('order-firstname', data.firstName);
+                            setValue('order-lastname', data.lastName);
+                            setValue('order-phone', data.number);
+                            setValue('order-email', data.email);
+                            
+                            // Заполняем социальные сети (Telegram или Instagram)
+                            if (data.telegram) {
+                                setValue('order-social', data.telegram);
+                            } else if (data.instagram) {
+                                setValue('order-social', data.instagram);
+                            }
+                            
+                            // Заполняем адрес доставки
+                            setValue('order-street', data.street);
+                            setValue('order-house', data.house);
+                            setValue('order-apartment', data.apartment);
+                            
+                            // Для этажа используем entrance, если есть
+                            if (data.entrance) {
+                                setValue('order-floor', data.entrance);
+                            }
+                            
+                            console.log('Форма заказа заполнена данными пользователя');
+                            
+                            // Настраиваем валидацию полей формы
+                            setupOrderFormValidation();
+                            
+                        } catch (e) {
+                            console.error('Ошибка парсинга JSON:', e);
+                            console.error('Полный ответ сервера:', xhr.responseText);
+                        }
+                    } else {
+                        console.error('Ошибка загрузки данных пользователя:', xhr.status, xhr.statusText);
+                    }
+                }
+            };
+            xhr.send(JSON.stringify({ userId: userId }));
+        })
+        .catch(err => {
+            console.error('Ошибка загрузки settings.json:', err);
+        });
+}
+
+// Функция для настройки валидации формы заказа
+function setupOrderFormValidation() {
+    console.log('Настраиваем валидацию формы заказа...');
+    
+    // Валидация обязательных полей
+    const requiredFields = [
+        {input: 'order-lastname', error: 'order-lastname-error'},
+        {input: 'order-firstname', error: 'order-firstname-error'},
+        {input: 'order-phone', error: 'order-phone-error'},
+        {input: 'order-email', error: 'order-email-error'},
+        {input: 'order-social', error: 'order-social-error'},
+        {input: 'order-street', error: 'order-street-error'},
+        {input: 'order-house', error: 'order-house-error'},
+        {input: 'order-floor', error: 'order-floor-error'},
+        {input: 'order-apartment', error: 'order-apartment-error'}
+    ];
+    
+    requiredFields.forEach(({input, error}) => {
+        const inputEl = document.getElementById(input);
+        const errorEl = document.getElementById(error);
+        if (!inputEl || !errorEl) return;
+        
+        inputEl.addEventListener('blur', function() {
+            if (!inputEl.value.trim()) {
+                errorEl.style.display = 'block';
+            } else {
+                errorEl.style.display = 'none';
+            }
+        });
+        
+        inputEl.addEventListener('input', function() {
+            if (inputEl.value.trim()) {
+                errorEl.style.display = 'none';
+            }
+        });
+    });
+    
+    // Обработчик отправки формы
+    const orderForm = document.querySelector('.order-form');
+    if (orderForm) {
+        orderForm.addEventListener('submit', function(e) {
+            let valid = true;
+            requiredFields.forEach(({input, error}) => {
+                const inputEl = document.getElementById(input);
+                const errorEl = document.getElementById(error);
+                if (inputEl && errorEl && !inputEl.value.trim()) {
+                    errorEl.style.display = 'block';
+                    valid = false;
+                }
+            });
+            if (!valid) {
+                e.preventDefault();
+                alert('Будь ласка, заповніть всі обов\'язкові поля');
+            } else {
+                alert('Замовлення успішно оформлено!');
+                // Здесь можно добавить логику отправки заказа на сервер
+            }
+        });
+    }
+}
 
 // Функция для отображения корзины на странице cart.html
 function loadCart() {
