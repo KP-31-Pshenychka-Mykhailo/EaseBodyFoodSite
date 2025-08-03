@@ -150,6 +150,13 @@
     function loadUserData() {
         const userId = localStorage.getItem('userId');
         
+        // Проверяем, что форма заказа существует
+        const orderForm = document.querySelector('.order-form');
+        if (!orderForm) {
+            console.error('Форма заказа не найдена на странице');
+            return;
+        }
+        
         // Если пользователь не зарегистрирован, ничего не делаем
         if (!userId) {
             console.log('Пользователь не зарегистрирован, форма остается пустой');
@@ -182,6 +189,9 @@
                                     const el = document.getElementById(id);
                                     if (el && value !== undefined && value !== null && value !== '') {
                                         el.value = value;
+                                        console.log(`Заполнено поле ${id}: ${value}`);
+                                    } else if (!el) {
+                                        console.warn(`Элемент с id ${id} не найден`);
                                     }
                                 };
                                 
@@ -228,6 +238,7 @@
     
     // Загружаем данные пользователя при загрузке страницы
     document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM загружен, начинаем загрузку данных пользователя...');
         loadUserData();
     });
     
