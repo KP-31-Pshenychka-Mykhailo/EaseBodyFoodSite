@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         </div>
         <div class="cart-item-controls">
           <div class="cart-item-actions">
-            <button class="add-to-cart-btn" onclick="addToCart(${dish.id})">Додати в кошик</button>
             <button class="delete-btn" onclick="removeFromFavorites(${dish.id})">Видалити з улюблених</button>
           </div>
         </div>
@@ -44,35 +43,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     `;
   }
 
-  // Функция добавления в корзину
-  window.addToCart = function(dishId) {
-    const dish = getDishById(dishId);
-    if (!dish) return;
 
-    const cartItem = {
-      id: dish.id,
-      title: dish.title,
-      subtitle: dish.subtitle,
-      img: dish.img,
-      p: dish.p,
-      f: dish.f,
-      c: dish.c,
-      quantity: 1,
-      day: 'today',
-      dayName: 'Сьогодні'
-    };
-
-    if (window.cartManager) {
-      window.cartManager.addItem(cartItem);
-      alert('Блюдо додано до кошика!');
-    } else {
-      // Fallback если cartManager не загружен
-      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      cart.push(cartItem);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      alert('Блюдо додано до кошика!');
-    }
-  };
 
   // Функция удаления из избранного
   window.removeFromFavorites = function(dishId) {
@@ -99,7 +70,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             <div class="profile-cart-empty-title">У вас поки немає улюблених страв</div>
             <div class="profile-cart-empty-desc">Додайте їх, натиснувши на сердечко біля блюда!</div>
             <div class="profile-cart-btns">
-              <a href="index.html" class="profile-cart-btn">Переглянути меню</a>
+              <a href="index.html" class="profile-cart-btn">Повернутися на головну</a>
             </div>
           </div>
         </div>
@@ -125,7 +96,6 @@ document.addEventListener('DOMContentLoaded', async function() {
       <div class="cart-container">
         <div class="cart-header">
           <h1 class="profile-header-title">Улюблені страви</h1>
-          <button class="clear-cart-btn" onclick="clearAllFavorites()">Очистити улюблені</button>
         </div>
         
         <div class="cart-items">
@@ -134,63 +104,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         <div class="cart-summary">
           <div class="cart-total">Загалом у улюблених: ${totalMacros.protein} Білки ${totalMacros.fat} Жири ${totalMacros.carbs} Вуглеводи, ${totalCalories} ккал.</div>
-          <div class="cart-actions">
-            <button class="checkout-btn" onclick="addAllToCart()">Додати все в кошик</button>
-            <a href="index.html" class="continue-shopping-btn">Переглянути меню</a>
+                                <div class="cart-actions">
+            <a href="index.html" class="continue-shopping-btn">Повернутися на головну</a>
           </div>
         </div>
       </div>
     `;
   }
 
-  // Функция очистки всех избранных
-  window.clearAllFavorites = function() {
-    if (confirm('Ви впевнені, що хочете видалити всі улюблені страви?')) {
-      localStorage.setItem('heartsState', '{}');
-      renderFavorites();
-    }
-  };
 
-  // Функция добавления всех избранных в корзину
-  window.addAllToCart = function() {
-    const heartsState = JSON.parse(localStorage.getItem('heartsState') || '{}');
-    const favoriteIds = Object.keys(heartsState).filter(id => heartsState[id] === true);
-    
-    if (favoriteIds.length === 0) {
-      alert('У вас немає улюблених страв для додавання в кошик');
-      return;
-    }
 
-    let addedCount = 0;
-    favoriteIds.forEach(id => {
-      const dish = getDishById(id);
-      if (dish) {
-        const cartItem = {
-          id: dish.id,
-          title: dish.title,
-          subtitle: dish.subtitle,
-          img: dish.img,
-          p: dish.p,
-          f: dish.f,
-          c: dish.c,
-          quantity: 1,
-          day: 'today',
-          dayName: 'Сьогодні'
-        };
 
-        if (window.cartManager) {
-          window.cartManager.addItem(cartItem);
-        } else {
-          const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-          cart.push(cartItem);
-          localStorage.setItem('cart', JSON.stringify(cart));
-        }
-        addedCount++;
-      }
-    });
-
-    alert(`Додано ${addedCount} страв до кошика!`);
-  };
 
   // Инициализация
   await loadDishesData();
