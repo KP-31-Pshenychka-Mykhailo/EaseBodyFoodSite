@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                        6.86-8.55 11.54L12 21.35z"/>
             </svg>
           </div>
-          <span class="menu-card-plus${isActive ? ' active' : ''}" data-dish-id="${dish.id}">${isActive ? '−' : '+'}</span>
+          <span class="menu-card-plus${isActive ? ' active' : ''}" data-dish-id="${dish.id}">${isActive ? '+' : '−'}</span>
         </div>
         <div class="menu-card-content">
           <div class="menu-card-title">${dish.title}</div>
@@ -100,14 +100,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         const isCurrentlyActive = this.classList.contains('active');
         
         if (isCurrentlyActive) {
-          // Если активно (минус), то убираем из меню
+          // Если активно (плюс), то убираем из меню
           this.classList.remove('active');
-          this.textContent = '+';
+          this.textContent = '−';
           cardState[currentDay][dishId] = false;
         } else {
-          // Если неактивно (плюс), то добавляем в меню
+          // Если неактивно (минус), то добавляем в меню
           this.classList.add('active');
-          this.textContent = '−';
+          this.textContent = '+';
           cardState[currentDay][dishId] = true;
         }
       });
