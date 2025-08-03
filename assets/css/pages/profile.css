@@ -211,6 +211,14 @@
   color: #fff;
 }
 
+/* Стили для карточек избранных блюд */
+.menu-card-allergens {
+  font-size: 12px;
+  color: #d0f5d0;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+
 /* Стили для карусели избранных блюд */
 .favorites-carousel {
   position: relative;
