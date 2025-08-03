@@ -8,23 +8,230 @@
     <link rel="stylesheet" href="assets/css/static/header.css">
     <link rel="stylesheet" href="assets/css/static/footer.css">
     <link rel="stylesheet" href="assets/css/pages/profile.css">
+    <link rel="stylesheet" href="assets/css/static/order.css">
+    <style>
+        .cart-container {
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
+            padding: 0 20px;
+        }
+        
+        .cart-items {
+            margin-top: 32px;
+        }
+        
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid #e0e0e0;
+            gap: 20px;
+        }
+        
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        
+        .cart-item-content {
+            flex: 1;
+        }
+        
+        .cart-item-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 8px;
+        }
+        
+        .cart-item-macros {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .cart-item-description {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.4;
+        }
+        
+        .cart-item-day {
+            background: #4CAF50;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .quantity-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #4CAF50;
+            background: white;
+            color: #4CAF50;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .quantity-btn:hover {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .quantity-input {
+            width: 50px;
+            height: 32px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+        }
+        
+        .cart-item-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .customize-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .customize-btn:hover {
+            background: #45a049;
+        }
+        
+        .delete-btn {
+            background: white;
+            color: #E53935;
+            border: 1px solid #E53935;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .delete-btn:hover {
+            background: #E53935;
+            color: white;
+        }
+        
+        .cart-summary {
+            margin-top: 32px;
+            padding: 24px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .cart-total {
+            font-size: 18px;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 16px;
+        }
+        
+        .cart-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .checkout-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .checkout-btn:hover {
+            background: #45a049;
+        }
+        
+        .continue-shopping-btn {
+            background: white;
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .continue-shopping-btn:hover {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .cart-item-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .cart-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="header"></div>
     <main style="background:#fff;">
-        <section style="max-width:1200px;margin:40px auto 0 auto;">
+        <div class="cart-container">
             <h1 class="profile-header-title">Кошик</h1>
-            <div class="profile-cart-empty">
-                <div class="profile-cart-empty-title">Упс! Кошик порожній</div>
-                <div class="profile-cart-empty-desc">Саме час для правильного харчування!</div>
-                <div class="profile-cart-btns">
-                    <button class="profile-cart-btn">Конструктор меню</button>
-                    <button class="profile-cart-btn">Зіркове меню</button>
-                </div>
+            
+            <div id="cart-content">
+                <!-- Содержимое корзины будет загружено через JavaScript -->
             </div>
-        </section>
+        </div>
     </main>
     <div id="footer"></div>
+    
     <script src="assets/js/layout.js"></script>
+    <script src="assets/js/cart.js"></script>
 </body>
 </html> 

@@ -90,20 +90,8 @@
       var orderBtn = document.querySelector('.menu-choose-btn');
       if(orderBtn) {
         orderBtn.addEventListener('click', function() {
-       
-          if (!document.querySelector('link[href="assets/css/pages/order.css"]')) {
-            var link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = 'assets/css/pages/order.css';
-            document.head.appendChild(link);
-          }
-          fetch('partials/order.html')
-            .then(r => r.text())
-            .then(html => {
-              var mainMatch = html.match(/<main[\s\S]*?<\/main>/);
-              document.getElementById('order-modal-body').innerHTML = mainMatch ? mainMatch[0] : html;
-              document.getElementById('order-modal').style.display = 'flex';
-            });
+          // Перенаправляем в корзину вместо открытия модального окна
+          window.location.href = 'cart.html';
         });
       }
   

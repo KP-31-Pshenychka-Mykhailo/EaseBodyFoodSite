@@ -94,6 +94,77 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
   }
 
+  // Функция для получения выбранных блюд
+  function getSelectedDishes() {
+    const selectedDishes = [];
+    const dayMap = {
+      'monday': 'Пн',
+      'tuesday': 'Вт', 
+      'wednesday': 'Ср',
+      'thursday': 'Чт',
+      'friday': 'Пт',
+      'saturday': 'Сб',
+      'sunday': 'Нд'
+    };
+
+    Object.keys(cardState).forEach(day => {
+      if (cardState[day]) {
+        Object.keys(cardState[day]).forEach(dishId => {
+          if (cardState[day][dishId] === true) {
+            const dish = dishesData.find(d => d.id == dishId);
+            if (dish) {
+              selectedDishes.push({
+                ...dish,
+                day: day,
+                dayName: dayMap[day],
+                quantity: 1
+              });
+            }
+          }
+        });
+      }
+    });
+
+    return selectedDishes;
+  }
+
+  // Функция для сохранения шаблона в корзину
+  function saveTemplateToCart() {
+    const selectedDishes = getSelectedDishes();
+    
+    if (selectedDishes.length === 0) {
+      alert('Будь ласка, оберіть хоча б одну страву для шаблону');
+      return;
+    }
+
+    // Используем CartManager для добавления блюд в корзину
+    if (window.cartManager) {
+      selectedDishes.forEach(dish => {
+        window.cartManager.addItem(dish);
+      });
+    } else {
+      // Fallback для случая, если CartManager не загружен
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      
+      selectedDishes.forEach(dish => {
+        const existingDishIndex = cart.findIndex(item => 
+          item.id === dish.id && item.day === dish.day
+        );
+        
+        if (existingDishIndex !== -1) {
+          cart[existingDishIndex].quantity += dish.quantity;
+        } else {
+          cart.push(dish);
+        }
+      });
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+    
+    // Перенаправляем в корзину
+    window.location.href = 'cart.html';
+  }
+
   // Обработчики для вкладок
   typeTabs.forEach(tab => {
     tab.addEventListener('click', function() {
@@ -125,6 +196,12 @@ document.addEventListener('DOMContentLoaded', async function() {
       renderCards(currentType);
     });
   });
+
+  // Обработчик для кнопки "Затвердити шаблон"
+  const confirmBtn = document.querySelector('.menu-choose-btn');
+  if (confirmBtn) {
+    confirmBtn.addEventListener('click', saveTemplateToCart);
+  }
 
   // Загрузка и первичный рендер
   await loadDishes();

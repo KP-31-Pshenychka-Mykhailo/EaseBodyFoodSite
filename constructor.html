@@ -115,30 +115,11 @@
     </div>
     <script src="assets/js/layout.js"></script>
     <script src="assets/js/hearts.js"></script>
+    <script src="assets/js/cart.js"></script>
     <script src="assets/js/constructor-menu.js"></script>
     <script>
-    // Открытие модального окна заказа
+    // Закрытие модального окна (если оно используется в других местах)
     document.addEventListener('DOMContentLoaded', function() {
-      var orderBtn = document.querySelector('.menu-choose-btn');
-      if(orderBtn) {
-        orderBtn.addEventListener('click', function() {
-          // Подключаем order.css, если не подключён
-          if (!document.querySelector('link[href="assets/css/pages/order.css"]')) {
-            var link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = 'assets/css/pages/order.css';
-            document.head.appendChild(link);
-          }
-          fetch('partials/order.html')
-            .then(r => r.text())
-            .then(html => {
-              var mainMatch = html.match(/<main[\s\S]*?<\/main>/);
-              document.getElementById('order-modal-body').innerHTML = mainMatch ? mainMatch[0] : html;
-              document.getElementById('order-modal').style.display = 'flex';
-            });
-        });
-      }
-      // Закрытие модального окна
       var closeBtn = document.getElementById('order-modal-close');
       document.getElementById('order-modal').addEventListener('click', function(e) {
         if(e.target === this) {
