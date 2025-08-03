@@ -170,6 +170,7 @@
   </div>
   <script src="assets/js/layout.js"></script>
   <script src="assets/js/hearts.js"></script>
+  <script src="assets/js/cart.js"></script>
   <script src="assets/js/calculator.js"></script>
   <script>
     // Переключение дней недели для персонального меню
@@ -208,16 +209,8 @@
       }
     });
 
-    // Перенаправление в корзину
+    // Закрытие модального окна
     document.addEventListener('DOMContentLoaded', function() {
-      var orderBtn = document.querySelector('.menu-choose-btn-alt');
-      if(orderBtn) {
-        orderBtn.addEventListener('click', function() {
-          // Перенаправляем в корзину вместо открытия модального окна
-          window.location.href = 'cart.html';
-        });
-      }
-      // Закрытие модального окна
       var closeBtn = document.getElementById('order-modal-close');
       document.getElementById('order-modal').addEventListener('click', function(e) {
         if(e.target === this) {

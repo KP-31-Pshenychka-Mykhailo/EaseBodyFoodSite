@@ -98,7 +98,7 @@ function createMenuCardAlt(dish, mealType) {
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
           </svg>
         </div>
-        <span class="menu-card-plus">+</span>
+        <span class="menu-card-plus active">−</span>
       </div>
       <div class="menu-card-content-alt">
         <div class="menu-card-title-alt">${mealType}</div>
@@ -140,8 +140,18 @@ function renderPersonalMenu(menuArr, dishes, day) {
   }
   document.querySelectorAll('.menu-card-plus').forEach(function(plus) {
     plus.addEventListener('click', function() {
-      plus.classList.toggle('active');
-      plus.textContent = plus.classList.contains('active') ? '−' : '+';
+      // Переключаем состояние
+      const isCurrentlyActive = this.classList.contains('active');
+      
+      if (isCurrentlyActive) {
+        // Если активно (красный минус), то убираем из меню
+        this.classList.remove('active');
+        this.textContent = '+';
+      } else {
+        // Если неактивно (зеленый плюс), то добавляем в меню
+        this.classList.add('active');
+        this.textContent = '−';
+      }
     });
   });
 }
@@ -276,8 +286,98 @@ document.addEventListener('DOMContentLoaded', function() {
   // --- Плюсики ---
   document.querySelectorAll('#personal-diet-section .menu-card-plus').forEach(function(plus) {
     plus.addEventListener('click', function() {
-      plus.classList.toggle('active');
-      plus.textContent = plus.classList.contains('active') ? '−' : '+';
+      // Переключаем состояние
+      const isCurrentlyActive = this.classList.contains('active');
+      
+      if (isCurrentlyActive) {
+        // Если активно (красный минус), то убираем из меню
+        this.classList.remove('active');
+        this.textContent = '+';
+      } else {
+        // Если неактивно (зеленый плюс), то добавляем в меню
+        this.classList.add('active');
+        this.textContent = '−';
+      }
     });
   });
+
+  // Функция для получения выбранных блюд из калькулятора
+  function getSelectedDishesFromCalculator() {
+    const selectedDishes = [];
+    const dayMap = {
+      'monday': 'Пн',
+      'tuesday': 'Вт', 
+      'wednesday': 'Ср',
+      'thursday': 'Чт',
+      'friday': 'Пт',
+      'saturday': 'Сб'
+    };
+
+    // Получаем активный день
+    const activeDayBtn = document.querySelector('#personal-diet-section .menu-day-alt.active');
+    const currentDay = activeDayBtn ? activeDayBtn.getAttribute('data-day') : 'monday';
+
+    // Получаем все активные карточки (с красным минусом)
+    const activeCards = document.querySelectorAll('#personal-diet-section .menu-card-plus.active');
+    
+    activeCards.forEach(plus => {
+      const card = plus.closest('.menu-card-alt');
+      const dishId = card.getAttribute('data-dish-id');
+      const dish = dishesData.find(d => d.id === parseInt(dishId));
+      
+      if (dish) {
+        selectedDishes.push({
+          ...dish,
+          day: currentDay,
+          dayName: dayMap[currentDay],
+          quantity: 1
+        });
+      }
+    });
+
+    return selectedDishes;
+  }
+
+  // Функция для сохранения шаблона в корзину
+  function saveCalculatorTemplateToCart() {
+    const selectedDishes = getSelectedDishesFromCalculator();
+    
+    if (selectedDishes.length === 0) {
+      alert('Будь ласка, залиште хоча б одну страву в меню');
+      return;
+    }
+
+    // Используем CartManager для добавления блюд в корзину
+    if (window.cartManager) {
+      selectedDishes.forEach(dish => {
+        window.cartManager.addItem(dish);
+      });
+    } else {
+      // Fallback для случая, если CartManager не загружен
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      
+      selectedDishes.forEach(dish => {
+        const existingDishIndex = cart.findIndex(item => 
+          item.id === dish.id && item.day === dish.day
+        );
+        
+        if (existingDishIndex !== -1) {
+          cart[existingDishIndex].quantity += dish.quantity;
+        } else {
+          cart.push(dish);
+        }
+      });
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+    
+    // Перенаправляем в корзину
+    window.location.href = 'cart.html';
+  }
+
+  // Обработчик для кнопки "Замовити це меню"
+  const orderBtn = document.querySelector('.menu-choose-btn-alt');
+  if (orderBtn) {
+    orderBtn.addEventListener('click', saveCalculatorTemplateToCart);
+  }
 }); 

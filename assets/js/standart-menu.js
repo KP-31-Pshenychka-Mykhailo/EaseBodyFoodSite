@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                        6.86-8.55 11.54L12 21.35z"/>
             </svg>
           </div>
-          <span class="menu-card-plus">+</span>
+          <span class="menu-card-plus active">−</span>
         </div>
         <div class="menu-card-content">
           <div class="menu-card-title">${mealType}</div>
@@ -132,14 +132,96 @@ document.addEventListener('DOMContentLoaded', async function() {
     const plusIcons = document.querySelectorAll('.menu-card-plus');
     plusIcons.forEach(plus => {
       plus.addEventListener('click', function() {
-        this.classList.toggle('active');
-        if (this.classList.contains('active')) {
-          this.textContent = '−';
-        } else {
+        // Переключаем состояние
+        const isCurrentlyActive = this.classList.contains('active');
+        
+        if (isCurrentlyActive) {
+          // Если активно (красный минус), то убираем из меню
+          this.classList.remove('active');
           this.textContent = '+';
+        } else {
+          // Если неактивно (зеленый плюс), то добавляем в меню
+          this.classList.add('active');
+          this.textContent = '−';
         }
       });
     });
+  }
+
+  // Функция для получения выбранных блюд
+  function getSelectedDishes() {
+    const selectedDishes = [];
+    const dayMap = {
+      'Mon': 'Пн',
+      'Tue': 'Вт', 
+      'Wed': 'Ср',
+      'Thu': 'Чт',
+      'Fri': 'Пт',
+      'Sat': 'Сб'
+    };
+
+    // Получаем все активные карточки (с красным минусом)
+    const activeCards = document.querySelectorAll('.menu-card-plus.active');
+    
+    activeCards.forEach(plus => {
+      const card = plus.closest('.menu-card');
+      const dishId = card.getAttribute('data-dish-id');
+      const dish = getDishById(parseInt(dishId));
+      
+      if (dish) {
+        selectedDishes.push({
+          ...dish,
+          day: selectedDay.toLowerCase(),
+          dayName: dayMap[selectedDay],
+          quantity: 1
+        });
+      }
+    });
+
+    return selectedDishes;
+  }
+
+  // Функция для сохранения шаблона в корзину
+  function saveTemplateToCart() {
+    const selectedDishes = getSelectedDishes();
+    
+    if (selectedDishes.length === 0) {
+      alert('Будь ласка, залиште хоча б одну страву в меню');
+      return;
+    }
+
+    // Используем CartManager для добавления блюд в корзину
+    if (window.cartManager) {
+      selectedDishes.forEach(dish => {
+        window.cartManager.addItem(dish);
+      });
+    } else {
+      // Fallback для случая, если CartManager не загружен
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      
+      selectedDishes.forEach(dish => {
+        const existingDishIndex = cart.findIndex(item => 
+          item.id === dish.id && item.day === dish.day
+        );
+        
+        if (existingDishIndex !== -1) {
+          cart[existingDishIndex].quantity += dish.quantity;
+        } else {
+          cart.push(dish);
+        }
+      });
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+    
+    // Перенаправляем в корзину
+    window.location.href = 'cart.html';
+  }
+
+  // Обработчик для кнопки "Обрати це меню"
+  const chooseBtn = document.querySelector('.menu-choose-btn');
+  if (chooseBtn) {
+    chooseBtn.addEventListener('click', saveTemplateToCart);
   }
 
   // Обработчики для дней недели

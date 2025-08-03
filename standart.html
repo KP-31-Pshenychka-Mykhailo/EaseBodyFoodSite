@@ -83,18 +83,11 @@
    
     <script src="assets/js/layout.js"></script>
     <script src="assets/js/hearts.js"></script>
+    <script src="assets/js/cart.js"></script>
     <script src="assets/js/standart-menu.js"></script>
     <script>
- 
+    // Закрытие модального окна (если оно используется в других местах)
     document.addEventListener('DOMContentLoaded', function() {
-      var orderBtn = document.querySelector('.menu-choose-btn');
-      if(orderBtn) {
-        orderBtn.addEventListener('click', function() {
-          // Перенаправляем в корзину вместо открытия модального окна
-          window.location.href = 'cart.html';
-        });
-      }
-  
       var closeBtn = document.getElementById('order-modal-close');
       document.getElementById('order-modal').addEventListener('click', function(e) {
         if(e.target === this) {
