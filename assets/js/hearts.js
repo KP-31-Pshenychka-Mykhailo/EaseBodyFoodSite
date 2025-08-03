@@ -39,9 +39,7 @@ class HeartsManager {
       });
     });
 
-    if (addedHandlers > 0) {
-      console.log(`Добавлено обработчиков для сердечек: ${addedHandlers}`);
-    }
+    // Обработчики добавлены
   }
 
   handleHeartClick(e, heart) {
@@ -108,8 +106,105 @@ class HeartsManager {
       heartsState[dishId] = isActive;
       localStorage.setItem('heartsState', JSON.stringify(heartsState));
       
+      // Отправляем запрос на сервер
+      this.sendHeartStateToServer(dishId, isActive);
+      
     } catch (error) {
       console.warn('Не удалось сохранить состояние сердечка:', error);
+    }
+  }
+
+  async sendHeartStateToServer(dishId, isActive) {
+    try {
+      // Получаем userId из localStorage или другого источника
+      const userId = this.getUserId();
+      
+      if (!userId) {
+        console.warn('Пользователь не авторизован, запрос на сервер не отправлен');
+        return;
+      }
+
+      // Получаем базовый URL сервера из настроек
+      const settingsResponse = await fetch('assets/data/settings.json');
+      const settings = await settingsResponse.json();
+      const baseUrl = settings.SERVER_BASE_URL;
+
+      const endpoint = isActive ? '/favorite/add' : '/favorite/remove';
+      const requestData = {
+        UserId: userId,
+        DishId: dishId.toString()
+      };
+
+      const response = await fetch(`${baseUrl}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(requestData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(`Сервер ответил: ${isActive ? 'добавлено' : 'удалено'} из избранного`, result);
+      
+    } catch (error) {
+      console.warn('Ошибка при отправке запроса на сервер:', error);
+    }
+  }
+
+  getUserId() {
+    // Получаем userId из localStorage
+    return localStorage.getItem('userId');
+  }
+
+  async loadFavoritesFromServer() {
+    try {
+      const userId = this.getUserId();
+      
+      if (!userId) {
+        console.warn('Пользователь не авторизован, не загружаем избранное с сервера');
+        return;
+      }
+
+      // Получаем базовый URL сервера из настроек
+      const settingsResponse = await fetch('assets/data/settings.json');
+      const settings = await settingsResponse.json();
+      const baseUrl = settings.SERVER_BASE_URL;
+
+      const response = await fetch(`${baseUrl}/favorite`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ userId: userId })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const favorites = await response.json();
+      
+      // Обновляем localStorage на основе данных с сервера
+      const heartsState = {};
+      favorites.forEach(dishId => {
+        heartsState[dishId] = true;
+      });
+      
+      localStorage.setItem('heartsState', JSON.stringify(heartsState));
+      
+      // Применяем состояния к DOM
+      this.loadHeartStates();
+      
+      console.log('Избранные блюда загружены с сервера:', favorites);
+      
+    } catch (error) {
+      console.warn('Ошибка при загрузке избранных блюд с сервера:', error);
     }
   }
 
@@ -117,7 +212,6 @@ class HeartsManager {
     try {
       // Загружаем состояние сердечек из localStorage
       const heartsState = JSON.parse(localStorage.getItem('heartsState') || '{}');
-      console.log('Загружено состояние сердечек:', heartsState);
       
       // Применяем активные состояния ко всем найденным карточкам
       Object.keys(heartsState).forEach(dishId => {
@@ -196,26 +290,60 @@ class HeartsManager {
   }
 
   // Публичный метод для очистки избранного
-  clearFavorites() {
+  async clearFavorites() {
     try {
       localStorage.removeItem('heartsState');
-      console.log('Избранное очищено');
+      
+      // Также очищаем на сервере
+      await this.clearFavoritesOnServer();
+      
     } catch (error) {
       console.warn('Не удалось очистить избранное:', error);
+    }
+  }
+
+  async clearFavoritesOnServer() {
+    try {
+      const userId = this.getUserId();
+      
+      if (!userId) {
+        console.warn('Пользователь не авторизован, не очищаем избранное на сервере');
+        return;
+      }
+
+      // Получаем базовый URL сервера из настроек
+      const settingsResponse = await fetch('assets/data/settings.json');
+      const settings = await settingsResponse.json();
+      const baseUrl = settings.SERVER_BASE_URL;
+
+      const response = await fetch(`${baseUrl}/favorite/clear`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ UserId: userId })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      console.log('Избранное очищено на сервере');
+      
+    } catch (error) {
+      console.warn('Ошибка при очистке избранного на сервере:', error);
     }
   }
 }
 
 // Инициализация при загрузке DOM
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM загружен, инициализируем HeartsManager...');
   window.heartsManager = new HeartsManager();
-  console.log('HeartsManager создан:', window.heartsManager);
   
-  // Загружаем сохраненные состояния после небольшой задержки
-  // чтобы все карточки успели отрендериться
-  setTimeout(() => {
-    console.log('Загружаем сохраненные состояния сердечек...');
+  // Загружаем избранные блюда с сервера и применяем состояния
+  setTimeout(async () => {
+    await window.heartsManager.loadFavoritesFromServer();
     window.heartsManager.loadHeartStates();
   }, 100);
 });

@@ -109,43 +109,31 @@
                         `;
                     }
                 }
-                
-                console.log('Избранные блюда:', favorites);
-                console.log('Полное состояние heartsState:', heartsState);
             }
         }
 
-        function clearFavorites() {
+        async function clearFavorites() {
             if (window.heartsManager) {
-                window.heartsManager.clearFavorites();
+                await window.heartsManager.clearFavorites();
                 showFavorites();
                 
                 // Убираем активные классы со всех сердечек
                 document.querySelectorAll('.gallery-heart, .gallery-heart-alt, .menu-card-heart, .menu-card-heart-alt').forEach(heart => {
                     heart.classList.remove('active');
                 });
-                
-                console.log('Избранное очищено');
             }
         }
 
         function refreshHearts() {
             if (window.heartsManager) {
                 window.heartsManager.refresh();
-                console.log('Сердечки обновлены');
             }
         }
 
         // Простой тест клика
         function testHeartClick() {
             const hearts = document.querySelectorAll('.gallery-heart, .gallery-heart-alt, .menu-card-heart, .menu-card-heart-alt');
-            console.log('Найдено сердечек для теста:', hearts.length);
-            
-            hearts.forEach((heart, index) => {
-                console.log(`Сердечко ${index}:`, heart);
-                console.log(`- data-heart-handler-added:`, heart.hasAttribute('data-heart-handler-added'));
-                console.log(`- classList:`, heart.classList.toString());
-            });
+            // Тест выполнен
         }
 
         // Загружаем реальные блюда из dishes.json
