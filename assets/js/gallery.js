@@ -196,52 +196,52 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Mouse события для десктопа (опционально)
-  gallery.addEventListener('mousedown', function(e) {
-    if (window.innerWidth <= 700) return; // Только на десктопе
-    startX = e.clientX;
-    startScrollLeft = gallery.scrollLeft;
-    startTime = Date.now();
-    isDragging = true;
-    gallery.style.cursor = 'grabbing';
-  });
+  // Mouse события для десктопа отключены - только кнопки навигации
+  // gallery.addEventListener('mousedown', function(e) {
+  //   if (window.innerWidth <= 700) return; // Только на десктопе
+  //   startX = e.clientX;
+  //   startScrollLeft = gallery.scrollLeft;
+  //   startTime = Date.now();
+  //   isDragging = true;
+  //   gallery.style.cursor = 'grabbing';
+  // });
 
-  gallery.addEventListener('mousemove', function(e) {
-    if (!isDragging || window.innerWidth <= 700) return;
-    e.preventDefault();
-    currentX = e.clientX;
-    const diff = startX - currentX;
-    gallery.scrollLeft = startScrollLeft + diff;
-  });
+  // gallery.addEventListener('mousemove', function(e) {
+  //   if (!isDragging || window.innerWidth <= 700) return;
+  //   e.preventDefault();
+  //   currentX = e.clientX;
+  //   const diff = startX - currentX;
+  //   gallery.scrollLeft = startScrollLeft + diff;
+  // });
 
-  gallery.addEventListener('mouseup', function(e) {
-    if (!isDragging || window.innerWidth <= 700) return;
-    isDragging = false;
-    gallery.style.cursor = 'grab';
+  // gallery.addEventListener('mouseup', function(e) {
+  //   if (!isDragging || window.innerWidth <= 700) return;
+  //   isDragging = false;
+  //   gallery.style.cursor = 'grab';
     
-    const diff = startX - currentX;
-    const cardWidth = getCardWidth();
-    const threshold = cardWidth / 3;
+  //   const diff = startX - currentX;
+  //   const cardWidth = getCardWidth();
+  //   const threshold = cardWidth / 3;
     
-    if (Math.abs(diff) > threshold) {
-      if (diff > 0) {
-        gallery.scrollBy({ left: cardWidth, behavior: 'smooth' });
-      } else {
-        gallery.scrollBy({ left: -cardWidth, behavior: 'smooth' });
-      }
-      setTimeout(centerCards, 600);
-      setTimeout(updateActiveCard, 300);
-    } else {
-      gallery.scrollTo({ left: startScrollLeft, behavior: 'smooth' });
-    }
-  });
+  //   if (Math.abs(diff) > threshold) {
+  //     if (diff > 0) {
+  //       gallery.scrollBy({ left: cardWidth, behavior: 'smooth' });
+  //     } else {
+  //       gallery.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+  //     }
+  //     setTimeout(centerCards, 600);
+  //     setTimeout(updateActiveCard, 300);
+  //   } else {
+  //     gallery.scrollTo({ left: startScrollLeft, behavior: 'smooth' });
+  //   }
+  // });
 
-  gallery.addEventListener('mouseleave', function() {
-    if (isDragging) {
-      isDragging = false;
-      gallery.style.cursor = 'grab';
-    }
-  });
+  // gallery.addEventListener('mouseleave', function() {
+  //   if (isDragging) {
+  //     isDragging = false;
+  //     gallery.style.cursor = 'grab';
+  //   }
+  // });
 
   // Единый обработчик кликов для всех устройств
   gallery.addEventListener('click', function(e) {
