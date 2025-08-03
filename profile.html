@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="assets/css/pages/profile.css">
     <link rel="stylesheet" href="assets/css/main/main-theme.css">
     <link rel="stylesheet" href="assets/css/main/alt-theme.css">
+    <link rel="stylesheet" href="assets/css/static/order.css">
+    <link rel="stylesheet" href="assets/css/pages/cart.css">
 </head>
 <body>
     <div id="header"></div>
@@ -114,13 +116,14 @@
                 <button class="profile-tab" data-tab="history">Історія замовлень</button>
             </div>
             <div id="tab-cart" class="profile-tab-content" style="display:block;">
-                <div class="profile-cart-title">Кошик</div>
-                <div class="profile-cart-empty">
-                    <div class="profile-cart-empty-title">Упс! Кошик порожній</div>
-                    <div class="profile-cart-empty-desc">Саме час для правильного харчування!</div>
-                    <div class="profile-cart-btns">
-                        <button class="profile-cart-btn">Конструктор меню</button>
-                        <button class="profile-cart-btn">Зіркове меню</button>
+                <div class="cart-container">
+                    <div class="cart-header">
+                        <h1 class="profile-header-title">Кошик</h1>
+                        <button class="clear-cart-btn" onclick="clearCart()" style="display:none;">Очистити кошик</button>
+                    </div>
+                    
+                    <div id="cart-content">
+                        <!-- Содержимое корзины будет загружено через JavaScript -->
                     </div>
                 </div>
             </div>
@@ -145,9 +148,19 @@
         </section>
     </main>
     <div id="footer"></div>
+    
+    <!-- Модальное окно заказа -->
+    <div id="order-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); align-items:center; justify-content:center;">
+      <div id="order-modal-content" style="background:#fff; border-radius:24px; max-width:900px; width:98vw; max-height:95vh; overflow-y:auto; overflow-x:hidden; position:relative; box-sizing:border-box; padding:32px 32px 24px 32px; scrollbar-width:none;">
+        <button id="order-modal-close" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:32px; color:#4CAF50; cursor:pointer;">&times;</button>
+        <div id="order-modal-body"></div>
+      </div>
+    </div>
+    
     <script src="assets/js/layout.js"></script>
     <script src="assets/js/hearts.js"></script>
     <script src="assets/js/profile-favorites.js"></script>
+    <script src="assets/js/cart.js"></script>
     <script>
     // Переключение вкладок профиля
     document.querySelectorAll('.profile-tab').forEach(function(tabBtn) {
@@ -159,8 +172,14 @@
                 content.style.display = 'none';
             });
             document.getElementById('tab-' + tab).style.display = 'block';
+            
+            // Если открыта вкладка корзины, загружаем корзину
+            if (tab === 'cart') {
+                loadCart();
+            }
         });
     });
+    
     // Валидация всех обязательных полей
     const requiredFields = [
         {input: 'firstname-input', error: 'firstname-error'},
@@ -387,6 +406,24 @@
       .catch(err => {
         console.error('Ошибка загрузки settings.json:', err);
       });
+      
+    // Закрытие модального окна
+    document.addEventListener('DOMContentLoaded', function() {
+      var closeBtn = document.getElementById('order-modal-close');
+      document.getElementById('order-modal').addEventListener('click', function(e) {
+        if(e.target === this) {
+          this.style.display = 'none';
+        }
+      });
+      if(closeBtn) closeBtn.addEventListener('click', function() {
+        document.getElementById('order-modal').style.display = 'none';
+      });
+      
+      // Загружаем корзину при загрузке страницы, если активна вкладка корзины
+      if (document.querySelector('.profile-tab.active').getAttribute('data-tab') === 'cart') {
+        loadCart();
+      }
+    });
     </script>
 </body>
 </html> 
