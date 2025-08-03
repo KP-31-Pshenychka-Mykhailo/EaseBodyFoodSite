@@ -32,11 +32,18 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Загрузка данных
   let menuData = {};
   let dishesData = [];
+  
+  // Глобальные переменные для доступа к данным меню
+  let globalMenuData = {};
+  let globalDishesData = [];
+  let globalSelectedCalories = '900';
   async function loadData() {
     const menuResp = await fetch('assets/data/menu.json').catch(() => fetch('../assets/data/menu.json'));
     menuData = await menuResp.json();
+    globalMenuData = menuData;
     const dishesResp = await fetch('assets/data/dishes.json').catch(() => fetch('../assets/data/dishes.json'));
     dishesData = await dishesResp.json();
+    globalDishesData = dishesData;
   }
 
   // Получить объект меню по калорийности и дню
@@ -160,20 +167,26 @@ document.addEventListener('DOMContentLoaded', async function() {
       'Sat': 'Сб'
     };
 
-    // Получаем все активные карточки (с красным минусом)
-    const activeCards = document.querySelectorAll('.menu-card-plus.active');
+    // Проходим по всем дням недели
+    const allDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     
-    activeCards.forEach(plus => {
-      const card = plus.closest('.menu-card');
-      const dishId = card.getAttribute('data-dish-id');
-      const dish = getDishById(parseInt(dishId));
-      
-      if (dish) {
-        selectedDishes.push({
-          ...dish,
-          day: selectedDay.toLowerCase(),
-          dayName: dayMap[selectedDay],
-          quantity: 1
+    allDays.forEach(day => {
+      // Получаем меню для этого дня
+      const menuObj = getMenuForSelection(globalSelectedCalories, day);
+      if (menuObj) {
+        // Получаем все блюда для этого дня
+        mealMap.forEach(meal => {
+          if (menuObj[meal.key]) {
+            const dish = getDishById(menuObj[meal.key]);
+            if (dish) {
+              selectedDishes.push({
+                ...dish,
+                day: day.toLowerCase(),
+                dayName: dayMap[day],
+                quantity: 1
+              });
+            }
+          }
         });
       }
     });
@@ -241,6 +254,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       typeTabs.forEach(t => t.classList.remove('active'));
       this.classList.add('active');
       selectedCalories = this.textContent.trim();
+      globalSelectedCalories = selectedCalories;
       renderMenuCards();
     });
   });

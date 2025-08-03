@@ -1,6 +1,11 @@
 let currentStep = 1;
 const totalSteps = 4;
 
+// Глобальные переменные для доступа к данным меню
+let globalMenuData = {};
+let globalDishesData = [];
+let globalMenuType = 900;
+
 function showStep(step) {
   for (let i = 1; i <= totalSteps; i++) {
     document.getElementById('form-step-' + i).style.display = (i === step) ? 'flex' : 'none';
@@ -191,8 +196,10 @@ document.getElementById('calculator-form').addEventListener('submit', async func
   this.style.display = 'none';
 
   // --- Динамическое меню ---
-  const menuType = getClosestMenuType(calories);
+  globalMenuType = getClosestMenuType(calories);
   const { menuData, dishesData } = await loadMenuData();
+  globalMenuData = menuData;
+  globalDishesData = dishesData;
   let currentDay = 'Mon';
   const dayMap = {
     'monday': 'Mon',
@@ -209,11 +216,11 @@ document.getElementById('calculator-form').addEventListener('submit', async func
       document.querySelectorAll('.menu-day-alt').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentDay = dayMap[btn.getAttribute('data-day')] || 'Mon';
-      renderPersonalMenu(menuData[menuType], dishesData, currentDay);
+      renderPersonalMenu(globalMenuData[globalMenuType], globalDishesData, currentDay);
     };
   });
   // Первичный рендер
-  renderPersonalMenu(menuData[menuType], dishesData, currentDay);
+  renderPersonalMenu(globalMenuData[globalMenuType], globalDishesData, currentDay);
   // Показать секцию
   var dietSection = document.getElementById('personal-diet-section');
   if (dietSection) {
@@ -313,24 +320,26 @@ document.addEventListener('DOMContentLoaded', function() {
       'saturday': 'Сб'
     };
 
-    // Получаем активный день
-    const activeDayBtn = document.querySelector('#personal-diet-section .menu-day-alt.active');
-    const currentDay = activeDayBtn ? activeDayBtn.getAttribute('data-day') : 'monday';
-
-    // Получаем все активные карточки (с красным минусом)
-    const activeCards = document.querySelectorAll('#personal-diet-section .menu-card-plus.active');
+    // Проходим по всем дням недели
+    const allDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     
-    activeCards.forEach(plus => {
-      const card = plus.closest('.menu-card-alt');
-      const dishId = card.getAttribute('data-dish-id');
-      const dish = dishesData.find(d => d.id === parseInt(dishId));
-      
-      if (dish) {
-        selectedDishes.push({
-          ...dish,
-          day: currentDay,
-          dayName: dayMap[currentDay],
-          quantity: 1
+    allDays.forEach(day => {
+      // Получаем меню для этого дня
+      const menuObj = getMenuForDay(globalMenuData[globalMenuType], day);
+      if (menuObj) {
+        // Получаем все блюда для этого дня
+        mealMap.forEach(meal => {
+          if (menuObj[meal.key]) {
+            const dish = getDishById(globalDishesData, menuObj[meal.key]);
+            if (dish) {
+              selectedDishes.push({
+                ...dish,
+                day: day,
+                dayName: dayMap[day],
+                quantity: 1
+              });
+            }
+          }
         });
       }
     });

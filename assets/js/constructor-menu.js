@@ -51,6 +51,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     const isActive = cardState[currentDay][dish.id] === true;
     
+    console.log(`Creating card for dish ${dish.id} on day ${currentDay}, active: ${isActive}`);
+    
     return `
       <div class="menu-card" data-dish-id="${dish.id}">
         <div class="menu-card-img-wrap">
@@ -128,6 +130,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     console.log('Getting selected dishes from cardState:', cardState);
 
+    // Проходим по всем дням недели
     Object.keys(cardState).forEach(day => {
       if (cardState[day]) {
         console.log(`Checking day ${day}:`, cardState[day]);
@@ -192,6 +195,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     console.log('Selected dishes:', selectedDishes);
     console.log('Card state:', cardState);
+    console.log('Current day:', currentDay);
     
     if (selectedDishes.length === 0) {
       alert('Будь ласка, додайте хоча б одну страву до меню, натиснувши на "+" біля страви');
@@ -259,8 +263,15 @@ document.addEventListener('DOMContentLoaded', async function() {
       dayButtons.forEach(btn => btn.classList.remove('active'));
       this.classList.add('active');
       const dayText = this.textContent.toLowerCase();
-      currentDay = dayMap[dayText] || 'monday';
+      const newDay = dayMap[dayText] || 'monday';
+      
+      console.log('Switching from day', currentDay, 'to day', newDay);
+      console.log('Card state before switch:', cardState);
+      
+      currentDay = newDay;
       renderCards(currentType);
+      
+      console.log('Card state after switch:', cardState);
     });
   });
 
