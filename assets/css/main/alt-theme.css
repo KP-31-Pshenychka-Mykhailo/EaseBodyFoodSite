@@ -930,6 +930,7 @@ a.gallery-btn {
         padding-bottom: 8px;
         margin-left: -12px;
         margin-right: -12px;
+        width: calc(100% + 12px);
     }
     .section2 .reviews-left {
         display: none;
