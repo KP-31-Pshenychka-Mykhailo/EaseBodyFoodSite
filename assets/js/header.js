@@ -11,6 +11,12 @@ fetch('assets/data/settings.json')
     SERVER_BASE_URL = settings.SERVER_BASE_URL;
   });
 
+// Функция для обрезки никнейма до 8 символов
+function truncateUsername(username) {
+  if (!username) return '';
+  return username.length > 8 ? username.substring(0, 8) + '...' : username;
+}
+
 function setupLoginBtn() {
   const userName = localStorage.getItem('userName');
   const loginBtn = document.getElementById('loginBtn');
@@ -21,7 +27,8 @@ function setupLoginBtn() {
   }
   
   if (userName) {
-    loginBtn.innerHTML = `<svg class="icon-img user-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="2"/><path d="M4 20C4 16.6863 7.13401 14 12 14C16.866 14 20 16.6863 20 20" stroke="#fff" stroke-width="2"/></svg>${userName}`;
+    const truncatedUserName = truncateUsername(userName);
+    loginBtn.innerHTML = `<svg class="icon-img user-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="2"/><path d="M4 20C4 16.6863 7.13401 14 12 14C16.866 14 20 16.6863 20 20" stroke="#fff" stroke-width="2"/></svg>${truncatedUserName}`;
     loginBtn.href = "#";
   }
   
@@ -114,7 +121,8 @@ function showRegisterModal() {
           // Обновляем header без перезагрузки
           const loginBtn = document.getElementById('loginBtn');
           if (loginBtn && userName) {
-            loginBtn.innerHTML = `<svg class="icon-img user-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="2"/><path d="M4 20C4 16.6863 7.13401 14 12 14C16.866 14 20 16.6863 20 20" stroke="#fff" stroke-width="2"/></svg>${userName}`;
+            const truncatedUserName = truncateUsername(userName);
+            loginBtn.innerHTML = `<svg class="icon-img user-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="2"/><path d="M4 20C4 16.6863 7.13401 14 12 14C16.866 14 20 16.6863 20 20" stroke="#fff" stroke-width="2"/></svg>${truncatedUserName}`;
             loginBtn.href = "#";
           }
           overlay.remove();
@@ -215,7 +223,8 @@ function showLoginModal() {
           // Обновляем header без перезагрузки
           const loginBtn = document.getElementById('loginBtn');
           if (loginBtn && userName) {
-            loginBtn.innerHTML = `<svg class="icon-img user-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="2"/><path d="M4 20C4 16.6863 7.13401 14 12 14C16.866 14 20 16.6863 20 20" stroke="#fff" stroke-width="2"/></svg>${userName}`;
+            const truncatedUserName = truncateUsername(userName);
+            loginBtn.innerHTML = `<svg class="icon-img user-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="2"/><path d="M4 20C4 16.6863 7.13401 14 12 14C16.866 14 20 16.6863 20 20" stroke="#fff" stroke-width="2"/></svg>${truncatedUserName}`;
             loginBtn.href = "#";
           }
           overlay.remove();
