@@ -19,16 +19,34 @@ function nextStep() {
   const currentBox = document.getElementById('form-step-' + currentStep);
   const inputs = currentBox.querySelectorAll('input[required]');
   let valid = false;
+  
+  // Проверяем заполнение полей
   for (let input of inputs) {
     if ((input.type === 'radio' && input.checked) || (input.type !== 'radio' && input.value)) {
       valid = true;
       break;
     }
   }
+  
   if (!valid) {
     alert('Будь ласка, заповніть поле!');
     return;
   }
+  
+  // Проверяем валидность числовых полей только для шага 3
+  if (currentStep === 3) {
+    const numberInputs = currentBox.querySelectorAll('input[type="number"]');
+    for (let input of numberInputs) {
+      if (input.value) { // Проверяем только если поле заполнено
+        const value = parseInt(input.value);
+        if (value < parseInt(input.min) || value > parseInt(input.max)) {
+          alert('Будь ласка, перевірте правильність введених даних!');
+          return;
+        }
+      }
+    }
+  }
+  
   if (currentStep < totalSteps) {
     currentStep++;
     showStep(currentStep);
@@ -234,6 +252,92 @@ document.getElementById('calculator-form').addEventListener('submit', async func
 
 // Initial step
 showStep(currentStep);
+
+// Функция для добавления галочки к полям ввода
+function addCheckmarkToInput(input) {
+  const inputField = input.closest('.input-field');
+  if (!inputField) return;
+  
+  // Удаляем существующую галочку
+  const existingCheckmark = inputField.querySelector('.input-checkmark');
+  if (existingCheckmark) {
+    existingCheckmark.remove();
+  }
+  
+  // Добавляем галочку если поле заполнено
+  if (input.value.trim() !== '') {
+    const checkmark = document.createElement('div');
+    checkmark.className = 'input-checkmark';
+    checkmark.innerHTML = '✓';
+    inputField.appendChild(checkmark);
+  }
+}
+
+// Обработчики для полей ввода
+document.addEventListener('DOMContentLoaded', function() {
+  const inputFields = document.querySelectorAll('.input-field input[type="number"]');
+  
+  inputFields.forEach(input => {
+    // Проверяем при загрузке страницы
+    addCheckmarkToInput(input);
+    validateInput(input);
+    
+    // Проверяем при вводе
+    input.addEventListener('input', function() {
+      addCheckmarkToInput(this);
+      validateInput(this);
+    });
+    
+    // Проверяем при потере фокуса
+    input.addEventListener('blur', function() {
+      addCheckmarkToInput(this);
+      validateInput(this);
+    });
+  });
+});
+
+// Функция валидации полей ввода
+function validateInput(input) {
+  const inputField = input.closest('.input-field');
+  const errorElement = inputField.querySelector('.error-message');
+  const value = parseInt(input.value);
+  
+  // Убираем класс ошибки по умолчанию
+  inputField.classList.remove('error');
+  errorElement.textContent = '';
+  
+  // Проверяем минимальные значения
+  if (input.value !== '' && value < parseInt(input.min)) {
+    inputField.classList.add('error');
+    
+    let errorText = '';
+    if (input.name === 'age') {
+      errorText = `Мінімальний вік: ${input.min} років`;
+    } else if (input.name === 'weight') {
+      errorText = `Мінімальна вага: ${input.min} кг`;
+    } else if (input.name === 'height') {
+      errorText = `Мінімальний зріст: ${input.min} см`;
+    }
+    
+    errorElement.textContent = errorText;
+  }
+  
+  // Проверяем максимальные значения
+  if (input.value !== '' && value > parseInt(input.max)) {
+    inputField.classList.add('error');
+    
+    let errorText = '';
+    if (input.name === 'age') {
+      errorText = `Максимальний вік: ${input.max} років`;
+    } else if (input.name === 'weight') {
+      errorText = `Максимальна вага: ${input.max} кг`;
+    } else if (input.name === 'height') {
+      errorText = `Максимальний зріст: ${input.max} см`;
+    }
+    
+    errorElement.textContent = errorText;
+  }
+}
 
 // --- Анимация и меню-карусель для блока с рационом ---
 document.addEventListener('DOMContentLoaded', function() {

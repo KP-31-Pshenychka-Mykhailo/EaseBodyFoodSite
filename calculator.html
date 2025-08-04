@@ -82,9 +82,21 @@
           </div>
           <div class="form-box" id="form-step-3" style="display:none;">
             <legend>Фізичні дані:</legend>
-            <input type="number" name="age" placeholder="Вік" min="18" max="100" required><br>
-            <input type="number" name="weight" placeholder="Вага (кг)" min="40" max="200" required><br>
-            <input type="number" name="height" placeholder="Зріст (см)" min="140" max="230" required><br>
+            <div class="input-field">
+              <input type="number" name="age" min="18" max="100" placeholder="Вік" required>
+              <div class="input-line"></div>
+              <div class="error-message" id="age-error"></div>
+            </div>
+            <div class="input-field">
+              <input type="number" name="weight" min="40" max="200" placeholder="Вага" required>
+              <div class="input-line"></div>
+              <div class="error-message" id="weight-error"></div>
+            </div>
+            <div class="input-field">
+              <input type="number" name="height" min="140" max="230" placeholder="Зріст" required>
+              <div class="input-line"></div>
+              <div class="error-message" id="height-error"></div>
+            </div>
             <button type="button" onclick="nextStep()">Далі</button>
           </div>
           <div class="form-box" id="form-step-4" style="display:none;">
