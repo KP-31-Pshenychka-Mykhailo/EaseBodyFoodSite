@@ -5,7 +5,8 @@ body {
     color: #333;
 }
 
-.main-content {
+.main-content,
+main {
     padding-top: 84px; /* Увеличенный отступ для фиксированного хедера */
 }
 header {
@@ -322,7 +323,8 @@ header img {
     z-index: 1002;
   }
   
-  .main-content {
+  .main-content,
+  main {
     padding-top: 76px; /* Увеличенный отступ для мобильной версии */
   }
 }
