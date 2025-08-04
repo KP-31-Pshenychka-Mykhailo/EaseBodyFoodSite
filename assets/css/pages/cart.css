@@ -230,7 +230,7 @@
 .continue-shopping-btn:hover {
     background: #4CAF50 !important;
     color: white !important;
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3) !important;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2) !important;
     border-color: #4CAF50 !important;
 }
 
