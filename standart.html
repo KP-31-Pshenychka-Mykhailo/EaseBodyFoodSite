@@ -85,19 +85,5 @@
     <script src="assets/js/hearts.js"></script>
     <script src="assets/js/cart.js"></script>
     <script src="assets/js/standart-menu.js"></script>
-    <script>
-    // Закрытие модального окна (если оно используется в других местах)
-    document.addEventListener('DOMContentLoaded', function() {
-      var closeBtn = document.getElementById('order-modal-close');
-      document.getElementById('order-modal').addEventListener('click', function(e) {
-        if(e.target === this) {
-          this.style.display = 'none';
-        }
-      });
-      if(closeBtn) closeBtn.addEventListener('click', function() {
-        document.getElementById('order-modal').style.display = 'none';
-      });
-    });
-    </script>
 </body>
 </html>

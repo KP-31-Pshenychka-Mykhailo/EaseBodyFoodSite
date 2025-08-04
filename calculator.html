@@ -184,55 +184,5 @@
   <script src="assets/js/hearts.js"></script>
   <script src="assets/js/cart.js"></script>
   <script src="assets/js/calculator.js"></script>
-  <script>
-    // Переключение дней недели для персонального меню
-    document.querySelectorAll('.menu-day-alt').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        // Снять active со всех кнопок
-        document.querySelectorAll('.menu-day-alt').forEach(function(b) {
-          b.classList.remove('active');
-        });
-        btn.classList.add('active');
-        // Получить выбранный день
-        var day = btn.getAttribute('data-day');
-        // Скрыть все карточки
-        document.querySelectorAll('.menu-card-alt').forEach(function(card) {
-          if (card.getAttribute('data-day') === day) {
-            card.style.display = '';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      });
-    });
-
-    // При загрузке показать только карточки для первого дня
-    document.addEventListener('DOMContentLoaded', function() {
-      var activeBtn = document.querySelector('.menu-day-alt.active');
-      if (activeBtn) {
-        var day = activeBtn.getAttribute('data-day');
-        document.querySelectorAll('.menu-card-alt').forEach(function(card) {
-          if (card.getAttribute('data-day') === day) {
-            card.style.display = '';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      }
-    });
-
-    // Закрытие модального окна
-    document.addEventListener('DOMContentLoaded', function() {
-      var closeBtn = document.getElementById('order-modal-close');
-      document.getElementById('order-modal').addEventListener('click', function(e) {
-        if(e.target === this) {
-          this.style.display = 'none';
-        }
-      });
-      if(closeBtn) closeBtn.addEventListener('click', function() {
-        document.getElementById('order-modal').style.display = 'none';
-      });
-    });
-  </script>
 </body>
 </html>

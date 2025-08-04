@@ -493,4 +493,38 @@ document.addEventListener('DOMContentLoaded', function() {
   if (orderBtn) {
     orderBtn.addEventListener('click', saveCalculatorTemplateToCart);
   }
+
+  // Переключение дней недели для персонального меню
+  document.querySelectorAll('.menu-day-alt').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      // Снять active со всех кнопок
+      document.querySelectorAll('.menu-day-alt').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      btn.classList.add('active');
+      // Получить выбранный день
+      var day = btn.getAttribute('data-day');
+      // Скрыть все карточки
+      document.querySelectorAll('.menu-card-alt').forEach(function(card) {
+        if (card.getAttribute('data-day') === day) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // При загрузке показать только карточки для первого дня
+  var activeBtn = document.querySelector('.menu-day-alt.active');
+  if (activeBtn) {
+    var day = activeBtn.getAttribute('data-day');
+    document.querySelectorAll('.menu-card-alt').forEach(function(card) {
+      if (card.getAttribute('data-day') === day) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
 }); 
