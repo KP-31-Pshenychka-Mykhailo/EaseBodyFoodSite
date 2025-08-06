@@ -14,7 +14,7 @@ class HeartsManager {
 
   addHeartHandlers() {
     // Обрабатываем все типы сердечек
-    const heartSelectors = [
+    const heartSelectors = window.SELECTORS?.HEARTS || [
       '.gallery-heart',
       '.gallery-heart-alt', 
       '.menu-card-heart',
@@ -27,7 +27,7 @@ class HeartsManager {
     let addedHandlers = 0;
 
     heartSelectors.forEach(selector => {
-      const hearts = document.querySelectorAll(selector);
+      const hearts = window.getElements(selector);
       totalHearts += hearts.length;
       
       hearts.forEach(heart => {
@@ -39,7 +39,7 @@ class HeartsManager {
       });
     });
 
-    // Обработчики добавлены
+
   }
 
   handleHeartClick(e, heart) {
@@ -58,7 +58,14 @@ class HeartsManager {
 
   onHeartToggle(heart) {
     // Получаем информацию о блюде
-    const card = heart.closest('.gallery-card, .menu-card, .menu-card-alt, .menu-constructor-card, .menu-constructor-card-alt');
+    const cardSelectors = window.SELECTORS?.CARDS || [
+      '.gallery-card',
+      '.menu-card',
+      '.menu-card-alt',
+      '.menu-constructor-card',
+      '.menu-constructor-card-alt'
+    ];
+    const card = heart.closest(cardSelectors.join(', '));
     if (card) {
       const dishId = card.getAttribute('data-dish-id') || 
                     card.querySelector('[data-dish-id]')?.getAttribute('data-dish-id') ||
@@ -102,92 +109,42 @@ class HeartsManager {
   saveHeartState(dishId, isActive) {
     try {
       // Сохраняем состояние в формате heartsState: {"id": true/false}
-      const heartsState = JSON.parse(localStorage.getItem('heartsState') || '{}');
+      const heartsState = window.getStorageItem(window.STORAGE_KEYS?.HEARTS_STATE || 'heartsState', {});
       heartsState[dishId] = isActive;
-      localStorage.setItem('heartsState', JSON.stringify(heartsState));
+      window.setStorageItem(window.STORAGE_KEYS?.HEARTS_STATE || 'heartsState', heartsState);
       
       // Отправляем запрос на сервер
       this.sendHeartStateToServer(dishId, isActive);
       
     } catch (error) {
-      console.warn('Не удалось сохранить состояние сердечка:', error);
+      // Ошибка сохранения
     }
   }
 
   async sendHeartStateToServer(dishId, isActive) {
     try {
-      // Получаем userId из localStorage или другого источника
-      const userId = this.getUserId();
-      
-      if (!userId) {
-        console.warn('Пользователь не авторизован, запрос на сервер не отправлен');
+      if (!window.isUserAuthenticated()) {
         return;
       }
 
-      // Получаем базовый URL сервера из настроек
-      const settingsResponse = await fetch('assets/data/settings.json');
-      const settings = await settingsResponse.json();
-      const baseUrl = settings.SERVER_BASE_URL;
-
-      const endpoint = isActive ? '/user/favorite/add' : '/user/favorite/remove';
-      const requestData = {
-        UserId: userId,
-        DishId: parseInt(dishId)
-      };
-
-      const response = await fetch(`${baseUrl}${endpoint}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(requestData)
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (isActive) {
+        await window.addToFavorites(dishId);
+      } else {
+        await window.removeFromFavorites(dishId);
       }
-
-      const result = await response.json();
-      console.log(`Сервер ответил: ${isActive ? 'добавлено' : 'удалено'} из избранного`, result);
       
     } catch (error) {
-      console.warn('Ошибка при отправке запроса на сервер:', error);
+      // Ошибка отправки
     }
-  }
-
-  getUserId() {
-    // Получаем userId из localStorage
-    return localStorage.getItem('userId');
   }
 
   async loadFavoritesFromServer() {
     try {
-      const userId = this.getUserId();
-      
-      if (!userId) {
-        console.warn('Пользователь не авторизован, не загружаем избранное с сервера');
+      if (!window.isUserAuthenticated()) {
         return;
       }
 
-      // Получаем базовый URL сервера из настроек
-      const settingsResponse = await fetch('assets/data/settings.json');
-      const settings = await settingsResponse.json();
-      const baseUrl = settings.SERVER_BASE_URL;
-
-      const response = await fetch(`${baseUrl}/user/favorite/${userId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include'
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const favorites = await response.json();
+      const favorites = await window.getFavorites();
       
       // Обновляем localStorage на основе данных с сервера
       const heartsState = {};
@@ -195,41 +152,62 @@ class HeartsManager {
         heartsState[dishId] = true;
       });
       
-      localStorage.setItem('heartsState', JSON.stringify(heartsState));
+      window.setStorageItem(window.STORAGE_KEYS?.HEARTS_STATE || 'heartsState', heartsState);
       
       // Применяем состояния к DOM
       this.loadHeartStates();
       
-      console.log('Избранные блюда загружены с сервера:', favorites);
-      
     } catch (error) {
-      console.warn('Ошибка при загрузке избранных блюд с сервера:', error);
+      // Ошибка загрузки
     }
   }
 
   loadHeartStates() {
     try {
       // Загружаем состояние сердечек из localStorage
-      const heartsState = JSON.parse(localStorage.getItem('heartsState') || '{}');
+      const heartsState = window.getStorageItem(window.STORAGE_KEYS?.HEARTS_STATE || 'heartsState', {});
       
       // Применяем активные состояния ко всем найденным карточкам
       Object.keys(heartsState).forEach(dishId => {
         if (heartsState[dishId]) { // Если сердечко активно
           // Ищем карточки по data-dish-id
-          const cards = document.querySelectorAll(`[data-dish-id="${dishId}"]`);
+          const cards = window.getElements(`[data-dish-id="${dishId}"]`);
           cards.forEach(card => {
-            const heart = card.querySelector('.gallery-heart, .gallery-heart-alt, .menu-card-heart, .menu-card-heart-alt, .menu-constructor-card-heart, .menu-constructor-card-heart-alt');
+            const heartSelectors = window.SELECTORS?.HEARTS || [
+              '.gallery-heart',
+              '.gallery-heart-alt', 
+              '.menu-card-heart',
+              '.menu-card-heart-alt',
+              '.menu-constructor-card-heart',
+              '.menu-constructor-card-heart-alt'
+            ];
+            const heart = card.querySelector(heartSelectors.join(', '));
             if (heart) {
               heart.classList.add('active');
             }
           });
           
           // Также ищем карточки по извлеченному ID из изображений
-          const allCards = document.querySelectorAll('.gallery-card, .menu-card, .menu-card-alt, .menu-constructor-card, .menu-constructor-card-alt');
+          const cardSelectors = window.SELECTORS?.CARDS || [
+            '.gallery-card',
+            '.menu-card',
+            '.menu-card-alt',
+            '.menu-constructor-card',
+            '.menu-constructor-card-alt'
+          ];
+          const allCards = window.getElements(cardSelectors.join(', '));
           allCards.forEach(card => {
             const extractedId = this.extractDishIdFromCard(card);
             if (extractedId === dishId) {
-              const heart = card.querySelector('.gallery-heart, .gallery-heart-alt, .menu-card-heart, .menu-card-heart-alt, .menu-constructor-card-heart, .menu-constructor-card-heart-alt');
+              const heartSelectors = window.SELECTORS?.HEARTS || [
+                '.gallery-heart',
+                '.gallery-heart-alt', 
+                '.menu-card-heart',
+                '.menu-card-heart-alt',
+                '.menu-constructor-card-heart',
+                '.menu-constructor-card-heart-alt'
+              ];
+              const heart = card.querySelector(heartSelectors.join(', '));
               if (heart) {
                 heart.classList.add('active');
               }
@@ -239,7 +217,7 @@ class HeartsManager {
       });
       
     } catch (error) {
-      console.warn('Не удалось загрузить состояния сердечек:', error);
+      // Ошибка загрузки состояний
     }
   }
 
@@ -252,7 +230,15 @@ class HeartsManager {
         if (mutation.type === 'childList') {
           mutation.addedNodes.forEach((node) => {
             if (node.nodeType === Node.ELEMENT_NODE) {
-              if (node.querySelector('.gallery-heart, .gallery-heart-alt, .menu-card-heart, .menu-card-heart-alt, .menu-constructor-card-heart, .menu-constructor-card-heart-alt')) {
+              const heartSelectors = window.SELECTORS?.HEARTS || [
+                '.gallery-heart',
+                '.gallery-heart-alt', 
+                '.menu-card-heart',
+                '.menu-card-heart-alt',
+                '.menu-constructor-card-heart',
+                '.menu-constructor-card-heart-alt'
+              ];
+              if (node.querySelector(heartSelectors.join(', '))) {
                 shouldReinit = true;
               }
             }
@@ -279,11 +265,10 @@ class HeartsManager {
   // Публичный метод для получения списка избранных блюд
   getFavoriteDishes() {
     try {
-      const heartsState = JSON.parse(localStorage.getItem('heartsState') || '{}');
+      const heartsState = window.getStorageItem(window.STORAGE_KEYS?.HEARTS_STATE || 'heartsState', {});
       // Возвращаем только ID блюд с активными сердечками
       return Object.keys(heartsState).filter(dishId => heartsState[dishId]);
     } catch (error) {
-      console.warn('Не удалось получить список избранных блюд:', error);
       return [];
     }
   }
@@ -291,47 +276,26 @@ class HeartsManager {
   // Публичный метод для очистки избранного
   async clearFavorites() {
     try {
-      localStorage.removeItem('heartsState');
+      window.removeStorageItem(window.STORAGE_KEYS?.HEARTS_STATE || 'heartsState');
       
       // Также очищаем на сервере
       await this.clearFavoritesOnServer();
       
     } catch (error) {
-      console.warn('Не удалось очистить избранное:', error);
+      // Ошибка очистки
     }
   }
 
   async clearFavoritesOnServer() {
     try {
-      const userId = this.getUserId();
-      
-      if (!userId) {
-        console.warn('Пользователь не авторизован, не очищаем избранное на сервере');
+      if (!window.isUserAuthenticated()) {
         return;
       }
 
-      // Получаем базовый URL сервера из настроек
-      const settingsResponse = await fetch('assets/data/settings.json');
-      const settings = await settingsResponse.json();
-      const baseUrl = settings.SERVER_BASE_URL;
-
-      const response = await fetch(`${baseUrl}/user/favorite/clear`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ UserId: userId })
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      console.log('Избранное очищено на сервере');
+      await window.clearFavorites();
       
     } catch (error) {
-      console.warn('Ошибка при очистке избранного на сервере:', error);
+      // Ошибка очистки на сервере
     }
   }
 

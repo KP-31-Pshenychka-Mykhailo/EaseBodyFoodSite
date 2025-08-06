@@ -1,7 +1,7 @@
 <footer class="footer">
     <div class="footer-content">
         <div class="footer-col footer-brand">
-            <img src="../EasyBodyFoodSite/assets/img/logo.png" alt="Easy Body Food" class="footer-logo">
+            <img src="/data/img/logo.png" alt="Easy Body Food" class="footer-logo">
             <div class="footer-brand-text">
                 <div class="footer-title">Easy Body Food</div>
                 <div class="footer-slogan">Раціон, що підходить саме Вам!</div>
@@ -10,11 +10,11 @@
         <div class="footer-col footer-nav">
             <div class="footer-col-title">Навігація</div>
             <ul>
-                <li><a href="../index.html">Головна</a></li>
-                <li><a href="../standart.html">Стандартне меню</a></li>
-                <li><a href="../star.html">Зіркове меню</a></li>
-                <li><a href="../calculator.html">Калькулятор раціону</a></li>
-                <li><a href="../constructor.html">Конструктор меню</a></li>
+                <li><a href="/index.html">Головна</a></li>
+                <li><a href="/pages/main/standart.html">Стандартне меню</a></li>
+                <!-- <li><a href="/pages/main/star.html">Зіркове меню</a></li> -->
+                <li><a href="/pages/main/calculator.html">Калькулятор раціону</a></li>
+                <li><a href="/pages/main/constructor.html">Конструктор меню</a></li>
             </ul>
         </div>
         <div class="footer-col footer-contacts">
@@ -75,25 +75,5 @@
     <div class="footer-copyright">
         Copyright: © 2025 EasyBodyFood
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const toggleBtn = document.getElementById('footerToggleBtn');
-        const popup = document.getElementById('footerPopupSocials');
-
-        // Открытие/закрытие popup по клику на кнопку
-        toggleBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const isOpen = popup.classList.toggle('open');
-            toggleBtn.classList.toggle('active', isOpen);
-        });
-
-        // Закрытие popup по клику вне popup и кнопки
-        document.addEventListener('click', function(e) {
-            if (!popup.contains(e.target) && !toggleBtn.contains(e.target)) {
-                popup.classList.remove('open');
-                toggleBtn.classList.remove('active');
-            }
-        });
-    });
-    </script>
+    <script src="/assets/js/layout/footer.js"></script>
 </footer> 

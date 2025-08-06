@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Конструктор меню | Easy Body Food</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rubik:wght@900&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="assets/img/logo.png">
-    <link rel="stylesheet" href="assets/css/static/header.css">
-    <link rel="stylesheet" href="assets/css/static/footer.css">
-    <link rel="stylesheet" href="assets/css/pages/index.css">
-    <link rel="stylesheet" href="assets/css/main/alt-theme.css">
-    <link rel="stylesheet" href="assets/css/main/main-theme.css">
-    <link rel="stylesheet" href="assets/css/static/order.css">
+    <link rel="icon" type="image/png" href="/data/img/logo.png">
+    <link rel="stylesheet" href="/assets/css/static/header.css">
+    <link rel="stylesheet" href="/assets/css/static/footer.css">
+    <link rel="stylesheet" href="/assets/css/static/auth.css">
+    <link rel="stylesheet" href="/assets/css/pages/index.css">
+    <link rel="stylesheet" href="/assets/css/main/alt-theme.css">
+    <link rel="stylesheet" href="/assets/css/main/main-theme.css">
+    <link rel="stylesheet" href="/assets/css/static/order.css">
+    <link rel="stylesheet" href="/assets/css/static/message.css">
 </head>
 <body>
     <div id="header"></div>
@@ -76,14 +78,19 @@
             <h2>Не хочеш обирати?</h2>
             <h4 class="light">Спробуй меню від нашого нутриціолога</h4>
             <div class="team-top">
-                <img src="assets/img/nutritionist.jpg" alt="Нутриціолог" class="team-main-photo-star">
+                <img src="/data/img/nutritionist.jpg" alt="Нутриціолог" class="team-main-photo-star">
             <div class="team-main-info">
                 <div class="menu-nutritionist-info">
                     <h3>Микита Бондаренко</h3>
                     <div class="team-main-info">Нутриціолог</div>
                     <div class="text24">Експерт з харчування, якому довіряють медіа, спортсмени та тисячі людей по всій Україні.<br><br>Працює з професійними атлетами, активними людьми, молодими мамами — та кожному підбирає раціон.<br>Його філософія проста:<br><b>"Раціон має бути не про жертви, а про свободу".</b></div>
                     <div class="gallery-bottom-buttons">
-                        <button class="gallery-btn gallery-btn-main">Зіркове меню</button>
+                        <button class="gallery-btn gallery-btn-main" id="star-menu-btn">Зіркове меню</button>
+                        <div class="message-tooltip" id="message-tooltip">
+                            <div class="message-content">
+                                <div class="message-text">Coming soon...</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 </div>
@@ -94,7 +101,7 @@
                 <div class="menu-standard-choice-inner">
                     <div class="menu-standard-choice-title">Або ж обирай наше стандартне меню</div>
                     <div class="menu-standard-choice-desc">Ми вже сформували збалансоване меню на день, щоб вам не довелося нічого обирати.</div>
-                    <a href="standart.html" class="menu-standard-choice-btn">Стандартне меню</a>
+                    <a href="/pages/main/standart.html" class="menu-standard-choice-btn">Стандартне меню</a>
                 </div>
             </section>
         </section>
@@ -103,6 +110,13 @@
     <style>
 #order-modal-content::-webkit-scrollbar { display: none; }
 #order-modal-content { scrollbar-width: none; }
+.menu-standard-choice { margin-bottom: 24px; }
+.menu-standard-choice-btn { margin-bottom: 24px; }
+.menu-standard-choice-inner { padding-bottom: 18px; }
+
+.gallery-bottom-buttons {
+    display: inline-block;
+}
 </style>
     <div id="footer"></div>
     <!-- Модальное окно заказа -->
@@ -112,10 +126,23 @@
         <div id="order-modal-body"></div>
       </div>
     </div>
-    <script src="assets/js/layout.js"></script>
-    <script src="assets/js/hearts.js"></script>
-    <script src="assets/js/cart.js"></script>
-    <script src="assets/js/constructor-menu.js"></script>
+    <!-- Core modules first -->
+    <script src="/assets/js/core/constants.js"></script>
+    <script src="/assets/js/core/utils.js"></script>
+    <script src="/assets/js/core/api.js"></script>
+    
+    <!-- Components -->
+    <script src="/assets/js/components/hearts.js"></script>
+    <script src="/assets/js/components/card.js"></script>
+    <script src="/assets/js/components/carousel.js"></script>
+    <script src="/assets/js/layout/header.js"></script>
+    <script src="/assets/js/components/modal.js"></script>
+    <script src="/assets/js/auth/auth.js"></script>
+    <script src="/assets/js/layout/navigation.js"></script>
+    <script src="/assets/js/layout/footer.js"></script>
+    <script src="/assets/js/service/cart.js"></script>
+    <script src="/assets/js/service/constructor.js"></script>
+    <script src="/assets/js/components/message.js"></script>
 
 </body>
 </html> 

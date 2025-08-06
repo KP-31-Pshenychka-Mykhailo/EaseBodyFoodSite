@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Головна | Easy Body Food</title>
-    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <link rel="icon" type="image/png" href="data/img/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rubik:wght@900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/static/header.css">
     <link rel="stylesheet" href="assets/css/static/footer.css">
+    <link rel="stylesheet" href="assets/css/static/auth.css">
     <link rel="stylesheet" href="assets/css/pages/index.css">
     <link rel="stylesheet" href="assets/css/main/alt-theme.css?v=1.1">
     <link rel="stylesheet" href="assets/css/main/main-theme.css">
@@ -19,7 +20,7 @@
         <section class = "hero">
             <h1>Персональний раціон<br>без клопоту</h1>
             <p>Розрахуйте калорії за хвилину та отримайте готове меню прямо до дверей.</p>
-            <a class="button" href = "calculator.html">
+            <a class="button" href = "pages/main/calculator.html">
                 Вибрати план
                 <svg class="btn-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="9 18 15 12 9 6"></polyline>
@@ -40,7 +41,7 @@
         <section class="section1">
             <h2>Наша команда</h2>
             <div class="team-top">
-                <img src="assets/img/team1.png" alt="Богдан Шевченко" class="team-main-photo">
+                <img src="data/img/team1.png" alt="Богдан Шевченко" class="team-main-photo">
                 <div class="team-main-info">
                     <h3>Богдан Шевченко</h3>
                     <div class="team-main-info">Засновник компанії</div>
@@ -49,28 +50,28 @@
             </div>
             <div class="team-gallery" id="teamGallery">
                 <div class="team-card">
-                    <img src="assets/img/team2.jpg" class="team-photo" alt="Team member 2">
+                    <img src="data/img/team2.jpg" class="team-photo" alt="Team member 2">
                     <div class="hover-info">
                         <div class="team-card-name">Ім'я 1</div>
                         <div class="team-card-desc">Опис учасника 1</div>
                     </div>
                 </div>
                 <div class="team-card">
-                    <img src="assets/img/team3.jpg" class="team-photo" alt="Team member 3">
+                    <img src="data/img/team3.jpg" class="team-photo" alt="Team member 3">
                     <div class="hover-info">
                         <div class="team-card-name">Ім'я 2</div>
                         <div class="team-card-desc">Опис учасника 2</div>
                     </div>
                 </div>
                 <div class="team-card">
-                    <img src="assets/img/team4.jpg" class="team-photo" alt="Team member 4">
+                    <img src="data/img/team4.jpg" class="team-photo" alt="Team member 4">
                     <div class="hover-info">
                         <div class="team-card-name">Ім'я 3</div>
                         <div class="team-card-desc">Опис учасника 3</div>
                     </div>
                 </div>
                 <div class="team-card">
-                    <img src="assets/img/team5.jpg" class="team-photo" alt="Team member 5">
+                    <img src="data/img/team5.jpg" class="team-photo" alt="Team member 5">
                     <div class="hover-info">
                         <div class="team-card-name">Ім'я 4</div>
                         <div class="team-card-desc">Опис учасника 4</div>
@@ -85,7 +86,7 @@
                 <div class="reviews-left">
                     <div class="review-card review-card-small">
                         <div class="review-header">
-                            <img src="assets/img/review1.jpg" alt="Анна Левицька" class="review-avatar">
+                            <img src="data/img/review1.jpg" alt="Анна Левицька" class="review-avatar">
                             <div>
                                 <h4 class="white">Анна Левицька</h4>
                                 <div class="review-info">Київ, 35 років</div>
@@ -97,7 +98,7 @@
                     </div>
                     <div class="review-card review-card-small">
                         <div class="review-header">
-                            <img src="assets/img/review3.jpg" alt="Ярослав Демчук" class="review-avatar">
+                            <img src="data/img/review3.jpg" alt="Ярослав Демчук" class="review-avatar">
                             <div>
                                 <h4 class="white">Ярослав Демчук</h4>
                                 <div class="review-info">Львів, 26 років</div>
@@ -110,15 +111,15 @@
                 </div>
                 <div class="review-card review-card-large">
                     <div class="review-header">
-                        <img src="assets/img/review2.jpg" alt="Ігор Павленко" class="review-avatar">
+                        <img src="data/img/review2.jpg" alt="Ігор Павленко" class="review-avatar">
                         <div>
                             <h4 class="white">Ігор Павленко</h4>
                             <div class="review-info">Харків, 28 років</div>
                         </div>
                     </div>
                     <div class="review-video-container">
-                        <video class="review-video" controls preload="metadata" poster="assets/img/review2.jpg">
-                            <source src="assets/video/testimonial.mp4" type="video/mp4">
+                        <video class="review-video" controls preload="metadata" poster="data/img/review2.jpg">
+                            <source src="data/video/testimonial.mp4" type="video/mp4">
                             Ваш браузер не підтримує відео.
                         </video>
                     </div>
@@ -126,7 +127,7 @@
                 <!-- Мобильные отзывы для карусели -->
                 <div class="review-card review-card-mobile">
                     <div class="review-header">
-                        <img src="assets/img/review1.jpg" alt="Анна Левицька" class="review-avatar">
+                        <img src="data/img/review1.jpg" alt="Анна Левицька" class="review-avatar">
                         <div>
                             <h4 class="white">Анна Левицька</h4>
                             <div class="review-info">Київ, 35 років</div>
@@ -138,7 +139,7 @@
                 </div>
                 <div class="review-card review-card-mobile">
                     <div class="review-header">
-                        <img src="assets/img/review3.jpg" alt="Ярослав Демчук" class="review-avatar">
+                        <img src="data/img/review3.jpg" alt="Ярослав Демчук" class="review-avatar">
                         <div>
                             <h4 class="white">Ярослав Демчук</h4>
                             <div class="review-info">Львів, 26 років</div>
@@ -150,7 +151,7 @@
                 </div>
                 <div class="review-card review-card-mobile">
                     <div class="review-header">
-                        <img src="assets/img/review4.jpg" alt="Марія Коваль" class="review-avatar">
+                        <img src="data/img/review4.jpg" alt="Марія Коваль" class="review-avatar">
                         <div>
                             <h4 class="white">Марія Коваль</h4>
                             <div class="review-info">Житомир, 24 роки</div>
@@ -162,15 +163,15 @@
                 </div>
                 <div class="review-card review-card-mobile">
                     <div class="review-header">
-                        <img src="assets/img/review2.jpg" alt="Ігор Павленко" class="review-avatar">
+                        <img src="data/img/review2.jpg" alt="Ігор Павленко" class="review-avatar">
                         <div>
                             <h4 class="white">Ігор Павленко</h4>
                             <div class="review-info">Харків, 28 років</div>
                         </div>
                     </div>
                     <div class="review-video-container">
-                        <video class="review-video" controls preload="metadata" poster="assets/img/review2.jpg">
-                            <source src="assets/video/testimonial.mp4" type="video/mp4">
+                        <video class="review-video" controls preload="metadata" poster="data/img/review2.jpg">
+                            <source src="data/video/testimonial.mp4" type="video/mp4">
                             Ваш браузер не підтримує відео.
                         </video>
                     </div>
@@ -211,18 +212,28 @@
                 <h3 class="center">Хочете більше варіантів?</h3>
                 <div class="gallery-bottom-subtitle">Персоналізуйте меню під себе або спробуйте зірковий раціон!</div>
                 <div class="gallery-bottom-buttons">
-                    <a class="gallery-btn gallery-btn-main" href = "constructor.html">Конструктор меню</a>
-                    <a class="gallery-btn gallery-btn-secondary" href = "calculator.html">Калькулятор раціону</a>
+                    <a class="gallery-btn gallery-btn-main" href = "pages/main/constructor.html">Конструктор меню</a>
+<a class="gallery-btn gallery-btn-secondary" href = "pages/main/calculator.html">Калькулятор раціону</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <script src="assets/js/hearts.js"></script>
-    <script src="assets/js/gallery.js"></script>
-    <script src="assets/js/reviews-carousel.js?v=1.1"></script>
+    <!-- Core modules first -->
+    <script src="assets/js/core/constants.js"></script>
+    <script src="assets/js/core/utils.js"></script>
+    <script src="assets/js/core/api.js"></script>
+    
+    <!-- Components -->
+    <script src="assets/js/components/hearts.js"></script>
+    <script src="assets/js/components/card.js"></script>
+    <script src="assets/js/components/carousel.js"></script>
 
     <div id="footer"></div>
-    <script src="assets/js/layout.js"></script>
+    <script src="assets/js/layout/header.js"></script>
+    <script src="assets/js/components/modal.js"></script>
+    <script src="assets/js/auth/auth.js"></script>
+    <script src="assets/js/layout/navigation.js"></script>
+    <script src="assets/js/layout/footer.js"></script>
 </body>
 </html>

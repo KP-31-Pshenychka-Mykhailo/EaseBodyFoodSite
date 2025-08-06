@@ -1,5 +1,5 @@
 // Переключение вкладок профиля
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     // Инициализация переключения вкладок
     initProfileTabs();
     
@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.querySelector('.profile-tab.active').getAttribute('data-tab') === 'cart') {
         loadCart();
     }
+
+    // Инициализация избранных блюд
+    await initFavorites();
 });
 
 function initProfileTabs() {
@@ -89,7 +92,7 @@ function initButtonHandlers() {
     document.getElementById('logout-btn').addEventListener('click', function() {
         localStorage.clear();
         sessionStorage.clear();
-        window.location.href = 'index.html';
+        window.location.href = '../index.html';
     });
 
     // Обработчик для кнопки "Змінити" - сохранение профиля
@@ -134,16 +137,12 @@ function saveProfileData() {
         instagram: document.getElementById('instagram-input').value
     };
 
-    console.log('Отправляем данные профиля:', profileData);
-    console.log('Отправляем данные адреса:', addressData);
-    console.log('Отправляем данные соцсетей:', socialsData);
-    console.log('JSON для адреса:', JSON.stringify(addressData));
+
 
     // Отправляем три запроса
-    fetch('assets/data/settings.json')
-        .then(response => response.json())
+    window.loadServerSettings()
         .then(settings => {
-            const baseUrl = settings.SERVER_BASE_URL;
+            const baseUrl = settings.serverBaseUrl || 'http://localhost:3000';
             
             // Основная информация
             const infoPromise = fetch(baseUrl + '/user/addinfo?userId=' + userId, {
@@ -164,10 +163,8 @@ function saveProfileData() {
                 credentials: 'include',
                 body: JSON.stringify(addressData)
             }).then(response => {
-                console.log('Ответ сервера для адреса:', response.status, response.statusText);
                 if (!response.ok) {
                     return response.text().then(text => {
-                        console.error('Ошибка адреса - ответ сервера:', text);
                         throw new Error('Ошибка адреса: ' + text);
                     });
                 }
@@ -198,7 +195,6 @@ function saveProfileData() {
             }
         })
         .catch(error => {
-            console.error('Ошибка:', error);
             alert('Помилка при оновленні: ' + error.message);
         });
 }
@@ -219,25 +215,20 @@ function loadProfileData() {
     // Сначала очищаем все поля профиля
     clearProfileFields();
     
-    fetch('assets/data/settings.json')
-        .then(response => response.json())
+    window.loadServerSettings()
         .then(settings => {
-            const baseUrl = settings.SERVER_BASE_URL;
-            console.log('Base URL:', baseUrl);
+            const baseUrl = settings.serverBaseUrl || 'http://localhost:3000';
             
             // Здесь можно получить userID из localStorage/sessionStorage/cookie, если нужно
             const userId = localStorage.getItem('userId');
-            console.log('UserID from localStorage:', userId);
             
             // Проверяем, что userId существует
             if (!userId) {
-                console.error('userId не найден в localStorage');
                 alert('Помилка: користувач не авторизований. Будь ласка, увійдіть в систему.');
                 return;
             }
             
             const fullUrl = baseUrl + '/user/info/' + userId;
-            console.log('Отправляем GET запрос на:', fullUrl);
             
             // Для примера просто делаем POST на /user/profile (так как GET не работает с ngrok)
             const xhr = new XMLHttpRequest();
@@ -245,11 +236,9 @@ function loadProfileData() {
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
-                    console.log('Получен ответ от сервера:', xhr.status, xhr.statusText);
                     if (xhr.status === 200) {
                         try {
                             const data = JSON.parse(xhr.responseText);
-                            console.log('Данные профиля получены:', data);
                             
                             // Заполняем поля формы только если значение есть, иначе оставляем пустым
                             const setValue = (id, value) => {
@@ -282,18 +271,17 @@ function loadProfileData() {
                             // Для этажа (floor-input) — если entrance есть, иначе пусто
                             setValue('entrance-input', data.entrance ? data.entrance : '');
                         } catch (e) {
-                            console.error('Ошибка парсинга JSON:', e);
-                            console.error('Полный ответ сервера:', xhr.responseText);
+                            // Ошибка парсинга JSON
                         }
                     } else {
-                        console.error('Ошибка загрузки профиля:', xhr.status, xhr.statusText);
+                        // Ошибка загрузки профиля
                     }
                 }
             };
             xhr.send(JSON.stringify({ userId: userId }));
         })
         .catch(err => {
-            console.error('Ошибка загрузки settings.json:', err);
+            // Ошибка загрузки настроек
         });
 }
 
@@ -311,4 +299,129 @@ function initModalHandlers() {
             document.getElementById('order-modal').style.display = 'none';
         });
     }
+}
+
+// ===== ФУНКЦИОНАЛЬНОСТЬ ИЗБРАННЫХ БЛЮД =====
+
+let dishesData = [];
+
+// Загрузка данных блюд
+async function loadDishesData() {
+    try {
+        dishesData = await window.loadDishesData();
+    } catch (error) {
+        // Ошибка загрузки данных блюд
+    }
+}
+
+// Получить блюдо по id
+function getDishById(id) {
+    return dishesData.find(dish => dish.id === parseInt(id));
+}
+
+// Генерация карточки избранного блюда в стиле корзины
+function createFavoriteCard(dish) {
+    if (!dish) return '';
+    
+    const calories = (dish.p * 4) + (dish.f * 9) + (dish.c * 4);
+    
+    return `
+        <div class="cart-item" data-dish-id="${dish.id}">
+            <img src="${dish.img || '../../data/img/food1.jpg'}" alt="${dish.title}" class="cart-item-img">
+            <div class="cart-item-content">
+                <div class="cart-item-title">${dish.title}</div>
+                <div class="cart-item-macros">Б: ${dish.p}г Ж: ${dish.f}г В: ${dish.c}г, ${calories} ккал</div>
+                <div class="cart-item-description">${dish.subtitle || ''}</div>
+                ${dish.allergens ? `<div class="cart-item-allergens">Алергени: ${dish.allergens}</div>` : ''}
+            </div>
+            <div class="cart-item-controls">
+                <div class="cart-item-actions">
+                    <button class="delete-btn" onclick="removeFromFavorites(${dish.id})">Видалити з улюблених</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Функция удаления из избранного
+window.removeFromFavorites = function(dishId) {
+    if (confirm('Ви впевнені, що хочете видалити це блюдо з улюблених?')) {
+        const heartsState = JSON.parse(localStorage.getItem('heartsState') || '{}');
+        heartsState[dishId] = false;
+        localStorage.setItem('heartsState', JSON.stringify(heartsState));
+        renderFavorites();
+    }
+};
+
+// Отображение избранных блюд в стиле корзины
+window.renderFavorites = function() {
+    const favoritesContainer = document.getElementById('tab-favorites');
+    if (!favoritesContainer) return;
+
+    const heartsState = JSON.parse(localStorage.getItem('heartsState') || '{}');
+    const favoriteIds = Object.keys(heartsState).filter(id => heartsState[id] === true);
+    
+    if (favoriteIds.length === 0) {
+        favoritesContainer.innerHTML = `
+            <div class="cart-container">
+                <div class="cart-header">
+                    <h1 class="profile-header-title">Улюблені страви</h1>
+                </div>
+                <div class="profile-cart-empty">
+                    <div class="profile-cart-empty-title">У вас поки немає улюблених страв</div>
+                    <div class="profile-cart-empty-desc">Додайте їх, натиснувши на сердечко біля блюда!</div>
+                    <div class="profile-cart-btns">
+                        <a href="../index.html" class="profile-cart-btn">Повернутися на головну</a>
+                    </div>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    const favoriteDishes = favoriteIds.map(id => getDishById(id)).filter(dish => dish);
+    
+    // Подсчет общих макронутриентов
+    const totalMacros = favoriteDishes.reduce((total, dish) => ({
+        protein: total.protein + dish.p,
+        fat: total.fat + dish.f,
+        carbs: total.carbs + dish.c
+    }), { protein: 0, fat: 0, carbs: 0 });
+    
+    const totalCalories = favoriteDishes.reduce((total, dish) => {
+        const calories = (dish.p * 4) + (dish.f * 9) + (dish.c * 4);
+        return total + calories;
+    }, 0);
+    
+    favoritesContainer.innerHTML = `
+        <div class="cart-container">
+            <div class="cart-header">
+                <h1 class="profile-header-title">Улюблені страви</h1>
+            </div>
+            
+            <div class="cart-items">
+                ${favoriteDishes.map(dish => createFavoriteCard(dish)).join('')}
+            </div>
+            
+            <div class="cart-summary">
+                <div class="cart-total">Загалом у улюблених: ${totalMacros.protein} Білки ${totalMacros.fat} Жири ${totalMacros.carbs} Вуглеводи, ${totalCalories} ккал.</div>
+                <div class="cart-actions">
+                    <a href="../index.html" class="continue-shopping-btn">Повернутися на головну</a>
+                </div>
+            </div>
+        </div>
+    `;
+};
+
+// Инициализация избранных
+async function initFavorites() {
+    await loadDishesData();
+    renderFavorites();
+
+    // Обновляем избранное при изменении localStorage
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'heartsState') {
+            renderFavorites();
+        }
+    });
 } 

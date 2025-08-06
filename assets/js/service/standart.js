@@ -1,17 +1,6 @@
 document.addEventListener('DOMContentLoaded', async function() {
-  const menuSlider = document.querySelector('.menu-slider');
-  const leftBtn = document.querySelector('.menu-slider-arrow.left');
-  const rightBtn = document.querySelector('.menu-slider-arrow.right');
-  if (!menuSlider || !leftBtn || !rightBtn) return;
-
-  const scrollStep = 320; // ширина одной карточки + gap
-
-  leftBtn.addEventListener('click', function() {
-    menuSlider.scrollBy({ left: -scrollStep, behavior: 'smooth' });
-  });
-  rightBtn.addEventListener('click', function() {
-    menuSlider.scrollBy({ left: scrollStep, behavior: 'smooth' });
-  });
+  // Логика карусели перенесена в carousel.js
+  // Карусель будет инициализирована автоматически через createMenuCarousel
 
   // Маппинг дней недели и калорийности
   const dayButtons = document.querySelectorAll('.menu-day');
@@ -37,56 +26,72 @@ document.addEventListener('DOMContentLoaded', async function() {
   let globalMenuData = {};
   let globalDishesData = [];
   let globalSelectedCalories = '900';
+  
   async function loadData() {
-    const menuResp = await fetch('assets/data/menu.json').catch(() => fetch('../assets/data/menu.json'));
-    menuData = await menuResp.json();
-    globalMenuData = menuData;
-    const dishesResp = await fetch('assets/data/dishes.json').catch(() => fetch('../assets/data/dishes.json'));
-    dishesData = await dishesResp.json();
-    globalDishesData = dishesData;
+    try {
+      const { menuData: menu, dishesData: dishes } = await window.loadAllData();
+      menuData = menu;
+      globalMenuData = menu;
+      dishesData = dishes;
+      globalDishesData = dishes;
+    } catch (error) {
+      menuData = {};
+      dishesData = [];
+    }
   }
 
   // Получить объект меню по калорийности и дню
   function getMenuForSelection(calories, day) {
     const arr = menuData[calories];
-    if (!arr) return null;
+    
+    if (!arr) {
+      return null;
+    }
+    
     return arr.find(item => item.dayOfWeek && item.dayOfWeek.toLowerCase().startsWith(day.toLowerCase()));
   }
 
   // Получить блюдо по id
   function getDishById(id) {
-    return dishesData.find(dish => dish.id === id);
+    return window.getDishById(dishesData, id);
   }
 
-  // Генерация карточки
+  // Генерация карточки - логика перенесена в card.js
   function createMenuCard(dish, mealType) {
-    if (!dish) return '';
-    // mealType: название приёма пищи ("Сніданок", "Обід" и т.д.)
-    return `
-      <div class="menu-card" data-dish-id="${dish.id}">
-        <div class="menu-card-img-wrap">
-          <img src="${dish.img || 'assets/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
-          <div class="gallery-card-icons">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
-                       4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
-                       14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
-                       6.86-8.55 11.54L12 21.35z"/>
-            </svg>
+    if (!dish) {
+      return '';
+    }
+    
+    // Используем функцию из card.js
+    if (window.createStandardMenuCard) {
+      return window.createStandardMenuCard(dish, mealType);
+    } else {
+      return `
+        <div class="menu-card" data-dish-id="${dish.id}">
+          <div class="menu-card-img-wrap">
+            <img src="${window.getDishImage ? window.getDishImage(dish) : (dish.img || '../../data/img/food1.jpg')}" alt="${dish.title}" class="menu-card-img">
+            <div class="gallery-card-icons">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
+                         4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
+                         14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+                         6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </div>
+                            <span class="menu-card-plus active">−</span>
           </div>
-          <span class="menu-card-plus active">−</span>
+          <div class="menu-card-content">
+            <div class="menu-card-title">${mealType}</div>
+            <div class="menu-card-macros">${window.formatMacros ? window.formatMacros(dish) : `Б: ${dish.p} г, Ж: ${dish.f} г, В: ${dish.c} г`}</div>
+            <div class="menu-card-desc">${dish.title}</div>
+          </div>
         </div>
-        <div class="menu-card-content">
-          <div class="menu-card-title">${mealType}</div>
-          <div class="menu-card-macros">Б: ${dish.p} г, Ж: ${dish.f} г, В: ${dish.c} г</div>
-          <div class="menu-card-desc">${dish.title}</div>
-        </div>
-      </div>
-    `;
+      `;
+    }
   }
 
   // Маппинг типов приёмов пищи к ключам в menu.json и названиям для карточек
-  const mealMap = [
+  const mealMap = window.MEAL_MAP || [
     { key: 'breakfastId', name: 'Сніданок' },
     { key: 'additionaldishesId', name: 'Додаткова страва' },
     { key: 'sweetbreakfastId', name: 'Солодкий сніданок' },
@@ -100,32 +105,45 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   // Основная функция генерации карточек
   function renderMenuCards() {
+    const menuSlider = document.querySelector('.menu-slider');
+    const menuTotal = document.querySelector('.menu-total');
+    
+    if (!menuSlider) {
+      return;
+    }
+    
     menuSlider.innerHTML = '';
     const menuObj = getMenuForSelection(selectedCalories, selectedDay);
+    
     if (!menuObj) {
       menuSlider.innerHTML = '<div style="padding:2rem">Немає меню для цього дня.</div>';
       if (menuTotal) menuTotal.textContent = 'Загалом у меню: 0 Білки 0 Жири 0 Вуглеводи.';
       return;
     }
+    
     let cardsHTML = '';
-    let totalP = 0, totalF = 0, totalC = 0;
+    let selectedDishes = [];
+    
     mealMap.forEach(meal => {
       if (menuObj[meal.key]) {
         const dish = getDishById(menuObj[meal.key]);
         if (dish) {
-          totalP += Number(dish.p) || 0;
-          totalF += Number(dish.f) || 0;
-          totalC += Number(dish.c) || 0;
+          selectedDishes.push(dish);
+          cardsHTML += createMenuCard(dish, meal.name);
         }
-        cardsHTML += createMenuCard(dish, meal.name);
       }
     });
+    
     menuSlider.innerHTML = cardsHTML;
-    // Подсчёт калорий
-    const totalKcal = Math.round(totalP * 4 + totalF * 9 + totalC * 4);
+    
+    // Подсчёт макронутриентов и калорий
+    const totalMacros = window.calculateTotalMacros(selectedDishes);
+    const totalKcal = Math.round(window.calculateTotalCalories(selectedDishes));
+    
     if (menuTotal) {
-      menuTotal.textContent = `Загалом у меню: ${totalP} Білки ${totalF} Жири ${totalC} Вуглеводи.`;
+      menuTotal.textContent = `Загалом у меню: ${totalMacros.protein} Білки ${totalMacros.fat} Жири ${totalMacros.carbs} Вуглеводи, ${totalKcal} ккал.`;
     }
+    
     attachCardEvents();
   }
 
@@ -136,23 +154,26 @@ document.addEventListener('DOMContentLoaded', async function() {
       window.heartsManager.refresh();
     }
     
-    const plusIcons = document.querySelectorAll('.menu-card-plus');
-    plusIcons.forEach(plus => {
-      plus.addEventListener('click', function() {
-        // Переключаем состояние
-        const isCurrentlyActive = this.classList.contains('active');
-        
-        if (isCurrentlyActive) {
-          // Если активно (красный минус), то убираем из меню
-          this.classList.remove('active');
-          this.textContent = '+';
-        } else {
-          // Если неактивно (зеленый плюс), то добавляем в меню
-          this.classList.add('active');
-          this.textContent = '−';
-        }
+    // Добавляем обработчики для плюсиков/минусов с небольшой задержкой
+    setTimeout(() => {
+      const plusIcons = document.querySelectorAll('.menu-card-plus');
+      plusIcons.forEach(plus => {
+        plus.addEventListener('click', function() {
+          // Переключаем состояние
+          const isCurrentlyActive = this.classList.contains('active');
+          
+          if (isCurrentlyActive) {
+            // Если активно (красный минус), то убираем из меню
+            this.classList.remove('active');
+            this.textContent = '+';
+          } else {
+            // Если неактивно (зеленый плюс), то добавляем в меню
+            this.classList.add('active');
+            this.textContent = '−';
+          }
+        });
       });
-    });
+    }, 10);
   }
 
   // Функция для получения выбранных блюд
@@ -179,12 +200,29 @@ document.addEventListener('DOMContentLoaded', async function() {
           if (menuObj[meal.key]) {
             const dish = getDishById(menuObj[meal.key]);
             if (dish) {
-              selectedDishes.push({
-                ...dish,
-                day: day.toLowerCase(),
-                dayName: dayMap[day],
-                quantity: 1
-              });
+              // Проверяем, есть ли карточка с этим блюдом на странице
+              const cardElement = document.querySelector(`[data-dish-id="${dish.id}"]`);
+              if (cardElement) {
+                // Проверяем состояние плюсика/минуса
+                const plusButton = cardElement.querySelector('.menu-card-plus');
+                if (plusButton && plusButton.classList.contains('active')) {
+                  // Если плюсик активен (минус), значит блюдо включено в меню
+                  selectedDishes.push({
+                    ...dish,
+                    day: day.toLowerCase(),
+                    dayName: dayMap[day],
+                    quantity: 1
+                  });
+                }
+              } else {
+                // Если карточки нет на странице, добавляем блюдо по умолчанию
+                selectedDishes.push({
+                  ...dish,
+                  day: day.toLowerCase(),
+                  dayName: dayMap[day],
+                  quantity: 1
+                });
+              }
             }
           }
         });
@@ -228,7 +266,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
     
     // Перенаправляем в корзину
-    window.location.href = 'cart.html';
+    window.location.href = '/pages/main/cart.html';
   }
 
   // Обработчик для кнопки "Обрати це меню"

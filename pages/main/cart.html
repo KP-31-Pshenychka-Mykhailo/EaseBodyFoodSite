@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кошик | Easy Body Food</title>
-    <link rel="icon" type="image/png" href="assets/img/logo.png">
-    <link rel="stylesheet" href="assets/css/static/header.css">
-    <link rel="stylesheet" href="assets/css/static/footer.css">
-    <link rel="stylesheet" href="assets/css/pages/profile.css">
-    <link rel="stylesheet" href="assets/css/static/order.css">
-    <link rel="stylesheet" href="assets/css/main/alt-theme.css">
-    <link rel="stylesheet" href="assets/css/pages/cart.css">
+    <link rel="icon" type="image/png" href="/data/img/logo.png">
+    <link rel="stylesheet" href="/assets/css/static/header.css">
+    <link rel="stylesheet" href="/assets/css/static/footer.css">
+    <link rel="stylesheet" href="/assets/css/static/auth.css">
+    <link rel="stylesheet" href="/assets/css/pages/profile.css">
+    <link rel="stylesheet" href="/assets/css/static/order.css">
+    <link rel="stylesheet" href="/assets/css/main/alt-theme.css">
+    <link rel="stylesheet" href="/assets/css/pages/cart.css">
 </head>
 <body>
     <div id="header"></div>
@@ -36,8 +37,17 @@
       </div>
     </div>
     
-    <script src="assets/js/layout.js"></script>
-    <script src="assets/js/cart.js"></script>
+    <!-- Core modules first -->
+    <script src="/assets/js/core/constants.js"></script>
+    <script src="/assets/js/core/utils.js"></script>
+    <script src="/assets/js/core/api.js"></script>
+    
+    <script src="/assets/js/layout/header.js"></script>
+    <script src="/assets/js/components/modal.js"></script>
+    <script src="/assets/js/auth/auth.js"></script>
+    <script src="/assets/js/layout/navigation.js"></script>
+    <script src="/assets/js/layout/footer.js"></script>
+    <script src="/assets/js/service/cart.js"></script>
     <script>
     // Закрытие модального окна
     document.addEventListener('DOMContentLoaded', function() {
@@ -50,6 +60,13 @@
       if(closeBtn) closeBtn.addEventListener('click', function() {
         document.getElementById('order-modal').style.display = 'none';
       });
+      
+      // Загружаем содержимое корзины
+      if (typeof loadCart === 'function') {
+        loadCart();
+      } else {
+        window.logError('loadCart function not found');
+      }
     });
     </script>
 </body>

@@ -6,7 +6,7 @@ class CartManager {
 
     // Загрузка корзины из localStorage
     loadCart() {
-        return JSON.parse(localStorage.getItem('cart') || '[]');
+        return window.getStorageItem(window.STORAGE_KEYS?.CART || 'cart', []);
     }
 
     // Сохранение корзины в localStorage
@@ -27,6 +27,11 @@ class CartManager {
         }
 
         this.saveCart();
+        
+        // Синхронизируем с сервером, если пользователь авторизован
+        if (window.isUserAuthenticated()) {
+            this.syncWithServer();
+        }
     }
 
     // Обновление количества товара
@@ -55,6 +60,11 @@ class CartManager {
     clearCart() {
         this.cart = [];
         this.saveCart();
+        
+        // Синхронизируем с сервером, если пользователь авторизован
+        if (window.isUserAuthenticated()) {
+            this.syncWithServer();
+        }
     }
 
     // Получение общего количества товаров
@@ -70,7 +80,7 @@ class CartManager {
     // Получение общей калорийности
     getTotalCalories() {
         return this.cart.reduce((total, item) => {
-            const calories = (item.p * 4) + (item.f * 9) + (item.c * 4);
+            const calories = window.calculateCaloriesFromMacros(item.p || 0, item.f || 0, item.c || 0);
             return total + (calories * item.quantity);
         }, 0);
     }
@@ -78,10 +88,43 @@ class CartManager {
     // Получение общих макронутриентов
     getTotalMacros() {
         return this.cart.reduce((total, item) => ({
-            protein: total.protein + (item.p * item.quantity),
-            fat: total.fat + (item.f * item.quantity),
-            carbs: total.carbs + (item.c * item.quantity)
+            protein: total.protein + ((item.p || 0) * item.quantity),
+            fat: total.fat + ((item.f || 0) * item.quantity),
+            carbs: total.carbs + ((item.c || 0) * item.quantity)
         }), { protein: 0, fat: 0, carbs: 0 });
+    }
+
+    // Синхронизация с сервером
+    async syncWithServer() {
+        try {
+            if (!window.isUserAuthenticated()) {
+                return;
+            }
+
+            // Отправляем корзину на сервер
+            await window.addToCart(this.cart);
+            
+        } catch (error) {
+            // Ошибка синхронизации
+        }
+    }
+
+    // Загрузка корзины с сервера
+    async loadFromServer() {
+        try {
+            if (!window.isUserAuthenticated()) {
+                return;
+            }
+
+            const serverCart = await window.getCart();
+            if (serverCart && Array.isArray(serverCart)) {
+                this.cart = serverCart;
+                this.saveCart();
+            }
+            
+        } catch (error) {
+            // Ошибка загрузки
+        }
     }
 }
 
@@ -124,24 +167,48 @@ window.proceedToCheckout = function() {
     // Открываем модальное окно с формой заказа
     const modal = document.getElementById('order-modal');
     if (modal) {
-        // Загружаем содержимое order.html
-        fetch('partials/order.html')
-            .then(response => response.text())
-            .then(html => {
-                // Извлекаем содержимое main из order.html
-                const mainMatch = html.match(/<main[\s\S]*?<\/main>/);
-                if (mainMatch) {
-                    document.getElementById('order-modal-body').innerHTML = mainMatch[0];
-                    modal.style.display = 'flex';
-                    
-                    // После загрузки формы загружаем данные пользователя
-                    loadUserDataToOrderForm();
-                }
-            })
-            .catch(error => {
-                console.error('Error loading order form:', error);
+        // Загружаем содержимое order.html с правильным путем
+        const orderPaths = [
+            '/pages/partials/order.html',
+            'pages/partials/order.html',
+            '../pages/partials/order.html'
+        ];
+        
+        // Пробуем разные пути
+        const tryLoadOrder = (pathIndex) => {
+            if (pathIndex >= orderPaths.length) {
+                console.error('Error loading order form: all paths failed');
                 alert('Помилка завантаження форми замовлення');
-            });
+                return;
+            }
+            
+
+            fetch(orderPaths[pathIndex])
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    // Извлекаем содержимое main из order.html
+                    const mainMatch = html.match(/<main[\s\S]*?<\/main>/);
+                    if (mainMatch) {
+                        document.getElementById('order-modal-body').innerHTML = mainMatch[0];
+                        modal.style.display = 'flex';
+                        
+                        // После загрузки формы загружаем данные пользователя
+                        loadUserDataToOrderForm();
+                    }
+                })
+                .catch(error => {
+                    console.error(`Error loading order form from ${orderPaths[pathIndex]}:`, error);
+                    // Пробуем следующий путь
+                    tryLoadOrder(pathIndex + 1);
+                });
+        };
+        
+        tryLoadOrder(0);
     }
 };
 
@@ -160,13 +227,13 @@ function loadUserDataToOrderForm() {
         return;
     }
     
-    fetch('assets/data/settings.json')
-        .then(response => response.json())
+            // Используем централизованную функцию загрузки настроек
+        window.loadServerSettings()
         .then(settings => {
-            const baseUrl = settings.SERVER_BASE_URL;
+            const baseUrl = settings.serverBaseUrl || 'http://localhost:3000';
             const fullUrl = baseUrl + '/user/info/' + userId;
             
-            console.log('Отправляем запрос на:', fullUrl);
+            
             
             const xhr = new XMLHttpRequest();
             xhr.open('POST', fullUrl, true);
@@ -220,7 +287,7 @@ function loadUserDataToOrderForm() {
             xhr.send(JSON.stringify({ userId: userId }));
         })
         .catch(err => {
-            console.error('Ошибка загрузки settings.json:', err);
+            // Ошибка загрузки настроек
         });
 }
 
@@ -286,17 +353,16 @@ function setupOrderFormValidation() {
 
 // Функция для отображения корзины на странице cart.html
 function loadCart() {
+    
     const cartContent = document.getElementById('cart-content');
     if (!cartContent) {
-        console.log('Cart content element not found in loadCart');
         return;
     }
 
     const cart = window.cartManager.loadCart();
-    console.log('Cart loaded from localStorage:', cart);
     
     if (cart.length === 0) {
-        console.log('Cart is empty, showing empty state');
+        
         // Скрываем кнопку "Очистити кошик"
         const clearCartBtn = document.querySelector('.clear-cart-btn');
         if (clearCartBtn) {
@@ -308,12 +374,13 @@ function loadCart() {
                 <div class="profile-cart-empty-title">Упс! Кошик порожній</div>
                 <div class="profile-cart-empty-desc">Саме час для правильного харчування!</div>
                 <div class="profile-cart-btns">
-                    <a href="index.html" class="profile-cart-btn">Повернутися на головну</a>
+                    <a href="/index.html" class="profile-cart-btn">Повернутися на головну</a>
                 </div>
             </div>
         `;
         return;
     }
+    
     
     // Показываем кнопку "Очистити кошик" если корзина не пуста
     const clearCartBtn = document.querySelector('.clear-cart-btn');
@@ -328,41 +395,41 @@ function loadCart() {
     cart.forEach((item, index) => {
         const calories = (item.p * 4) + (item.f * 9) + (item.c * 4);
         
-                            cartHTML += `
-                        <div class="cart-item" data-index="${index}">
-                            <img src="${item.img || 'assets/img/food1.jpg'}" alt="${item.title}" class="cart-item-img">
-                            <div class="cart-item-content">
-                                <div class="cart-item-day">${item.dayName}</div>
-                                <div class="cart-item-title">${item.title}</div>
-                                <div class="cart-item-macros">Б: ${item.p}г Ж: ${item.f}г В: ${item.c}г, ${calories} ккал</div>
-                                <div class="cart-item-description">${item.subtitle || ''}</div>
-                            </div>
-                            <div class="cart-item-controls">
-                                <div class="quantity-controls">
-                                    <span class="quantity-label">Кількість:</span>
-                                    <button class="quantity-btn" onclick="changeQuantity(${index}, -1)">−</button>
-                                    <input type="number" class="quantity-input" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)" oninput="updateQuantity(${index}, this.value)">
-                                    <button class="quantity-btn" onclick="changeQuantity(${index}, 1)">+</button>
-                                </div>
-                                <div class="cart-item-actions">
-                                    <button class="delete-btn" onclick="removeItem(${index})">Видалити</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
+        cartHTML += `
+            <div class="cart-item" data-index="${index}">
+                <img src="${item.img || '/data/img/food1.jpg'}" alt="${item.title}" class="cart-item-img">
+                <div class="cart-item-content">
+                    <div class="cart-item-day">${item.dayName}</div>
+                    <div class="cart-item-title">${item.title}</div>
+                    <div class="cart-item-macros">Б: ${item.p}г Ж: ${item.f}г В: ${item.c}г, ${calories} ккал</div>
+                    <div class="cart-item-description">${item.subtitle || ''}</div>
+                </div>
+                <div class="cart-item-controls">
+                    <div class="quantity-controls">
+                        <span class="quantity-label">Кількість:</span>
+                        <button class="quantity-btn" onclick="changeQuantity(${index}, -1)">−</button>
+                        <input type="number" class="quantity-input" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)" oninput="updateQuantity(${index}, this.value)">
+                        <button class="quantity-btn" onclick="changeQuantity(${index}, 1)">+</button>
+                    </div>
+                    <div class="cart-item-actions">
+                        <button class="delete-btn" onclick="removeItem(${index})">Видалити</button>
+                    </div>
+                </div>
+            </div>
+        `;
     });
     
     cartHTML += '</div>';
     
-                    cartHTML += `
-                    <div class="cart-summary">
-                        <div class="cart-total">Загалом у замовленні: ${macros.protein} Білки ${macros.fat} Жири ${macros.carbs} Вуглеводи, ${totalCalories} ккал.</div>
-                        <div class="cart-actions">
-                            <button class="checkout-btn" onclick="proceedToCheckout()">Оформити замовлення</button>
-                            <a href="index.html" class="continue-shopping-btn">Повернутися на головну</a>
-                        </div>
-                    </div>
-                `;
+    cartHTML += `
+        <div class="cart-summary">
+            <div class="cart-total">Загалом у замовленні: ${macros.protein} Білки ${macros.fat} Жири ${macros.carbs} Вуглеводи, ${totalCalories} ккал.</div>
+            <div class="cart-actions">
+                <button class="checkout-btn" onclick="proceedToCheckout()">Оформити замовлення</button>
+                <a href="/index.html" class="continue-shopping-btn">Повернутися на головну</a>
+            </div>
+        </div>
+    `;
     
     cartContent.innerHTML = cartHTML;
 }
@@ -371,5 +438,29 @@ function loadCart() {
 document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('cart-content')) {
         loadCart();
+    }
+    
+    // Добавляем функцию для отладки в глобальную область
+    window.debugCart = function() {
+        const cartData = localStorage.getItem('cart');
+        
+        if (cartData) {
+            try {
+                const parsedCart = JSON.parse(cartData);
+            } catch (e) {
+                // Ошибка парсинга
+            }
+        }
+        
+        if (window.cartManager) {
+            const managerCart = window.cartManager.loadCart();
+        }
+    };
+    
+    // Автоматически вызываем отладку при загрузке страницы корзины
+    if (document.getElementById('cart-content')) {
+        setTimeout(() => {
+            window.debugCart();
+        }, 1000);
     }
 }); 

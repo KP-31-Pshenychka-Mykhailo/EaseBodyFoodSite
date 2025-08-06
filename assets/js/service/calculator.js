@@ -41,6 +41,7 @@ function nextStep() {
         const value = parseInt(input.value);
         if (value < parseInt(input.min) || value > parseInt(input.max)) {
           alert('Будь ласка, перевірте правильність введених даних!');
+          this.showTooltip();
           return;
         }
       }
@@ -53,15 +54,14 @@ function nextStep() {
   }
 }
 
-function calculateCalories({ gender, age, weight, height, activity, goal }) {
-  // Формулы Харриса-Бенедикта (BMR)
+function calculateCaloriesLocal({ gender, age, weight, height, activity, goal }) {
   let bmr;
   if (gender === 'male') {
     bmr = 88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age);
   } else {
     bmr = 447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age);
   }
-  // Коэффициенты активности
+  
   const activityFactors = {
     '1': 1.2,    // Очень низкая
     '2': 1.375,  // Низкая
@@ -69,35 +69,60 @@ function calculateCalories({ gender, age, weight, height, activity, goal }) {
     '4': 1.725,  // Высокая
     '5': 1.9     // Очень высокая
   };
+  
   let calories = bmr * (activityFactors[activity] || 1.2);
-  // Корректировка по цели
+  
   if (goal === 'lose') {
-    calories -= 300; // Для похудения
+    calories -= 300;
   } else if (goal === 'gain') {
-    calories += 300; // Для набора
-  } // Для поддержания — без изменений
+    calories += 300;
+  }
+  
   return Math.round(calories);
 }
 
-function getClosestMenuType(calories) {
+function getClosestMenuTypeLocal(calories) {
   const types = [900, 1200, 1600, 1800, 2500, 3000, 3500];
   return types.reduce((prev, curr) => Math.abs(curr - calories) < Math.abs(prev - calories) ? curr : prev);
 }
 
-async function loadMenuData() {
-  const menuResp = await fetch('assets/data/menu.json').catch(() => fetch('../assets/data/menu.json'));
-  const menuData = await menuResp.json();
-  const dishesResp = await fetch('assets/data/dishes.json').catch(() => fetch('../assets/data/dishes.json'));
-  const dishesData = await dishesResp.json();
-  return { menuData, dishesData };
+async function loadCalculatorData() {
+  try {
+    // Загружаем данные меню
+    const menuResponse = await fetch('../../data/datafiles/menu.json');
+    const menuData = await menuResponse.json();
+    
+    // Загружаем данные блюд
+    const dishesResponse = await fetch('../../data/datafiles/dishes.json');
+    const dishesData = await dishesResponse.json();
+    
+    return { menuData, dishesData };
+  } catch (error) {
+    return { menuData: {}, dishesData: [] };
+  }
 }
 
-function getMenuForDay(menuArr, day) {
-  return menuArr.find(item => item.dayOfWeek && item.dayOfWeek.toLowerCase().startsWith(day.toLowerCase()));
+function getMenuForDayLocal(menuArr, day) {
+  // Маппинг дней недели
+  const dayMap = {
+    'monday': 'Mon',
+    'tuesday': 'Tue',
+    'wednesday': 'Wed',
+    'thursday': 'Thu',
+    'friday': 'Fri',
+    'saturday': 'Sat',
+    'sunday': 'Sun'
+  };
+  
+  const targetDay = dayMap[day];
+  const result = menuArr.find(item => item.dayOfWeek === targetDay) || null;
+  return result;
 }
 
 function getDishById(dishes, id) {
-  return dishes.find(d => d.id === id);
+  // Пробуем разные типы сравнения для совместимости
+  const dish = dishes.find(d => d.id === id || d.id == id || String(d.id) === String(id));
+  return dish;
 }
 
 const mealMap = [
@@ -110,12 +135,14 @@ const mealMap = [
   { key: 'eveningmealdishId', name: 'Вечеря' }
 ];
 
-function createMenuCardAlt(dish, mealType) {
+// Логика создания карточек перенесена в card.js
+function createMenuCardAltLocal(dish, mealType) {
   if (!dish) return '';
+  
   return `
     <div class="menu-card-alt" data-dish-id="${dish.id}">
       <div class="menu-card-img-wrap-alt">
-        <img src="${dish.img || 'assets/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
+        <img src="${dish.img || '../../data/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
         <div class="gallery-card-icons-alt">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart-alt icon-heart">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -135,48 +162,72 @@ function createMenuCardAlt(dish, mealType) {
 function renderPersonalMenu(menuArr, dishes, day) {
   const menuSlider = document.getElementById('dietCards');
   const menuTotal = document.querySelector('.menu-total-alt');
+  
+  if (!menuSlider) {
+    return;
+  }
+  
   menuSlider.innerHTML = '';
-  let totalP = 0, totalF = 0, totalC = 0;
-  const menuObj = getMenuForDay(menuArr, day);
+  const menuObj = getMenuForDayLocal(menuArr, day);
+  
   if (!menuObj) {
     menuSlider.innerHTML = '<div style="padding:2rem">Немає меню для цього дня.</div>';
     if (menuTotal) menuTotal.textContent = 'Б: 0 г, Ж: 0 г, В: 0 г';
     return;
   }
+  
   let cardsHTML = '';
+  let selectedDishes = [];
+  
   mealMap.forEach(meal => {
     if (menuObj[meal.key]) {
       const dish = getDishById(dishes, menuObj[meal.key]);
       if (dish) {
-        totalP += Number(dish.p) || 0;
-        totalF += Number(dish.f) || 0;
-        totalC += Number(dish.c) || 0;
+        selectedDishes.push(dish);
+        cardsHTML += createMenuCardAltLocal(dish, meal.name);
       }
-      cardsHTML += createMenuCardAlt(dish, meal.name);
     }
   });
+  
   menuSlider.innerHTML = cardsHTML;
-  if (menuTotal) menuTotal.textContent = `Б: ${totalP} г, Ж: ${totalF} г, В: ${totalC} г`;
+  
+  // Подсчёт макронутриентов и калорий
+  let totalP = 0, totalF = 0, totalC = 0;
+  selectedDishes.forEach(dish => {
+    totalP += Number(dish.p) || 0;
+    totalF += Number(dish.f) || 0;
+    totalC += Number(dish.c) || 0;
+  });
+  const totalKcal = Math.round(totalP * 4 + totalF * 9 + totalC * 4);
+  
+  if (menuTotal) {
+    menuTotal.textContent = `Б: ${totalP} г, Ж: ${totalF} г, В: ${totalC} г; ${totalKcal} ккал`;
+  }
+  
   // Интерактивность (сердечки обрабатываются универсальным HeartsManager)
   if (window.heartsManager) {
     window.heartsManager.refresh();
   }
-  document.querySelectorAll('.menu-card-plus').forEach(function(plus) {
-    plus.addEventListener('click', function() {
-      // Переключаем состояние
-      const isCurrentlyActive = this.classList.contains('active');
-      
-      if (isCurrentlyActive) {
-        // Если активно (красный минус), то убираем из меню
-        this.classList.remove('active');
-        this.textContent = '+';
-      } else {
-        // Если неактивно (зеленый плюс), то добавляем в меню
-        this.classList.add('active');
-        this.textContent = '−';
-      }
+  
+  // Добавляем обработчики для плюсиков/минусов с небольшой задержкой
+  setTimeout(() => {
+    document.querySelectorAll('.menu-card-plus').forEach(function(plus) {
+      plus.addEventListener('click', function() {
+        // Переключаем состояние
+        const isCurrentlyActive = this.classList.contains('active');
+        
+        if (isCurrentlyActive) {
+          // Если активно (красный минус), то убираем из меню
+          this.classList.remove('active');
+          this.textContent = '+';
+        } else {
+          // Если неактивно (зеленый плюс), то добавляем в меню
+          this.classList.add('active');
+          this.textContent = '−';
+        }
+      });
     });
-  });
+  }, 10);
 }
 
 // --- Модификация обработчика submit ---
@@ -204,7 +255,7 @@ document.getElementById('calculator-form').addEventListener('submit', async func
   const activity = data.get('activity');
   const goal = data.get('goal');
   // Расчёт калорий
-  const calories = calculateCalories({ gender, age, weight, height, activity, goal });
+      const calories = calculateCaloriesLocal({ gender, age, weight, height, activity, goal });
   let goalText = '';
   if (goal === 'lose') goalText = 'для схуднення';
   else if (goal === 'gain') goalText = 'для набору ваги';
@@ -214,29 +265,20 @@ document.getElementById('calculator-form').addEventListener('submit', async func
   this.style.display = 'none';
 
   // --- Динамическое меню ---
-  globalMenuType = getClosestMenuType(calories);
-  const { menuData, dishesData } = await loadMenuData();
+      globalMenuType = getClosestMenuTypeLocal(calories);
+  
+  const { menuData, dishesData } = await loadCalculatorData();
   globalMenuData = menuData;
   globalDishesData = dishesData;
-  let currentDay = 'Mon';
-  const dayMap = {
-    'monday': 'Mon',
-    'tuesday': 'Tue',
-    'wednesday': 'Wed',
-    'thursday': 'Thu',
-    'friday': 'Fri',
-    'saturday': 'Sat',
-    'sunday': 'Sun'
-  };
-  // Кнопки дней недели
-  document.querySelectorAll('.menu-day-alt').forEach(function(btn) {
-    btn.onclick = function() {
-      document.querySelectorAll('.menu-day-alt').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentDay = dayMap[btn.getAttribute('data-day')] || 'Mon';
-      renderPersonalMenu(globalMenuData[globalMenuType], globalDishesData, currentDay);
-    };
-  });
+  let currentDay = 'monday';
+  
+  // Проверяем, есть ли данные для выбранного типа меню
+  if (!globalMenuData[globalMenuType]) {
+    console.error('No menu data for type:', globalMenuType);
+    console.log('Available menu types:', Object.keys(globalMenuData));
+    return;
+  }
+  
   // Первичный рендер
   renderPersonalMenu(globalMenuData[globalMenuType], globalDishesData, currentDay);
   // Показать секцию
@@ -299,44 +341,60 @@ document.addEventListener('DOMContentLoaded', function() {
 // Функция валидации полей ввода
 function validateInput(input) {
   const inputField = input.closest('.input-field');
-  const errorElement = inputField.querySelector('.error-message');
+  const errorElement = inputField?.querySelector('.error-message');
   const value = parseInt(input.value);
   
   // Убираем класс ошибки по умолчанию
-  inputField.classList.remove('error');
-  errorElement.textContent = '';
+  if (inputField) {
+    inputField.classList.remove('error');
+  }
+  if (errorElement) {
+    errorElement.textContent = '';
+  }
   
   // Проверяем минимальные значения
   if (input.value !== '' && value < parseInt(input.min)) {
-    inputField.classList.add('error');
-    
-    let errorText = '';
-    if (input.name === 'age') {
-      errorText = `Мінімальний вік: ${input.min} років`;
-    } else if (input.name === 'weight') {
-      errorText = `Мінімальна вага: ${input.min} кг`;
-    } else if (input.name === 'height') {
-      errorText = `Мінімальний зріст: ${input.min} см`;
+    if (inputField) {
+      inputField.classList.add('error');
     }
     
-    errorElement.textContent = errorText;
+    if (errorElement) {
+      let errorText = '';
+      if (input.name === 'age') {
+        errorText = `Мінімальний вік: ${input.min} років`;
+      } else if (input.name === 'weight') {
+        errorText = `Мінімальна вага: ${input.min} кг`;
+      } else if (input.name === 'height') {
+        errorText = `Мінімальний зріст: ${input.min} см`;
+      }
+      
+      errorElement.textContent = errorText;
+    }
+    return false;
   }
   
   // Проверяем максимальные значения
   if (input.value !== '' && value > parseInt(input.max)) {
-    inputField.classList.add('error');
-    
-    let errorText = '';
-    if (input.name === 'age') {
-      errorText = `Максимальний вік: ${input.max} років`;
-    } else if (input.name === 'weight') {
-      errorText = `Максимальна вага: ${input.max} кг`;
-    } else if (input.name === 'height') {
-      errorText = `Максимальний зріст: ${input.max} см`;
+    if (inputField) {
+      inputField.classList.add('error');
     }
     
-    errorElement.textContent = errorText;
+    if (errorElement) {
+      let errorText = '';
+      if (input.name === 'age') {
+        errorText = `Максимальний вік: ${input.max} років`;
+      } else if (input.name === 'weight') {
+        errorText = `Максимальна вага: ${input.max} кг`;
+      } else if (input.name === 'height') {
+        errorText = `Максимальний зріст: ${input.max} см`;
+      }
+      
+      errorElement.textContent = errorText;
+    }
+    return false;
   }
+  
+  return true;
 }
 
 // --- Анимация и меню-карусель для блока с рационом ---
@@ -366,18 +424,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // --- Карусель и дни недели ---
-  const menuSlider = document.getElementById('dietCards');
-  const leftBtn = document.getElementById('dietLeft');
-  const rightBtn = document.getElementById('dietRight');
-  if (menuSlider && leftBtn && rightBtn) {
-    const scrollStep = 320;
-    leftBtn.addEventListener('click', function() {
-      menuSlider.scrollBy({ left: -scrollStep, behavior: 'smooth' });
-    });
-    rightBtn.addEventListener('click', function() {
-      menuSlider.scrollBy({ left: scrollStep, behavior: 'smooth' });
-    });
-  }
+  // Логика карусели перенесена в carousel.js
+  // Карусель будет инициализирована автоматически через createMenuCarousel
 
   // --- Дни недели (заглушка: просто активный класс, без фильтрации карточек) ---
   const dayButtons = document.querySelectorAll('#personal-diet-section .menu-day');
@@ -429,19 +477,36 @@ document.addEventListener('DOMContentLoaded', function() {
     
     allDays.forEach(day => {
       // Получаем меню для этого дня
-      const menuObj = getMenuForDay(globalMenuData[globalMenuType], day);
+      const menuObj = getMenuForDayLocal(globalMenuData[globalMenuType], day);
       if (menuObj) {
         // Получаем все блюда для этого дня
         mealMap.forEach(meal => {
           if (menuObj[meal.key]) {
             const dish = getDishById(globalDishesData, menuObj[meal.key]);
             if (dish) {
-              selectedDishes.push({
-                ...dish,
-                day: day,
-                dayName: dayMap[day],
-                quantity: 1
-              });
+              // Проверяем, есть ли карточка с этим блюдом на странице
+              const cardElement = document.querySelector(`[data-dish-id="${dish.id}"]`);
+              if (cardElement) {
+                // Проверяем состояние плюсика/минуса
+                const plusButton = cardElement.querySelector('.menu-card-plus');
+                if (plusButton && plusButton.classList.contains('active')) {
+                  // Если плюсик активен (минус), значит блюдо включено в меню
+                  selectedDishes.push({
+                    ...dish,
+                    day: day,
+                    dayName: dayMap[day],
+                    quantity: 1
+                  });
+                }
+              } else {
+                // Если карточки нет на странице, добавляем блюдо по умолчанию
+                selectedDishes.push({
+                  ...dish,
+                  day: day,
+                  dayName: dayMap[day],
+                  quantity: 1
+                });
+              }
             }
           }
         });
@@ -485,7 +550,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Перенаправляем в корзину
-    window.location.href = 'cart.html';
+    window.location.href = '/pages/main/cart.html';
   }
 
   // Обработчик для кнопки "Замовити це меню"
@@ -502,29 +567,54 @@ document.addEventListener('DOMContentLoaded', function() {
         b.classList.remove('active');
       });
       btn.classList.add('active');
+      
       // Получить выбранный день
-      var day = btn.getAttribute('data-day');
-      // Скрыть все карточки
-      document.querySelectorAll('.menu-card-alt').forEach(function(card) {
-        if (card.getAttribute('data-day') === day) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+      const dayText = btn.textContent.trim();
+      const dayMap = {
+        'Пн': 'monday',
+        'Вт': 'tuesday', 
+        'Ср': 'wednesday',
+        'Чт': 'thursday',
+        'Пт': 'friday',
+        'Сб': 'saturday'
+      };
+      const selectedDay = dayMap[dayText];
+      
+      if (selectedDay && globalMenuData && globalMenuType) {
+        // Перерендерим меню для выбранного дня
+        renderPersonalMenu(globalMenuData[globalMenuType], globalDishesData, selectedDay);
+      }
     });
   });
 
-  // При загрузке показать только карточки для первого дня
-  var activeBtn = document.querySelector('.menu-day-alt.active');
-  if (activeBtn) {
-    var day = activeBtn.getAttribute('data-day');
-    document.querySelectorAll('.menu-card-alt').forEach(function(card) {
-      if (card.getAttribute('data-day') === day) {
-        card.style.display = '';
-      } else {
-        card.style.display = 'none';
+  // Инициализация: загружаем данные при загрузке страницы
+  async function initializeCalculator() {
+    try {
+      // Проверяем, что все необходимые функции загружены
+      if (!window.loadAllData) {
+        console.error('loadAllData не найдена');
+        return;
       }
-    });
+      
+      const { menuData, dishesData } = await loadCalculatorData();
+      globalMenuData = menuData;
+      globalDishesData = dishesData;
+      
+      // Если есть данные, рендерим первое меню
+      if (Object.keys(menuData).length > 0 && dishesData.length > 0) {
+        const firstMenuType = Object.keys(menuData)[0];
+        globalMenuType = parseInt(firstMenuType);
+        renderPersonalMenu(menuData[firstMenuType], dishesData, 'monday');
+      }
+    } catch (error) {
+      // Ошибка инициализации
+    }
   }
-}); 
+
+  // Запускаем инициализацию только если страница полностью загружена
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeCalculator);
+  } else {
+    initializeCalculator();
+  }
+});

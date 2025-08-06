@@ -1,0 +1,74 @@
+/* Базовый стиль */
+.message-tooltip {
+    position: fixed;
+    top: 100px;
+    right: -2px;
+    padding: 16px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 10000;
+    min-width: 300px;
+    text-align: center;
+    border-radius: 22px 0 0 22px;
+
+    /* Общие анимации */
+    transform: translateX(100%);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+/* Цвета и радиусы для обычного */
+.message-tooltip {
+    background: #fff;
+    color: #4CAF50;
+    border: 2px solid #4CAF50;
+
+}
+
+/* Цвета и радиусы для альтернативного */
+.message-tooltip.alt {
+    background: #4CAF50;
+    color: white;
+    border: 2px solid #fff;
+}
+
+/* Появление */
+.message-tooltip.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+    .message-tooltip {
+        top: 80px;
+        right: 0;
+        min-width: 250px;
+        padding: 12px 20px;
+        font-size: 14px;
+        border-radius: 16px 0 0 16px;
+    }
+    .message-tooltip.alt {
+        border-radius: 12px;
+        min-width: 220px;
+    }
+}
+
+@media (max-width: 480px) {
+    .message-tooltip {
+        top: 70px;
+        min-width: 200px;
+        padding: 10px 16px;
+        font-size: 13px;
+        border-radius: 12px 0 0 12px;
+    }
+    .message-tooltip.alt {
+        border-radius: 10px;
+        min-width: 180px;
+        padding: 8px 14px;
+    }
+}

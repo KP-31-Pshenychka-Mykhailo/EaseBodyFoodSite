@@ -1,23 +1,12 @@
 document.addEventListener('DOMContentLoaded', async function() {
-  const menuSlider = document.querySelector('.menu-slider');
-  const leftBtn = document.querySelector('.menu-slider-arrow.left');
-  const rightBtn = document.querySelector('.menu-slider-arrow.right');
-  if (!menuSlider || !leftBtn || !rightBtn) return;
-
-  const scrollStep = 320; // ширина одной карточки + gap
-
-  leftBtn.addEventListener('click', function() {
-    menuSlider.scrollBy({ left: -scrollStep, behavior: 'smooth' });
-  });
-  rightBtn.addEventListener('click', function() {
-    menuSlider.scrollBy({ left: scrollStep, behavior: 'smooth' });
-  });
+  // Логика карусели перенесена в carousel.js
+  // Карусель будет инициализирована автоматически через createMenuCarousel
 
   const typeTabs = document.querySelectorAll('.menu-type-tab');
   let currentType = 'breakfast';
 
   // Маппинг вкладок к type в dishes.json
-  const typeMap = {
+  const typeMap = window.TYPE_MAP || {
     'сніданок': 'breakfast',
     'полуденок': 'afternoonsnask',
     'обід': 'dinnerdish',
@@ -27,8 +16,11 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Загрузка блюд
   let dishesData = [];
   async function loadDishes() {
-    const resp = await fetch('assets/data/dishes.json').catch(() => fetch('../assets/data/dishes.json'));
-    dishesData = await resp.json();
+    try {
+      dishesData = await window.loadDishesData();
+    } catch (error) {
+      dishesData = [];
+    }
   }
 
   // Сохраняем состояние плюса/минуса для каждого блюда по id и дню недели
@@ -41,6 +33,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     cardState[day] = {};
   });
 
+  // Логика создания карточек перенесена в card.js
   function createMenuCard(dish) {
     if (!cardState[currentDay]) cardState[currentDay] = {};
     
@@ -51,12 +44,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     const isActive = cardState[currentDay][dish.id] === true;
     
-    console.log(`Creating card for dish ${dish.id} on day ${currentDay}, active: ${isActive}`);
-    
     return `
       <div class="menu-card" data-dish-id="${dish.id}">
         <div class="menu-card-img-wrap">
-          <img src="${dish.img || 'assets/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
+          <img src="${window.getDishImage ? window.getDishImage(dish) : (dish.img || '../../data/img/food1.jpg')}" alt="${dish.title}" class="menu-card-img">
           <div class="gallery-card-icons">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart icon-heart">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
@@ -69,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         </div>
         <div class="menu-card-content">
           <div class="menu-card-title">${dish.title}</div>
-          <div class="menu-card-macros">Б: ${dish.p} г, Ж: ${dish.f} г, В: ${dish.c} г</div>
+          <div class="menu-card-macros">${window.formatMacros ? window.formatMacros(dish) : `Б: ${dish.p} г, Ж: ${dish.f} г, В: ${dish.c} г`}</div>
           <div class="menu-card-desc">${dish.subtitle || ''}</div>
         </div>
       </div>
@@ -77,6 +68,9 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
 
   function renderCards(type) {
+    const menuSlider = document.querySelector('.menu-slider');
+    if (!menuSlider) return;
+    
     menuSlider.innerHTML = '';
     const filtered = dishesData.filter(d => d.type === type);
     if (filtered.length === 0) {
@@ -96,6 +90,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     document.querySelectorAll('.menu-card-plus').forEach(plus => {
       plus.addEventListener('click', function() {
         const dishId = this.getAttribute('data-dish-id');
+        
         if (!cardState[currentDay]) cardState[currentDay] = {};
         
         // Переключаем состояние
@@ -112,8 +107,26 @@ document.addEventListener('DOMContentLoaded', async function() {
           this.textContent = '−';
           cardState[currentDay][dishId] = true;
         }
+        
+        updateTotal();
       });
     });
+  }
+
+  // Функция для обновления общего количества выбранных блюд
+  function updateTotal() {
+    const selectedDishes = getSelectedDishes();
+    const totalElement = document.querySelector('.menu-total');
+    
+    if (totalElement && selectedDishes.length > 0) {
+      // Подсчитываем общие макронутриенты и калории
+      const totalMacros = window.calculateTotalMacros(selectedDishes);
+      const totalCalories = Math.round(window.calculateTotalCalories(selectedDishes));
+      
+      totalElement.textContent = `Загалом у меню: ${totalMacros.protein} Білки ${totalMacros.fat} Жири ${totalMacros.carbs} Вуглеводи, ${totalCalories} ккал.`;
+    } else if (totalElement) {
+      totalElement.textContent = 'Загалом у меню: 0 Білки 0 Жири 0 Вуглеводи, 0 ккал.';
+    }
   }
 
   // Функция для получения выбранных блюд
@@ -128,30 +141,26 @@ document.addEventListener('DOMContentLoaded', async function() {
       'saturday': 'Сб'
     };
 
-    console.log('Getting selected dishes from cardState:', cardState);
-
     // Проходим по всем дням недели
     Object.keys(cardState).forEach(day => {
       if (cardState[day]) {
-        console.log(`Checking day ${day}:`, cardState[day]);
         Object.keys(cardState[day]).forEach(dishId => {
-          console.log(`Dish ${dishId} in ${day}:`, cardState[day][dishId]);
           if (cardState[day][dishId] === true) {
             const dish = dishesData.find(d => d.id == dishId);
             if (dish) {
-              selectedDishes.push({
+              const dishWithDay = {
                 ...dish,
                 day: day,
                 dayName: dayMap[day],
                 quantity: 1
-              });
+              };
+              selectedDishes.push(dishWithDay);
             }
           }
         });
       }
     });
 
-    console.log('Final selected dishes:', selectedDishes);
     return selectedDishes;
   }
 
@@ -159,9 +168,6 @@ document.addEventListener('DOMContentLoaded', async function() {
   function checkMinimumDays(selectedDishes) {
     const uniqueDays = new Set(selectedDishes.map(dish => dish.day));
     const daysCount = uniqueDays.size;
-    
-    console.log('Unique days selected:', Array.from(uniqueDays));
-    console.log('Days count:', daysCount);
     
     if (daysCount < 3) {
       const remainingDays = 3 - daysCount;
@@ -193,10 +199,6 @@ document.addEventListener('DOMContentLoaded', async function() {
   function saveTemplateToCart() {
     const selectedDishes = getSelectedDishes();
     
-    console.log('Selected dishes:', selectedDishes);
-    console.log('Card state:', cardState);
-    console.log('Current day:', currentDay);
-    
     if (selectedDishes.length === 0) {
       alert('Будь ласка, додайте хоча б одну страву до меню, натиснувши на "+" біля страви');
       return;
@@ -212,6 +214,17 @@ document.addEventListener('DOMContentLoaded', async function() {
       selectedDishes.forEach(dish => {
         window.cartManager.addItem(dish);
       });
+      
+      // Проверяем, что данные действительно сохранились
+      setTimeout(() => {
+        const savedCart = window.cartManager.loadCart();
+        
+        if (savedCart.length === 0) {
+          alert('Помилка: дані не збереглися в корзині. Спробуйте ще раз.');
+          return;
+        }
+      }, 100);
+      
     } else {
       // Fallback для случая, если CartManager не загружен
       let cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -231,10 +244,11 @@ document.addEventListener('DOMContentLoaded', async function() {
       localStorage.setItem('cart', JSON.stringify(cart));
     }
     
-    console.log('Cart after saving:', localStorage.getItem('cart'));
+    // Показываем уведомление об успешном добавлении
+    alert(`Успішно додано ${selectedDishes.length} страв до корзини!`);
     
-    // Перенаправляем в корзину
-    window.location.href = 'cart.html';
+    // Перенаправляем в корзину с правильным путем
+    window.location.href = '/pages/main/cart.html';
   }
 
   // Обработчики для вкладок
@@ -265,13 +279,8 @@ document.addEventListener('DOMContentLoaded', async function() {
       const dayText = this.textContent.toLowerCase();
       const newDay = dayMap[dayText] || 'monday';
       
-      console.log('Switching from day', currentDay, 'to day', newDay);
-      console.log('Card state before switch:', cardState);
-      
       currentDay = newDay;
       renderCards(currentType);
-      
-      console.log('Card state after switch:', cardState);
     });
   });
 
@@ -284,4 +293,5 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Загрузка и первичный рендер
   await loadDishes();
   renderCards(currentType);
+  updateTotal(); // Обновляем общее количество при загрузке страницы
 }); 
