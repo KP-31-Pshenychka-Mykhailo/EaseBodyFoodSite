@@ -19,7 +19,7 @@
         <div class="cart-container">
             <div class="cart-header">
                 <h1 class="profile-header-title">Кошик</h1>
-                <button class="clear-cart-btn" onclick="clearCart()">Очистити кошик</button>
+                <button class="clear-cart-btn" id="clear-cart-btn">Очистити кошик</button>
             </div>
             
             <div id="cart-content">
@@ -37,20 +37,12 @@
       </div>
     </div>
     
-    <!-- Core modules first -->
-    <script src="/assets/js/core/constants.js"></script>
-    <script src="/assets/js/core/utils.js"></script>
-    <script src="/assets/js/core/api.js"></script>
-    
-    <script src="/assets/js/layout/header.js"></script>
-    <script src="/assets/js/components/modal.js"></script>
-    <script src="/assets/js/auth/auth.js"></script>
-    <script src="/assets/js/layout/navigation.js"></script>
-    <script src="/assets/js/layout/footer.js"></script>
-    <script src="/assets/js/service/cart.js"></script>
+    <!-- Единый скрипт для всех модулей -->
+    <script src="/assets/js/main.js"></script>
     <script>
-    // Закрытие модального окна
-    document.addEventListener('DOMContentLoaded', function() {
+    // Специфичная логика для страницы корзины
+    document.addEventListener('easybodyAppReady', function() {
+      // Закрытие модального окна
       var closeBtn = document.getElementById('order-modal-close');
       document.getElementById('order-modal').addEventListener('click', function(e) {
         if(e.target === this) {

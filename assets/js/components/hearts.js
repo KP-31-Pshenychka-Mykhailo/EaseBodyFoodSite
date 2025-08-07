@@ -301,8 +301,7 @@ class HeartsManager {
 
 }
 
-// Инициализация при загрузке DOM
-document.addEventListener('DOMContentLoaded', () => {
+function initHearts() {
   window.heartsManager = new HeartsManager();
   
   // Загружаем избранные блюда с сервера и применяем состояния
@@ -310,9 +309,16 @@ document.addEventListener('DOMContentLoaded', () => {
     await window.heartsManager.loadFavoritesFromServer();
     window.heartsManager.loadHeartStates();
   }, 100);
-});
+}
+
+// Поддержка обеих систем - старой и новой
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initHearts);
+} else {
+  // DOM уже загружен, инициализируем сразу
+  initHearts();
+}
 
 // Экспортируем для использования в других модулях
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = HeartsManager;
-} 
+window.HeartsManager = HeartsManager;
+window.initHearts = initHearts;

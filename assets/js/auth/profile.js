@@ -1,5 +1,5 @@
 // Переключение вкладок профиля
-document.addEventListener('DOMContentLoaded', async function() {
+async function initProfilePage() {
     // Инициализация переключения вкладок
     initProfileTabs();
     
@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Загружаем корзину при загрузке страницы, если активна вкладка корзины
     if (document.querySelector('.profile-tab.active').getAttribute('data-tab') === 'cart') {
         loadCart();
+    }
+    
+    // Настройка кнопок очистки корзины
+    if (typeof window.setupClearCartButtons === 'function') {
+        window.setupClearCartButtons();
     }
 
     // Инициализация избранных блюд
@@ -185,7 +190,7 @@ function saveProfileData() {
         })
         .then(([infoRes, addressRes, socialsRes]) => {
             if (infoRes.ok && addressRes.ok && socialsRes.ok) {
-                alert('Профіль, адресу і соцмережі успішно оновлено!');
+                showSuccess('Профіль, адресу і соцмережі успішно оновлено!');
             } else {
                 let errorMsg = 'Помилка оновлення:';
                 if (!infoRes.ok) errorMsg += ' профілю;';
@@ -195,7 +200,7 @@ function saveProfileData() {
             }
         })
         .catch(error => {
-            alert('Помилка при оновленні: ' + error.message);
+            showError('Помилка при оновленні: ' + error.message);
         });
 }
 
@@ -224,7 +229,7 @@ function loadProfileData() {
             
             // Проверяем, что userId существует
             if (!userId) {
-                alert('Помилка: користувач не авторизований. Будь ласка, увійдіть в систему.');
+                showError('Помилка: користувач не авторизований. Будь ласка, увійдіть в систему.');
                 return;
             }
             
@@ -424,4 +429,15 @@ async function initFavorites() {
             renderFavorites();
         }
     });
-} 
+}
+
+// Поддержка обеих систем - старой и новой
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initProfilePage);
+} else {
+  // DOM уже загружен, инициализируем сразу
+  initProfilePage();
+}
+
+// Экспорт функций для использования в main.js
+window.initProfilePage = initProfilePage;

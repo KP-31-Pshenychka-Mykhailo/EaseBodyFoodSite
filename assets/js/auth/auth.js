@@ -30,13 +30,24 @@ function setupLoginBtn() {
   });
 }
 
-// Инициализация при загрузке DOM
-document.addEventListener('DOMContentLoaded', function() {
+function initAuth() {
   // Ждем загрузки модалок из modal.js
   setTimeout(() => {
     setupLoginBtn();
   }, 100);
-});
+}
+
+// Поддержка обеих систем - старой и новой
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAuth);
+} else {
+  // DOM уже загружен, инициализируем сразу
+  initAuth();
+}
+
+// Экспорт функций для использования в main.js
+window.setupLoginBtn = setupLoginBtn;
+window.initAuth = initAuth;
 
 // Глобальная функция для проверки авторизации
 window.showRegisterModalIfNotAuth = function() {

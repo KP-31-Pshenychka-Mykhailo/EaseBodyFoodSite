@@ -105,17 +105,17 @@ async function handleRegister(event) {
       closeModal('register-modal');
       
       // Показываем уведомление об успехе
-      alert('Регистрация прошла успешно!');
+      showSuccess('Регистрация прошла успешно!');
       
       // Обновляем интерфейс
       if (typeof window.updateAuthUI === 'function') {
         window.updateAuthUI();
       }
     } else {
-      alert(result.message || 'Ошибка при регистрации');
+      showError(result.message || 'Ошибка при регистрации');
     }
   } catch (err) {
-    alert('Ошибка при регистрации');
+    showError('Ошибка при регистрации');
   }
 }
 
@@ -139,17 +139,17 @@ async function handleLogin(event) {
       closeModal('login-modal');
       
       // Показываем уведомление об успехе
-      alert('Вход выполнен успешно!');
+      showSuccess('Вход выполнен успешно!');
       
       // Обновляем интерфейс
       if (typeof window.updateAuthUI === 'function') {
         window.updateAuthUI();
       }
     } else {
-      alert(result.message || 'Ошибка при входе');
+      showError(result.message || 'Ошибка при входе');
     }
   } catch (err) {
-    alert('Ошибка при входе');
+    showError('Ошибка при входе');
   }
 }
 
@@ -247,13 +247,21 @@ async function loadModals() {
   }
 }
 
-// Инициализация при загрузке DOM
-document.addEventListener('DOMContentLoaded', function() {
+function initModal() {
   loadModals();
-});
+}
+
+// Поддержка обеих систем - старой и новой
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initModal);
+} else {
+  // DOM уже загружен, инициализируем сразу
+  initModal();
+}
 
 // Экспортируем функции в глобальную область
 window.showRegisterModal = showRegisterModal;
 window.showLoginModal = showLoginModal;
 window.closeModal = closeModal;
 window.loadModals = loadModals;
+window.initModal = initModal;

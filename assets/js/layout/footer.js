@@ -1,10 +1,24 @@
-document.addEventListener('DOMContentLoaded', function() {
+function initFooter() {
   // Загрузка футера
   loadFooter();
   
   // Обработка событий футера
   setupFooterEvents();
-});
+}
+
+// Поддержка обеих систем - старой и новой
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initFooter);
+} else {
+  // DOM уже загружен, инициализируем сразу
+  initFooter();
+}
+
+// Экспорт функций для использования в main.js
+window.loadFooter = loadFooter;
+window.setupFooterEvents = setupFooterEvents;
+window.setupFooterToggleEvents = setupFooterToggleEvents;
+window.initFooter = initFooter;
 
 function loadFooter() {
   // Используем абсолютный путь от корня сайта для footer
@@ -17,6 +31,8 @@ function loadFooter() {
     })
     .then(html => {
       document.getElementById('footer').innerHTML = html;
+      // Настраиваем события после загрузки футера
+      setupFooterToggleEvents();
     })
     .catch(error => {
       console.error('Не удалось загрузить footer с абсолютным путем:', error);
@@ -37,6 +53,8 @@ function loadFooter() {
         })
         .then(html => {
           document.getElementById('footer').innerHTML = html;
+          // Настраиваем события после загрузки футера
+          setupFooterToggleEvents();
         })
         .catch(error => {
           console.error('Не удалось загрузить footer:', error);
@@ -45,20 +63,7 @@ function loadFooter() {
 }
 
 function setupFooterEvents() {
-  // Обработка событий для toggle contact
-  document.addEventListener('click', function(e) {
-    const toggleBtn = document.getElementById('footerToggleBtn');
-    const popup = document.getElementById('footerPopupSocials');
-    if (!toggleBtn || !popup) return;
-    if (toggleBtn.contains(e.target)) {
-      popup.classList.toggle('open');
-      toggleBtn.classList.toggle('active');
-    } else if (!popup.contains(e.target)) {
-      popup.classList.remove('open');
-      toggleBtn.classList.remove('active');
-    }
-  });
-  
+  // Глобальные обработчики событий
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       const popup = document.getElementById('footerPopupSocials');
@@ -69,4 +74,52 @@ function setupFooterEvents() {
       }
     }
   });
+}
+
+// Отдельная функция для настройки toggle кнопки
+function setupFooterToggleEvents() {
+  const toggleBtn = document.getElementById('footerToggleBtn');
+  const popup = document.getElementById('footerPopupSocials');
+  
+  if (!toggleBtn || !popup) {
+    console.log('⚠️ Footer toggle элементы не найдены');
+    return;
+  }
+  
+  console.log('✅ Footer toggle элементы найдены, настраиваем события');
+  
+  // Удаляем старые обработчики, если есть
+  toggleBtn.removeEventListener('click', handleToggleClick);
+  
+  // Добавляем новый обработчик
+  toggleBtn.addEventListener('click', handleToggleClick);
+  
+  // Обработчик клика вне попапа (только если попап открыт)
+  const handleClickOutside = function(e) {
+    if (popup.classList.contains('open') && !toggleBtn.contains(e.target) && !popup.contains(e.target)) {
+      popup.classList.remove('open');
+      toggleBtn.classList.remove('active');
+    }
+  };
+  
+  // Удаляем старый обработчик, если есть
+  document.removeEventListener('click', handleClickOutside);
+  
+  // Добавляем новый обработчик
+  document.addEventListener('click', handleClickOutside);
+}
+
+// Функция обработки клика по toggle кнопке
+function handleToggleClick(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  
+  const toggleBtn = document.getElementById('footerToggleBtn');
+  const popup = document.getElementById('footerPopupSocials');
+  
+  if (toggleBtn && popup) {
+    popup.classList.toggle('open');
+    toggleBtn.classList.toggle('active');
+    console.log('🔄 Footer toggle clicked, popup state:', popup.classList.contains('open'));
+  }
 } 

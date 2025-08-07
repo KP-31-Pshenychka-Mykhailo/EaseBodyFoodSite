@@ -324,7 +324,7 @@ function createMenuCarousel(containerSelector, leftBtnSelector, rightBtnSelector
 }
 
 // ===== ИНИЦИАЛИЗАЦИЯ КАРУСЕЛЕЙ =====
-document.addEventListener('DOMContentLoaded', function() {
+function initCarousel() {
     // Инициализация карусели отзывов
     const prevBtn = document.getElementById('reviewPrev');
     const nextBtn = document.getElementById('reviewNext');
@@ -486,8 +486,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const titleElement = card.querySelector('.gallery-card-title');
                 if (titleElement) {
                     const title = titleElement.textContent;
-                    alert('Выбрано блюдо: ' + title);
-                    // Здесь можно заменить alert на модальное окно или другую логику
+                    showInfo('Выбрано блюдо: ' + title);
+                    // Здесь можно заменить на модальное окно или другую логику
                 }
             }
         });
@@ -496,7 +496,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализация каруселей меню
     createMenuCarousel('.menu-slider', '.menu-slider-arrow.left', '.menu-slider-arrow.right');
     createMenuCarousel('#dietCards', '#dietLeft', '#dietRight');
-});
+}
+
+// Поддержка обеих систем - старой и новой
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCarousel);
+} else {
+  // DOM уже загружен, инициализируем сразу
+  initCarousel();
+}
 
 // Экспортируем функции в глобальную область видимости
 window.updateReviews = updateReviews;
@@ -507,5 +515,6 @@ window.getCardWidth = getCardWidth;
 window.centerCards = centerCards;
 window.updateActiveCard = updateActiveCard;
 window.addMoreCards = addMoreCards;
+window.initCarousel = initCarousel;
 
 

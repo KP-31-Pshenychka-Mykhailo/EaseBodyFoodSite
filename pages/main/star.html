@@ -135,7 +135,8 @@
         <div class="menu-total-alt">Б: 18 г, Ж: 51 г, В: 24 г; 645 ккал</div>
 
 <script>
-
+// Специфичная логика для страницы зирокого меню
+document.addEventListener('easybodyAppReady', function() {
   document.querySelectorAll('.menu-day-alt').forEach(function(btn) {
     btn.addEventListener('click', function() {
 
@@ -156,20 +157,19 @@
     });
   });
 
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    var activeBtn = document.querySelector('.menu-day-alt.active');
-    if (activeBtn) {
-      var day = activeBtn.getAttribute('data-day');
-      document.querySelectorAll('.menu-card-alt').forEach(function(card) {
-        if (card.getAttribute('data-day') === day) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-  });
+  // Инициализация активного дня
+  var activeBtn = document.querySelector('.menu-day-alt.active');
+  if (activeBtn) {
+    var day = activeBtn.getAttribute('data-day');
+    document.querySelectorAll('.menu-card-alt').forEach(function(card) {
+      if (card.getAttribute('data-day') === day) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+});
 </script>
         
       </section>
@@ -184,12 +184,7 @@
 
 
   <div id="footer"></div>
-      <script src="/assets/js/layout/header.js"></script>
-    <script src="/assets/js/components/modal.js"></script>
-    <script src="/assets/js/auth/auth.js"></script>
-    <script src="/assets/js/layout/navigation.js"></script>
-    <script src="/assets/js/layout/footer.js"></script>
-    <script src="/assets/js/components/hearts.js"></script>
-    <script src="/assets/js/service/calculator.js"></script>
+      <!-- Единый скрипт для всех модулей -->
+    <script src="/assets/js/main.js"></script>
 </body>
 </html>

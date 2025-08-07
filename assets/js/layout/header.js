@@ -104,9 +104,21 @@ function insertHeaderDirectly() {
   document.getElementById('header').innerHTML = headerHTML;
 }
 
-// Инициализация при загрузке DOM
-document.addEventListener('DOMContentLoaded', function() {
+// Инициализация при загрузке DOM или немедленно если DOM уже готов
+function initHeader() {
   loadHeader();
-});
+}
+
+// Поддержка обеих систем - старой и новой
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initHeader);
+} else {
+  // DOM уже загружен, инициализируем сразу
+  initHeader();
+}
+
+// Экспорт функций для использования в main.js
+window.loadHeader = loadHeader;
+window.initHeader = initHeader;
 
  

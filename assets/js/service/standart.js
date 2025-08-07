@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async function() {
+async function initStandartPage() {
   // Логика карусели перенесена в carousel.js
   // Карусель будет инициализирована автоматически через createMenuCarousel
 
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const selectedDishes = getSelectedDishes();
     
     if (selectedDishes.length === 0) {
-      alert('Будь ласка, залиште хоча б одну страву в меню');
+      showWarning('Будь ласка, залиште хоча б одну страву в меню');
       return;
     }
 
@@ -300,4 +300,15 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Загрузка данных и первичный рендер
   await loadData();
   renderMenuCards();
-}); 
+}
+
+// Поддержка обеих систем - старой и новой
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initStandartPage);
+} else {
+  // DOM уже загружен, инициализируем сразу
+  initStandartPage();
+}
+
+// Экспорт функций для использования в main.js
+window.initStandartPage = initStandartPage;

@@ -6,6 +6,64 @@ let globalMenuData = {};
 let globalDishesData = [];
 let globalMenuType = 900;
 
+// Функции для показа сообщений только при валидации формы
+function showCalculatorWarning(message) {
+  console.log('WARNING:', message); // Временно только логируем
+  // Используем глобальные функции сообщений если доступны
+  if (typeof window.showWarning === 'function') {
+    window.showWarning(message);
+  } else {
+    // Fallback - простое уведомление
+    showSimpleMessage(message, 'warning');
+  }
+}
+
+function showCalculatorError(message) {
+  console.log('ERROR:', message); // Временно только логируем
+  // Используем глобальные функции сообщений если доступны
+  if (typeof window.showError === 'function') {
+    window.showError(message);
+  } else {
+    // Fallback - простое уведомление
+    showSimpleMessage(message, 'error');
+  }
+}
+
+// Fallback функция для показа простых сообщений
+function showSimpleMessage(message, type) {
+  // Создаем простое уведомление
+  const notification = document.createElement('div');
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    ${type === 'error' ? 
+      'background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24;' : 
+      'background: #fff3cd; border: 1px solid #ffeaa7; color: #856404;'
+    }
+  `;
+  notification.textContent = message;
+  
+  document.body.appendChild(notification);
+  
+  // Убираем через 3 секунды
+  setTimeout(() => {
+    if (notification.parentNode) {
+      notification.parentNode.removeChild(notification);
+    }
+  }, 3000);
+}
+
 function showStep(step) {
   for (let i = 1; i <= totalSteps; i++) {
     document.getElementById('form-step-' + i).style.display = (i === step) ? 'flex' : 'none';
@@ -14,41 +72,66 @@ function showStep(step) {
 }
 
 function nextStep() {
-  // Validate current step
+  console.log('🔍 nextStep() вызвана из:', new Error().stack);
+  
+  // Validate current step BEFORE moving to next
   const form = document.getElementById('calculator-form');
   const currentBox = document.getElementById('form-step-' + currentStep);
-  const inputs = currentBox.querySelectorAll('input[required]');
-  let valid = false;
   
-  // Проверяем заполнение полей
-  for (let input of inputs) {
-    if ((input.type === 'radio' && input.checked) || (input.type !== 'radio' && input.value)) {
-      valid = true;
-      break;
-    }
-  }
+  let isValid = true; // Флаг валидности
   
-  if (!valid) {
-    alert('Будь ласка, заповніть поле!');
-    return;
-  }
-  
-  // Проверяем валидность числовых полей только для шага 3
-  if (currentStep === 3) {
-    const numberInputs = currentBox.querySelectorAll('input[type="number"]');
-    for (let input of numberInputs) {
-      if (input.value) { // Проверяем только если поле заполнено
-        const value = parseInt(input.value);
-        if (value < parseInt(input.min) || value > parseInt(input.max)) {
-          alert('Будь ласка, перевірте правильність введених даних!');
-          this.showTooltip();
-          return;
-        }
+  // Для радио кнопок (шаги 1, 2, 4) - проверяем что хотя бы одна выбрана
+  if (currentStep === 1 || currentStep === 2 || currentStep === 4) {
+    const radioGroups = {};
+    const radioInputs = currentBox.querySelectorAll('input[type="radio"]');
+    
+    // Группируем радио кнопки по name
+    radioInputs.forEach(input => {
+      if (!radioGroups[input.name]) {
+        radioGroups[input.name] = [];
+      }
+      radioGroups[input.name].push(input);
+    });
+    
+    // Проверяем что в каждой группе есть выбранная опция
+    for (let groupName in radioGroups) {
+      let hasSelected = radioGroups[groupName].some(input => input.checked);
+      if (!hasSelected) {
+        showCalculatorWarning('Будь ласка, оберіть один з варіантів!');
+        isValid = false;
+        break;
       }
     }
   }
   
-  if (currentStep < totalSteps) {
+  // Для шага 3 (числовые поля) - проверяем что все поля заполнены и валидны
+  if (currentStep === 3 && isValid) {
+    const numberInputs = currentBox.querySelectorAll('input[type="number"]');
+    
+    for (let input of numberInputs) {
+      const inputValue = input.value.toString().trim();
+      
+      // Проверяем что поле заполнено (более точная проверка)
+      if (!inputValue || inputValue === '') {
+        showCalculatorWarning('Будь ласка, заповніть всі поля!');
+        isValid = false;
+        break;
+      }
+      
+      // Проверяем валидность значения
+      const value = parseInt(inputValue);
+      if (isNaN(value) || value < parseInt(input.min) || value > parseInt(input.max)) {
+        const fieldName = input.name === 'age' ? 'вік' : 
+                         input.name === 'weight' ? 'вага' : 'зріст';
+        showCalculatorError(`Будь ласка, введіть правильне значення ${fieldName} (${input.min}-${input.max})`);
+        isValid = false;
+        break;
+      }
+    }
+  }
+  
+  // Переходим к следующему шагу только если текущий валиден
+  if (isValid && currentStep < totalSteps) {
     currentStep++;
     showStep(currentStep);
   }
@@ -243,7 +326,7 @@ document.getElementById('calculator-form').addEventListener('submit', async func
     }
   }
   if (!valid) {
-    alert('Будь ласка, оберіть мету!');
+    showWarning('Будь ласка, оберіть мету!');
     return;
   }
   // Collect data
@@ -316,7 +399,7 @@ function addCheckmarkToInput(input) {
 }
 
 // Обработчики для полей ввода
-document.addEventListener('DOMContentLoaded', function() {
+function setupInputValidation() {
   const inputFields = document.querySelectorAll('.input-field input[type="number"]');
   
   inputFields.forEach(input => {
@@ -336,7 +419,7 @@ document.addEventListener('DOMContentLoaded', function() {
       validateInput(this);
     });
   });
-});
+}
 
 // Функция валидации полей ввода
 function validateInput(input) {
@@ -398,7 +481,7 @@ function validateInput(input) {
 }
 
 // --- Анимация и меню-карусель для блока с рационом ---
-document.addEventListener('DOMContentLoaded', function() {
+function setupDietSectionAnimation() {
   // Анимация появления блока с рационом
   var dietSection = document.getElementById('personal-diet-section');
   if (dietSection) {
@@ -521,7 +604,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectedDishes = getSelectedDishesFromCalculator();
     
     if (selectedDishes.length === 0) {
-      alert('Будь ласка, залиште хоча б одну страву в меню');
+      showWarning('Будь ласка, залиште хоча б одну страву в меню');
       return;
     }
 
@@ -611,10 +694,37 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Запускаем инициализацию только если страница полностью загружена
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeCalculator);
-  } else {
+}
+
+// Основная функция инициализации калькулятора
+function initCalculatorPage() {
+  // Вызываем все функции инициализации
+  setupInputValidation();
+  setupDietSectionAnimation();
+  setupNextStepButtons();
+  
+  // Вызываем основную инициализацию
+  if (typeof initializeCalculator === 'function') {
     initializeCalculator();
   }
-});
+}
+
+// Настройка кнопок "Далі"
+function setupNextStepButtons() {
+  const nextStepButtons = document.querySelectorAll('.next-step-btn');
+  nextStepButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      if (typeof nextStep === 'function') {
+        nextStep();
+      }
+    });
+  });
+}
+
+// Инициализация теперь происходит через main.js
+// Убираем автоматическую инициализацию, чтобы избежать дублирования
+
+// Экспорт функций для использования в main.js и HTML
+window.nextStep = nextStep;
+window.clearCart = clearCart;
+window.initCalculatorPage = initCalculatorPage;

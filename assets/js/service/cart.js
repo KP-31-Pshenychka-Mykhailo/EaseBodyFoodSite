@@ -178,7 +178,7 @@ window.proceedToCheckout = function() {
         const tryLoadOrder = (pathIndex) => {
             if (pathIndex >= orderPaths.length) {
                 console.error('Error loading order form: all paths failed');
-                alert('Помилка завантаження форми замовлення');
+                showError('Помилка завантаження форми замовлення');
                 return;
             }
             
@@ -342,9 +342,9 @@ function setupOrderFormValidation() {
             });
             if (!valid) {
                 e.preventDefault();
-                alert('Будь ласка, заповніть всі обов\'язкові поля');
+                showWarning('Будь ласка, заповніть всі обов\'язкові поля');
             } else {
-                alert('Замовлення успішно оформлено!');
+                showSuccess('Замовлення успішно оформлено!');
                 // Здесь можно добавить логику отправки заказа на сервер
             }
         });
@@ -435,10 +435,13 @@ function loadCart() {
 }
 
 // Инициализация корзины при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
+function initCartPage() {
     if (document.getElementById('cart-content')) {
         loadCart();
     }
+    
+    // Настройка кнопок очистки корзины
+    setupClearCartButtons();
     
     // Добавляем функцию для отладки в глобальную область
     window.debugCart = function() {
@@ -463,4 +466,41 @@ document.addEventListener('DOMContentLoaded', function() {
             window.debugCart();
         }, 1000);
     }
-}); 
+    
+    // Создаем экземпляр менеджера корзины
+    window.cartManager = new CartManager();
+}
+
+// Поддержка обеих систем - старой и новой
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCartPage);
+} else {
+  // DOM уже загружен, инициализируем сразу
+  initCartPage();
+}
+
+// Настройка кнопок очистки корзины
+function setupClearCartButtons() {
+    const clearCartBtn = document.getElementById('clear-cart-btn');
+    const clearCartBtnProfile = document.getElementById('clear-cart-btn-profile');
+    
+    if (clearCartBtn) {
+        clearCartBtn.addEventListener('click', function() {
+            if (typeof clearCart === 'function') {
+                clearCart();
+            }
+        });
+    }
+    
+    if (clearCartBtnProfile) {
+        clearCartBtnProfile.addEventListener('click', function() {
+            if (typeof clearCart === 'function') {
+                clearCart();
+            }
+        });
+    }
+}
+
+// Экспорт функций для использования в main.js
+window.initCartPage = initCartPage;
+window.setupClearCartButtons = setupClearCartButtons;

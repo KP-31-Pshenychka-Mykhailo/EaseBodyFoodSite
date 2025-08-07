@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async function() {
+async function initConstructorPage() {
   // Логика карусели перенесена в carousel.js
   // Карусель будет инициализирована автоматически через createMenuCarousel
 
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       
       const selectedDayNames = Array.from(uniqueDays).map(day => dayMap[day]).join(', ');
       
-      alert(`Мінімум потрібно додати страви для 3 днів.\n\nВи додали страви для: ${selectedDayNames}\n\nВам залишилося додати страви ще для ${remainingDays} ${dayNames[remainingDays]}.`);
+      showWarning(`Мінімум потрібно додати страви для 3 днів.\n\nВи додали страви для: ${selectedDayNames}\n\nВам залишилося додати страви ще для ${remainingDays} ${dayNames[remainingDays]}.`);
       return false;
     }
     
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const selectedDishes = getSelectedDishes();
     
     if (selectedDishes.length === 0) {
-      alert('Будь ласка, додайте хоча б одну страву до меню, натиснувши на "+" біля страви');
+      showWarning('Будь ласка, додайте хоча б одну страву до меню, натиснувши на "+" біля страви');
       return;
     }
 
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const savedCart = window.cartManager.loadCart();
         
         if (savedCart.length === 0) {
-          alert('Помилка: дані не збереглися в корзині. Спробуйте ще раз.');
+          showError('Помилка: дані не збереглися в корзині. Спробуйте ще раз.');
           return;
         }
       }, 100);
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
     
     // Показываем уведомление об успешном добавлении
-    alert(`Успішно додано ${selectedDishes.length} страв до корзини!`);
+    showSuccess(`Успішно додано ${selectedDishes.length} страв до корзини!`);
     
     // Перенаправляем в корзину с правильным путем
     window.location.href = '/pages/main/cart.html';
@@ -294,4 +294,15 @@ document.addEventListener('DOMContentLoaded', async function() {
   await loadDishes();
   renderCards(currentType);
   updateTotal(); // Обновляем общее количество при загрузке страницы
-}); 
+}
+
+// Поддержка обеих систем - старой и новой
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initConstructorPage);
+} else {
+  // DOM уже загружен, инициализируем сразу
+  initConstructorPage();
+}
+
+// Экспорт функций для использования в main.js
+window.initConstructorPage = initConstructorPage;
