@@ -32,8 +32,8 @@ const STORAGE_KEYS = {
 
 // Пути к файлам данных
 const DATA_PATHS = {
-  MENU: '../../data/datafiles/menu.json',
-  DISHES: '../../data/datafiles/dishes.json'
+  MENU: 'data/datafiles/menu.json',
+  DISHES: 'data/datafiles/dishes.json'
 };
 
 // Настройки сервера
@@ -122,7 +122,7 @@ const HTTP_STATUS = {
 const MAX_USERNAME_LENGTH = 8;
 
 // Fallback изображение
-const FALLBACK_IMAGE = '../../data/img/food1.jpg';
+const FALLBACK_IMAGE = 'data/img/food1.jpg';
 
 // Маппинг приёмов пищи
 const MEAL_MAP = [

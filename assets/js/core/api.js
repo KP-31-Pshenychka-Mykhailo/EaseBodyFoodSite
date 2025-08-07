@@ -382,7 +382,8 @@ async function loadMenuData() {
         '../../data/datafiles/menu.json',
         '../../../data/datafiles/menu.json',
         '/data/datafiles/menu.json',
-        'data/datafiles/menu.json'
+        'data/datafiles/menu.json',
+        './data/datafiles/menu.json'
       ];
       
       try {
@@ -462,7 +463,8 @@ async function loadDishesData() {
         '../../data/datafiles/dishes.json',
         '../../../data/datafiles/dishes.json',
         '/data/datafiles/dishes.json',
-        'data/datafiles/dishes.json'
+        'data/datafiles/dishes.json',
+        './data/datafiles/dishes.json'
       ];
       
       try {

@@ -397,7 +397,7 @@ function loadCart() {
         
         cartHTML += `
             <div class="cart-item" data-index="${index}">
-                <img src="${item.img || '/data/img/food1.jpg'}" alt="${item.title}" class="cart-item-img">
+                <img src="${item.img || 'data/img/food1.jpg'}" alt="${item.title}" class="cart-item-img">
                 <div class="cart-item-content">
                     <div class="cart-item-day">${item.dayName}</div>
                     <div class="cart-item-title">${item.title}</div>

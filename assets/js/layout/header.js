@@ -69,12 +69,12 @@ function loadHeader() {
 function insertHeaderDirectly() {
   const headerHTML = `
     <header class="main-header">
-        <a href="/index.html" class="logo-link">
-            <img src="/data/img/logo.png" alt="Logo" class="logo">
+        <a href="index.html" class="logo-link">
+                            <img src="data/img/logo.png" alt="Logo" class="logo">
         </a>
         <nav class="main-nav" id="mainNav">
-            <a href="/index.html">Головна</a>
-            <a href="/pages/main/constructor.html">Конструктор меню</a>
+            <a href="index.html">Головна</a>
+            <a href="pages/main/constructor.html">Конструктор меню</a>
             <a href="/pages/main/calculator.html">Калькулятор раціону</a>
             <a href="/pages/main/standart.html">Стандартне меню</a>
         </nav>

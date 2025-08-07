@@ -332,7 +332,7 @@ function createFavoriteCard(dish) {
     
     return `
         <div class="cart-item" data-dish-id="${dish.id}">
-            <img src="${dish.img || '../../data/img/food1.jpg'}" alt="${dish.title}" class="cart-item-img">
+                            <img src="${dish.img || 'data/img/food1.jpg'}" alt="${dish.title}" class="cart-item-img">
             <div class="cart-item-content">
                 <div class="cart-item-title">${dish.title}</div>
                 <div class="cart-item-macros">Б: ${dish.p}г Ж: ${dish.f}г В: ${dish.c}г, ${calories} ккал</div>

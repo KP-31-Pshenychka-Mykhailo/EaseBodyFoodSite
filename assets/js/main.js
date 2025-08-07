@@ -47,7 +47,7 @@ class EasyBodyApp {
         
         // Если мы в подпапке pages/main/, то нужно вернуться на 2 уровня вверх
         if (path.includes('/pages/main/')) {
-            return '/assets/js/';
+            return '../../assets/js/';
         }
         
         // Если мы в корне сайта

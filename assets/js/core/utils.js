@@ -83,11 +83,11 @@ function truncateUsername(username) {
 function getDishImage(dish, fallbackPath = null) {
   if (!dish) {
     console.warn('getDishImage called with null dish');
-    const fallback = fallbackPath || window.FALLBACK_IMAGE || '../../data/img/food1.jpg';
+    const fallback = fallbackPath || window.FALLBACK_IMAGE || 'data/img/food1.jpg';
     return fallback;
   }
   console.log('getDishImage called with dish:', dish);
-  const fallback = fallbackPath || window.FALLBACK_IMAGE || '../../data/img/food1.jpg';
+  const fallback = fallbackPath || window.FALLBACK_IMAGE || 'data/img/food1.jpg';
   return dish.img || fallback;
 }
 
