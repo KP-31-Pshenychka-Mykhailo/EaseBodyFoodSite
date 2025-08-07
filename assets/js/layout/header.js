@@ -3,83 +3,53 @@
 // Загрузка хедера
 function loadHeader() {
   const headerElement = document.getElementById('header');
-  if (headerElement && headerElement.innerHTML.trim() === '') {
   
-    // Используем абсолютный путь от корня сайта
-    fetch('/pages/partials/header.html')
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        return res.text();
-      })
-      .then(html => {
-        document.getElementById('header').innerHTML = html;
-        setTimeout(() => {
-          // Принудительно применяем стили
-          const headerElement = document.querySelector('.main-header');
-          if (headerElement) {
-            headerElement.style.display = 'flex';
-            headerElement.style.alignItems = 'center';
-            headerElement.style.justifyContent = 'space-between';
-            headerElement.style.padding = '0 16px';
-            headerElement.style.height = '64px';
-          }
-        }, 100);
-      })
-      .catch(error => {
-        console.error('Не удалось загрузить header с абсолютным путем:', error);
-        // Fallback: пробуем относительные пути
-        const currentPath = window.location.pathname;
-        let headerPath = 'pages/partials/header.html';
-        
-        if (currentPath.includes('/pages/main/')) {
-          headerPath = '../pages/partials/header.html';
-        }
-        
-        fetch(headerPath)
-          .then(res => {
-            if (!res.ok) {
-              throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            return res.text();
-          })
-          .then(html => {
-            document.getElementById('header').innerHTML = html;
-            setTimeout(() => {
-              // Принудительно применяем стили
-              const headerElement = document.querySelector('.main-header');
-              if (headerElement) {
-                headerElement.style.display = 'flex';
-                headerElement.style.alignItems = 'center';
-                headerElement.style.justifyContent = 'space-between';
-                headerElement.style.padding = '0 16px';
-                headerElement.style.height = '64px';
-              }
-            }, 100);
-          })
-          .catch(error => {
-            console.error('Не удалось загрузить header с относительным путем:', error);
-            insertHeaderDirectly();
-          });
-      });
+  if (headerElement && headerElement.innerHTML.trim() === '') {
+    // Используем прямое вставление хедера вместо загрузки из файла
+    insertHeaderDirectly();
   }
 }
 
+// Используем глобальные функции из path-utils.js
+// getBasePath() и updatePathsInHtml() теперь доступны глобально
+
 function insertHeaderDirectly() {
+  const path = window.location.pathname;
+  
+  // Определяем правильные пути в зависимости от текущего расположения
+  let homePath, constructorPath, calculatorPath, standartPath, cartPath, logoPath;
+  
+  if (path.includes('/pages/main/')) {
+    // Мы в подпапке pages/main/
+    homePath = '../../index.html';
+    constructorPath = 'constructor.html';
+    calculatorPath = 'calculator.html';
+    standartPath = 'standart.html';
+    cartPath = 'cart.html';
+    logoPath = '../../data/img/logo.png';
+  } else {
+    // Мы в корне сайта
+    homePath = 'index.html';
+    constructorPath = 'pages/main/constructor.html';
+    calculatorPath = 'pages/main/calculator.html';
+    standartPath = 'pages/main/standart.html';
+    cartPath = 'pages/main/cart.html';
+    logoPath = 'data/img/logo.png';
+  }
+  
   const headerHTML = `
     <header class="main-header">
-        <a href="index.html" class="logo-link">
-                            <img src="data/img/logo.png" alt="Logo" class="logo">
+        <a href="${homePath}" class="logo-link">
+                            <img src="${logoPath}" alt="Logo" class="logo">
         </a>
         <nav class="main-nav" id="mainNav">
-            <a href="index.html">Головна</a>
-            <a href="pages/main/constructor.html">Конструктор меню</a>
-            <a href="pages/main/calculator.html">Калькулятор раціону</a>
-            <a href="pages/main/standart.html">Стандартне меню</a>
+            <a href="${homePath}">Головна</a>
+            <a href="${constructorPath}">Конструктор меню</a>
+            <a href="${calculatorPath}">Калькулятор раціону</a>
+            <a href="${standartPath}">Стандартне меню</a>
         </nav>
         <div class="header-actions">
-            <a href="pages/main/cart.html" class="icon-button basket-big">
+            <a href="${cartPath}" class="icon-button basket-big">
                 <svg class="icon-img basket-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6 6H21L20 14H7L6 6Z" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <circle cx="9" cy="20" r="1" stroke="#4CAF50" stroke-width="2"/>

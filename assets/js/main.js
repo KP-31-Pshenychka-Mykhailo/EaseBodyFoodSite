@@ -134,6 +134,7 @@ class EasyBodyApp {
         return {
             // Базовые модули для всех страниц
             core: [
+                'core/path-utils.js',
                 'core/constants.js',
                 'core/utils.js', 
                 'core/api.js'
