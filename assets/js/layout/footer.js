@@ -158,11 +158,11 @@ function setupFooterToggleEvents() {
   const popup = document.getElementById('footerPopupSocials');
   
   if (!toggleBtn || !popup) {
-    console.log('⚠️ Footer toggle элементы не найдены');
+    
     return;
   }
   
-  console.log('✅ Footer toggle элементы найдены, настраиваем события');
+  
   
   // Удаляем старые обработчики, если есть
   toggleBtn.removeEventListener('click', handleToggleClick);
@@ -196,6 +196,6 @@ function handleToggleClick(e) {
   if (toggleBtn && popup) {
     popup.classList.toggle('open');
     toggleBtn.classList.toggle('active');
-    console.log('🔄 Footer toggle clicked, popup state:', popup.classList.contains('open'));
+    
   }
 } 

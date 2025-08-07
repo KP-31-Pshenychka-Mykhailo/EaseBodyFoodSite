@@ -62,11 +62,11 @@ function createMenuCard(dish, options = {}) {
 // ===== КАРТОЧКА МЕНЮ АЛЬТЕРНАТИВНАЯ (КАЛЬКУЛЯТОР) =====
 function createMenuCardAlt(dish, mealType) {
     if (!dish) {
-        console.warn('createMenuCardAlt called with null dish');
+    
         return '';
     }
     
-    console.log('createMenuCardAlt called with:', { dish, mealType });
+
     
     const imageSrc = window.getDishImage ? window.getDishImage(dish, window.FALLBACK_IMAGE) : (dish.img || window.FALLBACK_IMAGE || 'data/img/food1.jpg');
     const macros = window.formatMacros ? window.formatMacros(dish) : `Б: ${dish.p} г, Ж: ${dish.f} г, В: ${dish.c} г`;

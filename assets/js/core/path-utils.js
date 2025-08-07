@@ -110,4 +110,4 @@ window.getCssPath = getCssPath;
 window.getJsPath = getJsPath;
 window.getPagePath = getPagePath;
 
-console.log('✅ Path utilities loaded');
+

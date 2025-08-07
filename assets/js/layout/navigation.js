@@ -33,11 +33,11 @@ function setupBurgerMenu() {
     const nav = document.getElementById('mainNav');
     
     if (!burger || !nav) {
-      console.log('⚠️ Burger menu элементы не найдены');
+  
       return;
     }
     
-    console.log('✅ Burger menu элементы найдены, настраиваем события');
+
     
     // Удаляем старые обработчики, если есть
     burger.removeEventListener('click', handleBurgerClick);
@@ -83,7 +83,7 @@ function handleBurgerClick(e) {
   if (burger && nav) {
     burger.classList.toggle('active');
     nav.classList.toggle('open');
-    console.log('🔄 Burger clicked, nav state:', nav.classList.contains('open'));
+    
   }
 }
 

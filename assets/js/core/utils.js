@@ -10,7 +10,7 @@ function getStorageItem(key, defaultValue = null) {
     const item = localStorage.getItem(key);
     return item ? JSON.parse(item) : defaultValue;
   } catch (error) {
-    console.warn(`Ошибка при получении ${key} из localStorage:`, error);
+    
     return defaultValue;
   }
 }
@@ -23,7 +23,7 @@ function setStorageItem(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
     return true;
   } catch (error) {
-    console.warn(`Ошибка при сохранении ${key} в localStorage:`, error);
+    
     return false;
   }
 }
@@ -36,7 +36,7 @@ function removeStorageItem(key) {
     localStorage.removeItem(key);
     return true;
   } catch (error) {
-    console.warn(`Ошибка при удалении ${key} из localStorage:`, error);
+    
     return false;
   }
 }
@@ -82,7 +82,7 @@ function truncateUsername(username) {
  */
 function getDishImage(dish, fallbackPath = null) {
   if (!dish) {
-    console.warn('getDishImage called with null dish');
+
     const fallback = fallbackPath || window.FALLBACK_IMAGE || 'data/img/food1.jpg';
     return getCorrectImagePath(fallback);
   }
@@ -131,10 +131,10 @@ function getCorrectImagePath(imagePath) {
  */
 function formatMacros(dish) {
   if (!dish) {
-    console.warn('formatMacros called with null dish');
+
     return '';
   }
-  console.log('formatMacros called with dish:', dish);
+  
   return `Б: ${dish.p || 0} г, Ж: ${dish.f || 0} г, В: ${dish.c || 0} г`;
 }
 
@@ -336,9 +336,9 @@ function getMenuForDay(menuArr, day) {
   };
   
   const targetDay = dayMap[day];
-  console.log('Looking for day:', day, 'target:', targetDay, 'in menuArr:', menuArr);
+  
   const result = menuArr.find(item => item.dayOfWeek === targetDay) || null;
-  console.log('Found menu for day:', result);
+  
   return result;
 }
 
@@ -367,7 +367,7 @@ function addEventListenerSafe(selector, event, handler) {
     element.addEventListener(event, handler);
     return true;
   }
-  console.warn(`Элемент ${selector} не найден`);
+  
   return false;
 }
 
@@ -391,7 +391,7 @@ function toggleElement(selector, show) {
 function getDishById(dishes, id) {
   // Пробуем разные типы сравнения для совместимости
   const dish = dishes.find(d => d.id === id || d.id == id || String(d.id) === String(id));
-  console.log('getDishById called with id:', id, 'type:', typeof id, 'found:', dish);
+  
   return dish;
 }
 
@@ -399,13 +399,13 @@ function getDishById(dishes, id) {
  * Подсчет общих макронутриентов для массива блюд
  */
 function calculateTotalMacros(dishes) {
-  console.log('calculateTotalMacros called with dishes:', dishes);
+  
   const result = dishes.reduce((total, dish) => ({
     protein: total.protein + (Number(dish.p) || 0),
     fat: total.fat + (Number(dish.f) || 0),
     carbs: total.carbs + (Number(dish.c) || 0)
   }), { protein: 0, fat: 0, carbs: 0 });
-  console.log('calculateTotalMacros result:', result);
+  
   return result;
 }
 
@@ -413,12 +413,12 @@ function calculateTotalMacros(dishes) {
  * Подсчет общих калорий для массива блюд
  */
 function calculateTotalCalories(dishes) {
-  console.log('calculateTotalCalories called with dishes:', dishes);
+  
   const result = dishes.reduce((total, dish) => {
     const calories = (Number(dish.p) * 4) + (Number(dish.f) * 9) + (Number(dish.c) * 4);
     return total + calories;
   }, 0);
-  console.log('calculateTotalCalories result:', result);
+  
   return result;
 }
 
@@ -428,14 +428,14 @@ function calculateTotalCalories(dishes) {
  * Логирование ошибок
  */
 function logError(message, error = null) {
-  console.error(`[ERROR] ${message}`, error);
+  
 }
 
 /**
  * Логирование предупреждений
  */
 function logWarning(message, data = null) {
-  console.warn(`[WARNING] ${message}`, data);
+  
 }
 
 /**

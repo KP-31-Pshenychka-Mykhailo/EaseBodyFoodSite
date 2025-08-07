@@ -8,7 +8,7 @@ let globalMenuType = 900;
 
 // Функции для показа сообщений только при валидации формы
 function showCalculatorWarning(message) {
-  console.log('WARNING:', message); // Временно только логируем
+  
   // Используем глобальные функции сообщений если доступны
   if (typeof window.showWarning === 'function') {
     window.showWarning(message);
@@ -19,7 +19,7 @@ function showCalculatorWarning(message) {
 }
 
 function showCalculatorError(message) {
-  console.log('ERROR:', message); // Временно только логируем
+  
   // Используем глобальные функции сообщений если доступны
   if (typeof window.showError === 'function') {
     window.showError(message);
@@ -72,7 +72,7 @@ function showStep(step) {
 }
 
 function nextStep() {
-  console.log('🔍 nextStep() вызвана из:', new Error().stack);
+  
   
   // Validate current step BEFORE moving to next
   const form = document.getElementById('calculator-form');
@@ -193,7 +193,6 @@ async function loadCalculatorData() {
     
     return { menuData, dishesData };
   } catch (error) {
-    console.error('Ошибка загрузки данных калькулятора:', error);
     return { menuData: {}, dishesData: [] };
   }
 }
@@ -260,7 +259,6 @@ function renderPersonalMenu(menuArr, dishes, day) {
   const menuTotal = document.querySelector('.menu-total-alt');
   
   if (!menuSlider) {
-    console.error('❌ Элемент dietCards не найден');
     return;
   }
   
@@ -371,8 +369,6 @@ document.getElementById('calculator-form').addEventListener('submit', async func
   
   // Проверяем, есть ли данные для выбранного типа меню
   if (!globalMenuData[globalMenuType]) {
-    console.error('No menu data for type:', globalMenuType);
-    console.log('Available menu types:', Object.keys(globalMenuData));
     return;
   }
   
@@ -698,21 +694,17 @@ function setupDietSectionAnimation() {
   // Инициализация: загружаем данные при загрузке страницы
   async function initializeCalculator() {
     try {
-      console.log('🚀 Инициализация калькулятора...');
+  
       
       const { menuData, dishesData } = await loadCalculatorData();
-      console.log('📊 Загружены данные:', { 
-        menuKeys: Object.keys(menuData), 
-        dishesCount: dishesData.length 
-      });
       
       globalMenuData = menuData;
       globalDishesData = dishesData;
       
       // Не рендерим карточки сразу - они будут показаны после заполнения формы
-      console.log('✅ Данные загружены, готовы к использованию');
+
     } catch (error) {
-      console.error('❌ Ошибка инициализации калькулятора:', error);
+      // Ошибка инициализации калькулятора
     }
   }
 
@@ -745,6 +737,14 @@ function setupNextStepButtons() {
 
 // Инициализация теперь происходит через main.js
 // Убираем автоматическую инициализацию, чтобы избежать дублирования
+
+// Функция очистки корзины (заглушка)
+function clearCart() {
+  // Очистка корзины будет реализована в cart.js
+  if (window.clearCart) {
+    window.clearCart();
+  }
+}
 
 // Экспорт функций для использования в main.js и HTML
 window.nextStep = nextStep;

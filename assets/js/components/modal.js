@@ -4,7 +4,7 @@ function showRegisterModal() {
   if (modal) {
     modal.style.display = 'flex';
   } else {
-    console.error('Элемент register-modal не найден');
+
   }
 }
 
@@ -14,7 +14,7 @@ function showLoginModal() {
   if (modal) {
     modal.style.display = 'flex';
   } else {
-    console.error('Элемент login-modal не найден');
+
   }
 }
 
@@ -200,10 +200,7 @@ async function loadModals() {
       // Добавляем обработчики событий
       setupModalEvents();
     } else {
-      console.error('Один из файлов не загрузился:', {
-        register: registerResponse.status,
-        login: loginResponse.status
-      });
+      // Один из файлов не загрузился
       
       // Попробуем альтернативные пути
       try {
@@ -239,11 +236,11 @@ async function loadModals() {
           setupModalEvents();
         }
       } catch (altError) {
-        console.error('Альтернативные пути тоже не работают:', altError);
+        
       }
     }
   } catch (error) {
-    console.error('Ошибка загрузки модальных окон:', error);
+    
   }
 }
 

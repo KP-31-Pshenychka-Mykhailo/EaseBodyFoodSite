@@ -19,8 +19,7 @@ class EasyBodyApp {
         this.pageModules = new Map();
         this.currentPage = this.detectCurrentPage();
         
-        console.log('🚀 EasyBodyApp: Initializing application...');
-        console.log('📍 Current page:', this.currentPage);
+
     }
 
     /**
@@ -76,13 +75,11 @@ class EasyBodyApp {
             script.onload = () => {
                 this.loadedScripts.add(src);
                 this.loadingPromises.delete(src);
-                console.log('✅ Loaded:', src);
                 resolve();
             };
             
             script.onerror = () => {
                 this.loadingPromises.delete(src);
-                console.error('❌ Failed to load:', src);
                 reject(new Error(`Failed to load script: ${src}`));
             };
             
@@ -104,7 +101,6 @@ class EasyBodyApp {
             try {
                 await this.loadScript(fullPath);
             } catch (error) {
-                console.warn(`⚠️ Optional script failed to load: ${script}`, error);
                 // Продолжаем загрузку остальных скриптов даже если один не загрузился
             }
         }
@@ -119,7 +115,6 @@ class EasyBodyApp {
         const promises = scripts.map(script => {
             const fullPath = basePath + script;
             return this.loadScript(fullPath).catch(error => {
-                console.warn(`⚠️ Optional script failed to load: ${script}`, error);
                 return null; // Возвращаем null вместо выброса ошибки
             });
         });
@@ -178,35 +173,26 @@ class EasyBodyApp {
      * Основная функция загрузки всех модулей
      */
     async loadAllModules() {
-        console.log('📦 Loading modules...');
-        
         const modules = this.getPageModules();
         
         try {
             // 1. Загружаем core модули (критичны, должны быть первыми)
-            console.log('🔧 Loading core modules...');
             await this.loadScriptsSequentially(modules.core);
             
             // 2. Загружаем layout модули (зависят от core)
-            console.log('🖼️ Loading layout modules...');
             await this.loadScriptsSequentially(modules.layout);
             
             // 3. Загружаем компоненты параллельно (независимы друг от друга)
-            console.log('🧩 Loading components...');
             await this.loadScriptsParallel(modules.components);
             
             // 4. Загружаем модули авторизации
-            console.log('🔐 Loading auth modules...');
             await this.loadScriptsParallel(modules.auth);
             
             // 5. Загружаем специфичные для страницы модули
             const pageModules = modules.pageSpecific[this.currentPage] || [];
             if (pageModules.length > 0) {
-                console.log(`📄 Loading page-specific modules for: ${this.currentPage}`);
                 await this.loadScriptsParallel(pageModules);
             }
-            
-            console.log('✅ All modules loaded successfully!');
             
             // Небольшая задержка для инициализации модулей
             await new Promise(resolve => setTimeout(resolve, 100));
@@ -218,7 +204,6 @@ class EasyBodyApp {
             this.dispatchLoadComplete();
             
         } catch (error) {
-            console.error('❌ Error loading modules:', error);
             // Всё равно вызываем событие, чтобы страница могла работать с частично загруженными модулями
             this.dispatchLoadComplete();
         }
@@ -228,8 +213,6 @@ class EasyBodyApp {
      * Принудительная инициализация критичных модулей
      */
     forceInitializeModules() {
-        console.log('🔄 Force initializing modules...');
-        
         // Инициализируем модули в правильном порядке
         const initFunctions = [
             'initModal',      // Модальные окна
@@ -253,13 +236,10 @@ class EasyBodyApp {
         initFunctions.forEach(funcName => {
             if (typeof window[funcName] === 'function') {
                 try {
-                    console.log(`🔄 Initializing ${funcName}...`);
                     window[funcName]();
                 } catch (error) {
-                    console.warn(`⚠️ Failed to initialize ${funcName}:`, error);
+                    // Ошибка инициализации модуля
                 }
-            } else {
-                console.warn(`⚠️ Function ${funcName} not found`);
             }
         });
         
@@ -267,10 +247,9 @@ class EasyBodyApp {
         const pageInitFunc = pageInitFunctions[this.currentPage];
         if (pageInitFunc && typeof window[pageInitFunc] === 'function') {
             try {
-                console.log(`📄 Initializing page module: ${pageInitFunc}...`);
                 window[pageInitFunc]();
             } catch (error) {
-                console.warn(`⚠️ Failed to initialize page module ${pageInitFunc}:`, error);
+                // Ошибка инициализации страничного модуля
             }
         }
     }
@@ -287,7 +266,6 @@ class EasyBodyApp {
         });
         
         document.dispatchEvent(event);
-        console.log('🎉 EasyBodyApp ready! Event dispatched.');
     }
 
     /**
@@ -304,16 +282,12 @@ class EasyBodyApp {
      * Инициализация приложения
      */
     async init() {
-        console.log('🚀 Starting EasyBodyApp initialization...');
-        
         // Дожидаемся загрузки DOM
         if (document.readyState === 'loading') {
             await new Promise(resolve => {
                 document.addEventListener('DOMContentLoaded', resolve);
             });
         }
-
-        console.log('📄 DOM ready, loading modules...');
         
         // Загружаем все модули
         await this.loadAllModules();
@@ -325,7 +299,7 @@ window.EasyBodyApp = new EasyBodyApp();
 
 // Автоматически инициализируем приложение
 window.EasyBodyApp.init().catch(error => {
-    console.error('❌ Failed to initialize EasyBodyApp:', error);
+    // Ошибка инициализации приложения
 });
 
 // Экспортируем класс для возможности создания дополнительных экземпляров

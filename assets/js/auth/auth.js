@@ -1,7 +1,9 @@
 // Инициализация настроек сервера
-window.loadServerSettings().catch(error => {
-  // Ошибка загрузки настроек
-});
+if (window.loadServerSettings) {
+  window.loadServerSettings().catch(error => {
+    // Ошибка загрузки настроек
+  });
+}
 
 function setupLoginBtn() {
   const userName = window.getUserName();

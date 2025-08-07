@@ -49,7 +49,7 @@ class MessageSystem {
                     font-size: 16px;
                     max-width: 400px;
                     text-align: center;
-                    border-radius: 22px 0 0 22px;
+                    border-radius: 50px 0 0 50px;
                     pointer-events: auto;
                     cursor: pointer;
                     transition: all 0.4s ease-out;
@@ -89,7 +89,7 @@ class MessageSystem {
                         max-width: 300px;
                         padding: 12px 20px;
                         font-size: 14px;
-                        border-radius: 16px 0 0 16px;
+                        border-radius: 32px 0 0 32px;
                     }
                 }
 
@@ -98,7 +98,7 @@ class MessageSystem {
                         max-width: 250px;
                         padding: 10px 16px;
                         font-size: 13px;
-                        border-radius: 12px 0 0 12px;
+                        border-radius: 24px 0 0 24px;
                     }
                 }
             `;
@@ -167,18 +167,14 @@ class MessageSystem {
 class MessageTooltip {
     constructor() {
         this.triggerBtn = null;
-        this.messageTooltip = null;
-        this.autoHideTimeout = null;
-        this.currentDesign = 'default';
         this.init();
     }
 
     init() {
         const initMessage = () => {
             this.triggerBtn = document.getElementById('star-menu-btn');
-            this.messageTooltip = document.getElementById('message-tooltip');
             
-            if (this.triggerBtn && this.messageTooltip) {
+            if (this.triggerBtn) {
                 this.bindEvents();
             }
         };
@@ -195,38 +191,22 @@ class MessageTooltip {
             e.preventDefault();
             this.showTooltip();
         });
-        
-        document.addEventListener('click', (e) => {
-            if (!this.triggerBtn.contains(e.target) && !this.messageTooltip.contains(e.target)) {
-                this.hideTooltip();
-            }
-        });
     }
 
     showTooltip() {
-        if (this.autoHideTimeout) {
-            clearTimeout(this.autoHideTimeout);
-        }
-        
-        this.messageTooltip.classList.add('show');
-        
-        this.autoHideTimeout = setTimeout(() => {
-            this.hideTooltip();
-        }, 1750);
-    }
-
-    hideTooltip() {
-        this.messageTooltip.classList.remove('show');
-        
-        if (this.autoHideTimeout) {
-            clearTimeout(this.autoHideTimeout);
-            this.autoHideTimeout = null;
+        // Используем универсальную систему сообщений
+        if (window.messageSystem) {
+            window.messageSystem.info('Coming soon...', 1750);
+        } else {
+            // Fallback если система сообщений не загружена
+            console.log('Coming soon...');
         }
     }
 }
 
 // Глобальная инициализация
 const messageSystem = new MessageSystem();
+window.messageSystem = messageSystem; // Делаем доступным глобально
 new MessageTooltip();
 
 // Создаем глобальную функцию для замены alert

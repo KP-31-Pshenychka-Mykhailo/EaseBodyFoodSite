@@ -177,7 +177,7 @@ window.proceedToCheckout = function() {
         // Пробуем разные пути
         const tryLoadOrder = (pathIndex) => {
             if (pathIndex >= orderPaths.length) {
-                console.error('Error loading order form: all paths failed');
+        
                 showError('Помилка завантаження форми замовлення');
                 return;
             }
@@ -202,7 +202,7 @@ window.proceedToCheckout = function() {
                     }
                 })
                 .catch(error => {
-                    console.error(`Error loading order form from ${orderPaths[pathIndex]}:`, error);
+    
                     // Пробуем следующий путь
                     tryLoadOrder(pathIndex + 1);
                 });
@@ -279,7 +279,7 @@ function loadUserDataToOrderForm() {
                             setupOrderFormValidation();
                             
                         } catch (e) {
-                            console.error('Ошибка парсинга JSON:', e);
+                
                         }
                     }
                 }

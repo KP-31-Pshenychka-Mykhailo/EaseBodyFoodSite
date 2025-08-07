@@ -359,13 +359,13 @@ async function clearCart() {
 async function loadMenuData() {
   // Проверяем кэш
   if (dataCache.menu) {
-    console.log('Menu data loaded from cache');
+    
     return dataCache.menu;
   }
   
   // Проверяем флаг загрузки
   if (loadingFlags.menu) {
-    console.log('Menu data is already loading, waiting...');
+
     // Ждем завершения текущей загрузки
     while (loadingFlags.menu) {
       await new Promise(resolve => setTimeout(resolve, 50));
@@ -374,7 +374,7 @@ async function loadMenuData() {
   }
   
   loadingFlags.menu = true;
-  console.log('Loading menu data...');
+  
   
   try {
     const result = await addToQueue(async () => {
@@ -390,15 +390,15 @@ async function loadMenuData() {
         // Сначала пробуем путь из констант
         if (window.DATA_PATHS?.MENU) {
           try {
-            console.log('Trying path from constants:', window.DATA_PATHS.MENU);
+    
             const response = await fetch(window.DATA_PATHS.MENU);
             if (response.ok) {
               const menuData = await response.json();
-              console.log('Menu data loaded from constants path');
+              
               return menuData;
             }
           } catch (e) {
-            console.warn('Failed to load from constants path:', e);
+    
             // Пробуем fallback пути
           }
         }
@@ -406,15 +406,15 @@ async function loadMenuData() {
         // Пробуем fallback пути
         for (const path of fallbackPaths) {
           try {
-            console.log('Trying fallback path:', path);
+    
             const response = await fetch(path);
             if (response.ok) {
               const menuData = await response.json();
-              console.log('Menu data loaded from fallback path:', path);
+              
               return menuData;
             }
           } catch (e) {
-            console.warn('Failed to load from path:', path, e);
+    
             continue;
           }
         }
@@ -427,7 +427,7 @@ async function loadMenuData() {
     
     // Сохраняем в кэш
     dataCache.menu = result;
-    console.log('Menu data cached, keys:', Object.keys(result));
+    
     return result;
   } finally {
     loadingFlags.menu = false;
@@ -440,13 +440,13 @@ async function loadMenuData() {
 async function loadDishesData() {
   // Проверяем кэш
   if (dataCache.dishes) {
-    console.log('Dishes data loaded from cache');
+    
     return dataCache.dishes;
   }
   
   // Проверяем флаг загрузки
   if (loadingFlags.dishes) {
-    console.log('Dishes data is already loading, waiting...');
+
     // Ждем завершения текущей загрузки
     while (loadingFlags.dishes) {
       await new Promise(resolve => setTimeout(resolve, 50));
@@ -455,7 +455,7 @@ async function loadDishesData() {
   }
   
   loadingFlags.dishes = true;
-  console.log('Loading dishes data...');
+  
   
   try {
     const result = await addToQueue(async () => {
@@ -471,15 +471,15 @@ async function loadDishesData() {
         // Сначала пробуем путь из констант
         if (window.DATA_PATHS?.DISHES) {
           try {
-            console.log('Trying dishes path from constants:', window.DATA_PATHS.DISHES);
+
             const response = await fetch(window.DATA_PATHS.DISHES);
             if (response.ok) {
               const dishesData = await response.json();
-              console.log('Dishes data loaded from constants path');
+              
               return dishesData;
             }
           } catch (e) {
-            console.warn('Failed to load dishes from constants path:', e);
+    
             // Пробуем fallback пути
           }
         }
@@ -487,15 +487,15 @@ async function loadDishesData() {
         // Пробуем fallback пути
         for (const path of fallbackPaths) {
           try {
-            console.log('Trying dishes fallback path:', path);
+
             const response = await fetch(path);
             if (response.ok) {
               const dishesData = await response.json();
-              console.log('Dishes data loaded from fallback path:', path);
+              
               return dishesData;
             }
           } catch (e) {
-            console.warn('Failed to load dishes from path:', path, e);
+    
             continue;
           }
         }
@@ -508,7 +508,7 @@ async function loadDishesData() {
     
     // Сохраняем в кэш
     dataCache.dishes = result;
-    console.log('Dishes data cached, count:', result.length);
+    
     return result;
   } finally {
     loadingFlags.dishes = false;
@@ -520,20 +520,17 @@ async function loadDishesData() {
  */
 async function loadAllData() {
   try {
-    console.log('loadAllData called');
+
     const [menuData, dishesData] = await Promise.all([
       loadMenuData(),
       loadDishesData()
     ]);
     
-    console.log('loadAllData result:', { 
-      menuDataKeys: Object.keys(menuData), 
-      dishesCount: dishesData.length 
-    });
+    return { menuData, dishesData };
     
     return { menuData, dishesData };
   } catch (error) {
-    console.error('loadAllData error:', error);
+
     throw error;
   }
 }
