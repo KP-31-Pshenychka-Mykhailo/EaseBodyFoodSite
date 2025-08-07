@@ -169,6 +169,8 @@ async function initConstructorPage() {
     const uniqueDays = new Set(selectedDishes.map(dish => dish.day));
     const daysCount = uniqueDays.size;
     
+    console.log(`🔍 Проверяем минимальное количество дней: ${daysCount} из 3`);
+    
     if (daysCount < 3) {
       const remainingDays = 3 - daysCount;
       const dayNames = {
@@ -188,10 +190,12 @@ async function initConstructorPage() {
       
       const selectedDayNames = Array.from(uniqueDays).map(day => dayMap[day]).join(', ');
       
+      console.log(`⚠️ Показываем предупреждение о недостаточном количестве дней`);
       showWarning(`Мінімум потрібно додати страви для 3 днів.\n\nВи додали страви для: ${selectedDayNames}\n\nВам залишилося додати страви ще для ${remainingDays} ${dayNames[remainingDays]}.`);
       return false;
     }
     
+    console.log(`✅ Минимальное количество дней соблюдено`);
     return true;
   }
 
@@ -202,9 +206,11 @@ async function initConstructorPage() {
   function saveTemplateToCart() {
     // Защита от повторного вызова
     if (isSaving) {
+      console.log('🔄 saveTemplateToCart уже выполняется, пропускаем...');
       return;
     }
     
+    console.log('🚀 Начинаем сохранение шаблона в корзину...');
     isSaving = true;
     
     const selectedDishes = getSelectedDishes();
@@ -314,21 +320,18 @@ async function initConstructorPage() {
   // Обработчик для кнопки "Затвердити шаблон"
   const confirmBtn = document.querySelector('.menu-choose-btn');
   if (confirmBtn) {
+    // Удаляем существующие обработчики, чтобы избежать дублирования
+    confirmBtn.removeEventListener('click', saveTemplateToCart);
     confirmBtn.addEventListener('click', saveTemplateToCart);
+    console.log('✅ Обработчик кнопки "Затвердити шаблон" привязан');
+  } else {
+    console.warn('⚠️ Кнопка "Затвердити шаблон" не найдена');
   }
 
   // Загрузка и первичный рендер
   await loadDishes();
   renderCards(currentType);
   updateTotal(); // Обновляем общее количество при загрузке страницы
-}
-
-// Поддержка обеих систем - старой и новой
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initConstructorPage);
-} else {
-  // DOM уже загружен, инициализируем сразу
-  initConstructorPage();
 }
 
 // Экспорт функций для использования в main.js

@@ -239,9 +239,11 @@ window.showSuccess = function(message) {
     messageSystem.success(message);
 };
 
-// Переменная для отслеживания последнего показанного сообщения
+// Переменные для отслеживания последних показанных сообщений
 let lastErrorMessage = '';
 let lastErrorTime = 0;
+let lastWarningMessage = '';
+let lastWarningTime = 0;
 
 window.showError = function(message) {
     const now = Date.now();
@@ -256,6 +258,14 @@ window.showError = function(message) {
 };
 
 window.showWarning = function(message) {
+    const now = Date.now();
+    // Проверяем, не показывали ли мы это же предупреждение в последние 2 секунды
+    if (message === lastWarningMessage && (now - lastWarningTime) < 2000) {
+        return;
+    }
+    
+    lastWarningMessage = message;
+    lastWarningTime = now;
     messageSystem.warning(message);
 };
 
