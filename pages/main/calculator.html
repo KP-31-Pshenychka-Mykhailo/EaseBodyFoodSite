@@ -187,6 +187,11 @@
       <script>
       // Специфичная логика для страницы калькулятора
       document.addEventListener('easybodyAppReady', function() {
+        // Инициализируем калькулятор
+        if (typeof initCalculatorPage === 'function') {
+          initCalculatorPage();
+        }
+        
         // Закрытие модального окна
         var closeBtn = document.getElementById('order-modal-close');
         document.getElementById('order-modal').addEventListener('click', function(e) {

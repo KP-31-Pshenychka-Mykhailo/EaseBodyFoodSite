@@ -122,16 +122,15 @@ h1 {
 }
 
 .input-line {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  position: relative;
   width: 100%;
   height: 2px;
   background: #fff;
   border-radius: 1px;
+  margin-top: 4px;
 }
 
-.input-field input[type="number"]:focus + .input-line {
+.input-field input[type="number"]:focus ~ .input-line {
   background: #fff;
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 }
@@ -139,8 +138,7 @@ h1 {
 .input-checkmark {
   position: absolute;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 8px;
   color: #fff;
   font-size: 1.2em;
   font-weight: bold;
@@ -179,9 +177,11 @@ h1 {
   text-align: left;
   display: none;
   font-weight: 500;
+  min-height: 1.2em;
 }
 
-.input-field.error .error-message {
+.input-field.error .error-message,
+.input-field.has-content .error-message {
   display: block;
 }
 .form-box button {

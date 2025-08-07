@@ -8,10 +8,11 @@ let globalMenuType = 900;
 
 // Функции для показа сообщений только при валидации формы
 function showCalculatorWarning(message) {
-  
   // Используем глобальные функции сообщений если доступны
   if (typeof window.showWarning === 'function') {
     window.showWarning(message);
+  } else if (typeof window.showMessage === 'function') {
+    window.showMessage(message, 'warning');
   } else {
     // Fallback - простое уведомление
     showSimpleMessage(message, 'warning');
@@ -19,10 +20,11 @@ function showCalculatorWarning(message) {
 }
 
 function showCalculatorError(message) {
-  
   // Используем глобальные функции сообщений если доступны
   if (typeof window.showError === 'function') {
     window.showError(message);
+  } else if (typeof window.showMessage === 'function') {
+    window.showMessage(message, 'error');
   } else {
     // Fallback - простое уведомление
     showSimpleMessage(message, 'error');
@@ -66,17 +68,48 @@ function showSimpleMessage(message, type) {
 
 function showStep(step) {
   for (let i = 1; i <= totalSteps; i++) {
-    document.getElementById('form-step-' + i).style.display = (i === step) ? 'flex' : 'none';
-    document.getElementById('step-' + i).classList.toggle('active', i === step);
+    const formStep = document.getElementById('form-step-' + i);
+    const stepIndicator = document.getElementById('step-' + i);
+    
+    if (formStep) {
+      formStep.style.display = (i === step) ? 'flex' : 'none';
+    }
+    
+    if (stepIndicator) {
+      stepIndicator.classList.toggle('active', i === step);
+    }
   }
 }
 
+// Флаг для предотвращения повторного вызова
+let isNextStepExecuting = false;
+let lastStepExecuted = 0;
+
 function nextStep() {
+  // Предотвращаем повторный вызов в течение короткого времени
+  const now = Date.now();
+  if (isNextStepExecuting || (now - lastStepExecuted) < 100) {
+    return;
+  }
   
+  isNextStepExecuting = true;
+  lastStepExecuted = now;
+  
+  // Проверяем, что мы не вышли за пределы допустимых шагов
+  if (currentStep < 1 || currentStep > totalSteps) {
+    isNextStepExecuting = false;
+    return;
+  }
   
   // Validate current step BEFORE moving to next
   const form = document.getElementById('calculator-form');
   const currentBox = document.getElementById('form-step-' + currentStep);
+  
+  // Проверяем, что текущий блок формы существует
+  if (!currentBox) {
+    isNextStepExecuting = false;
+    return;
+  }
   
   let isValid = true; // Флаг валидности
   
@@ -99,6 +132,7 @@ function nextStep() {
       if (!hasSelected) {
         showCalculatorWarning('Будь ласка, оберіть один з варіантів!');
         isValid = false;
+        isNextStepExecuting = false; // Сбрасываем флаг при ошибке
         break;
       }
     }
@@ -109,22 +143,12 @@ function nextStep() {
     const numberInputs = currentBox.querySelectorAll('input[type="number"]');
     
     for (let input of numberInputs) {
-      const inputValue = input.value.toString().trim();
-      
-      // Проверяем что поле заполнено (более точная проверка)
-      if (!inputValue || inputValue === '') {
-        showCalculatorWarning('Будь ласка, заповніть всі поля!');
-        isValid = false;
-        break;
-      }
-      
-      // Проверяем валидность значения
-      const value = parseInt(inputValue);
-      if (isNaN(value) || value < parseInt(input.min) || value > parseInt(input.max)) {
+      if (!validateInput(input)) {
         const fieldName = input.name === 'age' ? 'вік' : 
                          input.name === 'weight' ? 'вага' : 'зріст';
-        showCalculatorError(`Будь ласка, введіть правильне значення ${fieldName} (${input.min}-${input.max})`);
+        showCalculatorWarning(`Будь ласка, заповніть поле "${fieldName}" (${input.min}-${input.max})`);
         isValid = false;
+        isNextStepExecuting = false; // Сбрасываем флаг при ошибке
         break;
       }
     }
@@ -135,6 +159,14 @@ function nextStep() {
     currentStep++;
     showStep(currentStep);
   }
+  
+  // Сбрасываем флаг выполнения
+  isNextStepExecuting = false;
+  
+  // Добавляем небольшую задержку перед сбросом флага
+  setTimeout(() => {
+    isNextStepExecuting = false;
+  }, 200);
 }
 
 function calculateCaloriesLocal({ gender, age, weight, height, activity, goal }) {
@@ -325,68 +357,76 @@ function renderPersonalMenu(menuArr, dishes, day) {
   }, 10);
 }
 
-// --- Модификация обработчика submit ---
-document.getElementById('calculator-form').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  // Simple validation for last step
-  const goalRadios = document.querySelectorAll('input[name="goal"]');
-  let valid = false;
-  for (let input of goalRadios) {
-    if (input.checked) {
-      valid = true;
-      break;
+// Функция для настройки обработчика отправки формы калькулятора
+function setupCalculatorFormSubmit() {
+  const form = document.getElementById('calculator-form');
+  if (!form) return;
+  
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    // Simple validation for last step
+    const goalRadios = document.querySelectorAll('input[name="goal"]');
+    let valid = false;
+    for (let input of goalRadios) {
+      if (input.checked) {
+        valid = true;
+        break;
+      }
     }
-  }
-  if (!valid) {
-    showWarning('Будь ласка, оберіть мету!');
-    return;
-  }
-  // Collect data
-  const data = new FormData(this);
-  const gender = data.get('gender');
-  const age = Number(data.get('age'));
-  const weight = Number(data.get('weight'));
-  const height = Number(data.get('height'));
-  const activity = data.get('activity');
-  const goal = data.get('goal');
-  // Расчёт калорий
-      const calories = calculateCaloriesLocal({ gender, age, weight, height, activity, goal });
-  let goalText = '';
-  if (goal === 'lose') goalText = 'для схуднення';
-  else if (goal === 'gain') goalText = 'для набору ваги';
-  else goalText = 'для підтримки форми';
-  document.getElementById('result').style.display = 'block';
-  document.getElementById('result').innerText = `Ваша приблизна добова норма калорій ${goalText}: ${calories} ккал`;
-  this.style.display = 'none';
+    if (!valid) {
+      showCalculatorWarning('Будь ласка, оберіть мету!');
+      return;
+    }
+    // Collect data
+    const data = new FormData(this);
+    const gender = data.get('gender');
+    const age = Number(data.get('age'));
+    const weight = Number(data.get('weight'));
+    const height = Number(data.get('height'));
+    const activity = data.get('activity');
+    const goal = data.get('goal');
+    // Расчёт калорий
+    const calories = calculateCaloriesLocal({ gender, age, weight, height, activity, goal });
+    let goalText = '';
+    if (goal === 'lose') goalText = 'для схуднення';
+    else if (goal === 'gain') goalText = 'для набору ваги';
+    else goalText = 'для підтримки форми';
+    document.getElementById('result').style.display = 'block';
+    document.getElementById('result').innerText = `Ваша приблизна добова норма калорій ${goalText}: ${calories} ккал`;
+    this.style.display = 'none';
 
-  // --- Динамическое меню ---
-      globalMenuType = getClosestMenuTypeLocal(calories);
-  
-  const { menuData, dishesData } = await loadCalculatorData();
-  globalMenuData = menuData;
-  globalDishesData = dishesData;
-  let currentDay = 'monday';
-  
-  // Проверяем, есть ли данные для выбранного типа меню
-  if (!globalMenuData[globalMenuType]) {
-    return;
-  }
-  
-  // Первичный рендер
-  renderPersonalMenu(globalMenuData[globalMenuType], globalDishesData, currentDay);
-  // Показать секцию
-  var dietSection = document.getElementById('personal-diet-section');
-  if (dietSection) {
-    dietSection.style.display = 'block';
-    setTimeout(function() {
-      dietSection.style.opacity = 1;
-      dietSection.style.transform = 'translateY(0)';
-    }, 50);
-  }
-});
-
-// Initial step
-showStep(currentStep);
+    // --- Динамическое меню ---
+    globalMenuType = getClosestMenuTypeLocal(calories);
+    
+    const { menuData, dishesData } = await loadCalculatorData();
+    globalMenuData = menuData;
+    globalDishesData = dishesData;
+    let currentDay = 'monday';
+    
+    // Проверяем, есть ли данные для выбранного типа меню
+    if (!globalMenuData[globalMenuType]) {
+      return;
+    }
+    
+    // Первичный рендер
+    renderPersonalMenu(globalMenuData[globalMenuType], globalDishesData, currentDay);
+    // Показать секцию с анимацией
+    var dietSection = document.getElementById('personal-diet-section');
+    if (dietSection) {
+      // Настраиваем начальное состояние для анимации
+      dietSection.style.opacity = 0;
+      dietSection.style.transform = 'translateY(40px)';
+      dietSection.style.transition = 'opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1)';
+      dietSection.style.display = 'block';
+      
+      // Запускаем анимацию
+      setTimeout(function() {
+        dietSection.style.opacity = 1;
+        dietSection.style.transform = 'translateY(0)';
+      }, 50);
+    }
+  });
+}
 
 // Функция для добавления галочки к полям ввода
 function addCheckmarkToInput(input) {
@@ -415,18 +455,27 @@ function setupInputValidation() {
   inputFields.forEach(input => {
     // Проверяем при загрузке страницы
     addCheckmarkToInput(input);
-    validateInput(input);
     
-    // Проверяем при вводе
+    // При вводе проверяем валидность и показываем ошибки в реальном времени
     input.addEventListener('input', function() {
       addCheckmarkToInput(this);
-      validateInput(this);
+      if (currentStep === 3) {
+        validateInput(this);
+      }
     });
     
-    // Проверяем при потере фокуса
+    // Валидация при потере фокуса только на шаге 3
     input.addEventListener('blur', function() {
-      addCheckmarkToInput(this);
-      validateInput(this);
+      if (currentStep === 3) {
+        validateInput(this);
+      }
+    });
+    
+    // Валидация при получении фокуса (если поле уже заполнено)
+    input.addEventListener('focus', function() {
+      if (currentStep === 3 && this.value.trim() !== '') {
+        validateInput(this);
+      }
     });
   });
 }
@@ -435,7 +484,6 @@ function setupInputValidation() {
 function validateInput(input) {
   const inputField = input.closest('.input-field');
   const errorElement = inputField?.querySelector('.error-message');
-  const value = parseInt(input.value);
   
   // Убираем класс ошибки по умолчанию
   if (inputField) {
@@ -445,46 +493,77 @@ function validateInput(input) {
     errorElement.textContent = '';
   }
   
-  // Проверяем минимальные значения
-  if (input.value !== '' && value < parseInt(input.min)) {
+  // Если поле пустое, убираем ошибки и подсказки
+  if (!input.value || input.value.trim() === '') {
+    // Убираем ошибки и класс has-content для пустых полей
     if (inputField) {
-      inputField.classList.add('error');
+      inputField.classList.remove('error', 'has-content');
     }
-    
     if (errorElement) {
-      let errorText = '';
-      if (input.name === 'age') {
-        errorText = `Мінімальний вік: ${input.min} років`;
-      } else if (input.name === 'weight') {
-        errorText = `Мінімальна вага: ${input.min} кг`;
-      } else if (input.name === 'height') {
-        errorText = `Мінімальний зріст: ${input.min} см`;
-      }
-      
-      errorElement.textContent = errorText;
+      errorElement.textContent = '';
     }
     return false;
   }
   
-  // Проверяем максимальные значения
-  if (input.value !== '' && value > parseInt(input.max)) {
+  const value = parseInt(input.value);
+  
+  // Добавляем класс has-content, так как поле не пустое
+  if (inputField) {
+    inputField.classList.add('has-content');
+  }
+  
+  // Проверяем, что значение является числом
+  if (isNaN(value)) {
     if (inputField) {
       inputField.classList.add('error');
     }
-    
+    if (errorElement) {
+      errorElement.textContent = 'Будь ласка, введіть число';
+      errorElement.style.color = '#fff'; // Белый цвет для ошибок
+    }
+    return false;
+  }
+  
+  // Проверяем минимальные и максимальные значения
+  if (value < parseInt(input.min) || value > parseInt(input.max)) {
+    if (inputField) {
+      inputField.classList.add('error');
+    }
     if (errorElement) {
       let errorText = '';
       if (input.name === 'age') {
-        errorText = `Максимальний вік: ${input.max} років`;
+        errorText = `Допустимий діапазон віку: ${input.min} - ${input.max}`;
       } else if (input.name === 'weight') {
-        errorText = `Максимальна вага: ${input.max} кг`;
+        errorText = `Допустимий діапазон ваги: ${input.min} - ${input.max}`;
       } else if (input.name === 'height') {
-        errorText = `Максимальний зріст: ${input.max} см`;
+        errorText = `Допустимий діапазон зросту: ${input.min} - ${input.max}`;
       }
-      
       errorElement.textContent = errorText;
+      errorElement.style.color = '#fff'; // Белый цвет для ошибок
     }
     return false;
+  }
+  
+  // Если значение корректное, показываем подсказку о диапазоне
+  if (errorElement) {
+    let hintText = '';
+    if (input.name === 'age') {
+      hintText = `Введіть вік від ${input.min} до ${input.max} років`;
+    } else if (input.name === 'weight') {
+      hintText = `Введіть вагу від ${input.min} до ${input.max} кг`;
+    } else if (input.name === 'height') {
+      hintText = `Введіть зріст від ${input.min} до ${input.max} см`;
+    }
+    errorElement.textContent = hintText;
+    errorElement.style.color = '#fff';
+  }
+  
+  // Если все проверки пройдены, убираем все ошибки
+  if (inputField) {
+    inputField.classList.remove('error');
+  }
+  if (errorElement) {
+    errorElement.textContent = '';
   }
   
   return true;
@@ -500,21 +579,22 @@ function setupDietSectionAnimation() {
     dietSection.style.transition = 'opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1)';
   }
 
-  var form = document.getElementById('calculator-form');
-  var result = document.getElementById('result');
-  if (form) {
-    form.addEventListener('submit', function(e) {
-      setTimeout(function() {
-        if (result && result.style.display === 'block' && dietSection) {
-          dietSection.style.display = 'block';
-          setTimeout(function() {
-            dietSection.style.opacity = 1;
-            dietSection.style.transform = 'translateY(0)';
-          }, 50);
-        }
-      }, 100);
-    });
-  }
+  // Убираем дублирующийся обработчик submit, так как он уже настроен в setupCalculatorFormSubmit
+  // var form = document.getElementById('calculator-form');
+  // var result = document.getElementById('result');
+  // if (form) {
+  //   form.addEventListener('submit', function(e) {
+  //     setTimeout(function() {
+  //       if (result && result.style.display === 'block' && dietSection) {
+  //         dietSection.style.display = 'block';
+  //         setTimeout(function() {
+  //           dietSection.style.opacity = 1;
+  //           dietSection.style.transform = 'translateY(0)';
+  //         }, 50);
+  //       }
+  //     }, 100);
+  //   });
+  // }
 
   // --- Карусель и дни недели ---
   // Логика карусели перенесена в carousel.js
@@ -665,7 +745,6 @@ function setupDietSectionAnimation() {
   if (orderBtn) {
     // Удаляем существующие обработчики, чтобы избежать дублирования
     orderBtn.removeEventListener('click', saveCalculatorTemplateToCart);
-    orderBtn.removeEventListener('click', openOrderForm);
     
     // Добавляем новый обработчик, который сначала сохраняет в корзину, а потом открывает форму заказа
     orderBtn.addEventListener('click', function() {
@@ -673,7 +752,7 @@ function setupDietSectionAnimation() {
       const selectedDishes = getSelectedDishesFromCalculator();
       
       if (selectedDishes.length === 0) {
-        showWarning('Будь ласка, залиште хоча б одну страву в меню');
+        showCalculatorWarning('Будь ласка, залиште хоча б одну страву в меню');
         return;
       }
 
@@ -776,6 +855,10 @@ function initCalculatorPage() {
   setupInputValidation();
   setupDietSectionAnimation();
   setupNextStepButtons();
+  setupCalculatorFormSubmit();
+  
+  // Показываем первый шаг
+  showStep(currentStep);
   
   // Вызываем основную инициализацию
   if (typeof initializeCalculator === 'function') {
@@ -786,11 +869,18 @@ function initCalculatorPage() {
 // Настройка кнопок "Далі"
 function setupNextStepButtons() {
   const nextStepButtons = document.querySelectorAll('.next-step-btn');
-  nextStepButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      if (typeof nextStep === 'function') {
-        nextStep();
-      }
+  
+  nextStepButtons.forEach((button, index) => {
+    // Удаляем все существующие обработчики клика
+    const newButton = button.cloneNode(true);
+    button.parentNode.replaceChild(newButton, button);
+    
+    // Добавляем новый обработчик
+    newButton.addEventListener('click', function(e) {
+      e.preventDefault(); // Предотвращаем стандартное поведение
+      e.stopPropagation(); // Останавливаем всплытие события
+      // Вызываем функцию nextStep напрямую, так как она определена в этом же файле
+      nextStep();
     });
   });
 }
@@ -810,6 +900,7 @@ function clearCart() {
 window.nextStep = nextStep;
 window.clearCart = clearCart;
 window.initCalculatorPage = initCalculatorPage;
+window.showStep = showStep;
 
 // Импорт функций из других модулей
 window.showWarning = window.showWarning || function(message) {
