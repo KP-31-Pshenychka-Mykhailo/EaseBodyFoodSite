@@ -374,7 +374,7 @@ function loadCart() {
                 <div class="profile-cart-empty-title">Упс! Кошик порожній</div>
                 <div class="profile-cart-empty-desc">Саме час для правильного харчування!</div>
                 <div class="profile-cart-btns">
-                    <a href="/index.html" class="profile-cart-btn">Повернутися на головну</a>
+                    <a href="index.html" class="profile-cart-btn">Повернутися на головну</a>
                 </div>
             </div>
         `;
@@ -426,7 +426,7 @@ function loadCart() {
             <div class="cart-total">Загалом у замовленні: ${macros.protein} Білки ${macros.fat} Жири ${macros.carbs} Вуглеводи, ${totalCalories} ккал.</div>
             <div class="cart-actions">
                 <button class="checkout-btn" onclick="proceedToCheckout()">Оформити замовлення</button>
-                <a href="/index.html" class="continue-shopping-btn">Повернутися на головну</a>
+                <a href="index.html" class="continue-shopping-btn">Повернутися на головну</a>
             </div>
         </div>
     `;
