@@ -256,9 +256,12 @@ async function initStandartPage() {
         );
         
         if (existingDishIndex !== -1) {
-          cart[existingDishIndex].quantity += dish.quantity;
+          cart[existingDishIndex].quantity += 1;
         } else {
-          cart.push(dish);
+          cart.push({
+            ...dish,
+            quantity: 1
+          });
         }
       });
 
@@ -283,6 +286,8 @@ async function initStandartPage() {
   // Обработчик для кнопки "Обрати це меню"
   const chooseBtn = document.querySelector('.menu-choose-btn');
   if (chooseBtn) {
+    // Удаляем существующие обработчики, чтобы избежать дублирования
+    chooseBtn.removeEventListener('click', saveTemplateToCart);
     chooseBtn.addEventListener('click', saveTemplateToCart);
   }
 
@@ -311,14 +316,6 @@ async function initStandartPage() {
   // Загрузка данных и первичный рендер
   await loadData();
   renderMenuCards();
-}
-
-// Поддержка обеих систем - старой и новой
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initStandartPage);
-} else {
-  // DOM уже загружен, инициализируем сразу
-  initStandartPage();
 }
 
 // Экспорт функций для использования в main.js

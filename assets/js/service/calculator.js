@@ -633,9 +633,12 @@ function setupDietSectionAnimation() {
         );
         
         if (existingDishIndex !== -1) {
-          cart[existingDishIndex].quantity += dish.quantity;
+          cart[existingDishIndex].quantity += 1;
         } else {
-          cart.push(dish);
+          cart.push({
+            ...dish,
+            quantity: 1
+          });
         }
       });
 
@@ -660,7 +663,64 @@ function setupDietSectionAnimation() {
   // Обработчик для кнопки "Замовити це меню"
   const orderBtn = document.querySelector('.menu-choose-btn-alt');
   if (orderBtn) {
-    orderBtn.addEventListener('click', saveCalculatorTemplateToCart);
+    // Удаляем существующие обработчики, чтобы избежать дублирования
+    orderBtn.removeEventListener('click', saveCalculatorTemplateToCart);
+    orderBtn.removeEventListener('click', openOrderForm);
+    
+    // Добавляем новый обработчик, который сначала сохраняет в корзину, а потом открывает форму заказа
+    orderBtn.addEventListener('click', function() {
+      // Сначала сохраняем выбранные блюда в корзину
+      const selectedDishes = getSelectedDishesFromCalculator();
+      
+      if (selectedDishes.length === 0) {
+        showWarning('Будь ласка, залиште хоча б одну страву в меню');
+        return;
+      }
+
+      // Используем CartManager для добавления блюд в корзину
+      if (window.cartManager) {
+        selectedDishes.forEach(dish => {
+          window.cartManager.addItem(dish);
+        });
+      } else {
+        // Fallback для случая, если CartManager не загружен
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        
+        selectedDishes.forEach(dish => {
+          const existingDishIndex = cart.findIndex(item => 
+            item.id === dish.id && item.day === dish.day
+          );
+          
+          if (existingDishIndex !== -1) {
+            cart[existingDishIndex].quantity += 1;
+          } else {
+            cart.push({
+              ...dish,
+              quantity: 1
+            });
+          }
+        });
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+      }
+      
+      // Теперь открываем форму заказа
+      if (typeof window.proceedToCheckout === 'function') {
+        window.proceedToCheckout();
+      } else {
+        // Fallback - перенаправляем в корзину
+        const path = window.location.pathname;
+        let cartPath;
+        
+        if (path.includes('/pages/main/')) {
+          cartPath = 'cart.html';
+        } else {
+          cartPath = 'pages/main/cart.html';
+        }
+        
+        window.location.href = cartPath;
+      }
+    });
   }
 
   // Переключение дней недели для персонального меню
@@ -750,3 +810,14 @@ function clearCart() {
 window.nextStep = nextStep;
 window.clearCart = clearCart;
 window.initCalculatorPage = initCalculatorPage;
+
+// Импорт функций из других модулей
+window.showWarning = window.showWarning || function(message) {
+    if (typeof window.showWarning === 'function') {
+        window.showWarning(message);
+    } else if (typeof window.showMessage === 'function') {
+        window.showMessage(message, 'warning');
+    } else {
+        console.warn(message);
+    }
+};

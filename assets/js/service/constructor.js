@@ -254,9 +254,12 @@ async function initConstructorPage() {
         );
         
         if (existingDishIndex !== -1) {
-          cart[existingDishIndex].quantity += dish.quantity;
+          cart[existingDishIndex].quantity += 1;
         } else {
-          cart.push(dish);
+          cart.push({
+            ...dish,
+            quantity: 1
+          });
         }
       });
 
@@ -323,8 +326,7 @@ async function initConstructorPage() {
     // Удаляем существующие обработчики, чтобы избежать дублирования
     confirmBtn.removeEventListener('click', saveTemplateToCart);
     confirmBtn.addEventListener('click', saveTemplateToCart);
-    
-      }
+  }
 
   // Загрузка и первичный рендер
   await loadDishes();

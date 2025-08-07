@@ -21,9 +21,14 @@ class CartManager {
         );
 
         if (existingItemIndex !== -1) {
-            this.cart[existingItemIndex].quantity += item.quantity;
+            // Если товар уже есть, увеличиваем количество только на 1
+            this.cart[existingItemIndex].quantity += 1;
         } else {
-            this.cart.push(item);
+            // Если товара нет, добавляем с количеством 1
+            this.cart.push({
+                ...item,
+                quantity: 1
+            });
         }
 
         this.saveCart();
@@ -197,6 +202,21 @@ window.proceedToCheckout = function() {
                         document.getElementById('order-modal-body').innerHTML = mainMatch[0];
                         modal.style.display = 'flex';
                         
+                        // Добавляем обработчик закрытия модального окна
+                        const closeBtn = document.getElementById('order-modal-close');
+                        if (closeBtn) {
+                            closeBtn.addEventListener('click', function() {
+                                modal.style.display = 'none';
+                            });
+                        }
+                        
+                        // Закрытие по клику вне модального окна
+                        modal.addEventListener('click', function(e) {
+                            if (e.target === modal) {
+                                modal.style.display = 'none';
+                            }
+                        });
+                        
                         // После загрузки формы загружаем данные пользователя
                         loadUserDataToOrderForm();
                     }
@@ -222,8 +242,9 @@ function loadUserDataToOrderForm() {
         return;
     }
     
-    // Если пользователь не зарегистрирован, ничего не делаем
+    // Если пользователь не зарегистрирован, настраиваем только валидацию формы
     if (!userId) {
+        setupOrderFormValidation();
         return;
     }
     
@@ -279,8 +300,11 @@ function loadUserDataToOrderForm() {
                             setupOrderFormValidation();
                             
                         } catch (e) {
-                
+                            setupOrderFormValidation();
                         }
+                    } else {
+                        // Если запрос не успешен, все равно настраиваем валидацию
+                        setupOrderFormValidation();
                     }
                 }
             };
@@ -288,6 +312,7 @@ function loadUserDataToOrderForm() {
         })
         .catch(err => {
             // Ошибка загрузки настроек
+            setupOrderFormValidation();
         });
 }
 
@@ -300,7 +325,6 @@ function setupOrderFormValidation() {
         {input: 'order-firstname', error: 'order-firstname-error'},
         {input: 'order-phone', error: 'order-phone-error'},
         {input: 'order-email', error: 'order-email-error'},
-        {input: 'order-social', error: 'order-social-error'},
         {input: 'order-street', error: 'order-street-error'},
         {input: 'order-house', error: 'order-house-error'},
         {input: 'order-floor', error: 'order-floor-error'},
@@ -331,6 +355,8 @@ function setupOrderFormValidation() {
     const orderForm = document.querySelector('.order-form');
     if (orderForm) {
         orderForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Предотвращаем стандартную отправку формы
+            
             let valid = true;
             requiredFields.forEach(({input, error}) => {
                 const inputEl = document.getElementById(input);
@@ -340,13 +366,67 @@ function setupOrderFormValidation() {
                     valid = false;
                 }
             });
+            
             if (!valid) {
-                e.preventDefault();
-                showWarning('Будь ласка, заповніть всі обов\'язкові поля');
-            } else {
-                showSuccess('Замовлення успішно оформлено!');
-                // Здесь можно добавить логику отправки заказа на сервер
+                if (typeof showWarning === 'function') {
+                    showWarning('Будь ласка, заповніть всі обов\'язкові поля');
+                } else if (typeof window.showWarning === 'function') {
+                    window.showWarning('Будь ласка, заповніть всі обов\'язкові поля');
+                } else {
+                    // Fallback если функция showWarning недоступна
+                    alert('Будь ласка, заповніть всі обов\'язкові поля');
+                }
+                return;
             }
+            
+            // Если форма валидна, выполняем действия:
+            
+            // 1. Закрываем модальное окно заказа
+            const orderModal = document.getElementById('order-modal');
+            if (orderModal) {
+                orderModal.style.display = 'none';
+            } else {
+                // Если модальное окно не найдено, попробуем найти его по классу
+                const modalElements = document.querySelectorAll('[id*="modal"]');
+                modalElements.forEach(modal => {
+                    if (modal.style.display === 'flex' || modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // 2. Очищаем корзину
+            if (window.cartManager) {
+                window.cartManager.clearCart();
+            }
+            
+            // 3. Переходим на главную страницу
+            const currentPath = window.location.pathname;
+            let homePath = '/index.html';
+            
+            // Определяем правильный путь к главной странице
+            if (currentPath.includes('/pages/main/')) {
+                homePath = '../../index.html';
+            } else if (currentPath.includes('/pages/partials/')) {
+                homePath = '../index.html';
+            } else if (currentPath.includes('/pages/')) {
+                homePath = '../index.html';
+            }
+            
+            // 4. Показываем сообщение об успешном оформлении заказа
+            if (typeof showSuccess === 'function') {
+                showSuccess('Замовлення успішно оформлено!');
+            } else if (typeof window.showSuccess === 'function') {
+                window.showSuccess('Замовлення успішно оформлено!');
+            } else {
+                // Fallback если функция showSuccess недоступна
+                alert('Замовлення успішно оформлено!');
+            }
+            
+            // 5. Переходим на главную страницу с небольшой задержкой
+            setTimeout(() => {
+                window.location.href = homePath;
+            }, 1500); // Задержка 1.5 секунды, чтобы пользователь увидел сообщение
         });
     }
 }
@@ -471,13 +551,7 @@ function initCartPage() {
     window.cartManager = new CartManager();
 }
 
-// Поддержка обеих систем - старой и новой
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initCartPage);
-} else {
-  // DOM уже загружен, инициализируем сразу
-  initCartPage();
-}
+// Инициализация теперь происходит через main.js
 
 // Настройка кнопок очистки корзины
 function setupClearCartButtons() {
@@ -504,3 +578,5 @@ function setupClearCartButtons() {
 // Экспорт функций для использования в main.js
 window.initCartPage = initCartPage;
 window.setupClearCartButtons = setupClearCartButtons;
+window.proceedToCheckout = proceedToCheckout;
+window.clearCart = clearCart;
