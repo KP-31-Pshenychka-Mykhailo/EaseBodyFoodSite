@@ -65,7 +65,10 @@ window.initAuth = initAuth;
 window.showRegisterModalIfNotAuth = function() {
   if (!window.isUserAuthenticated()) {
     if (window.showRegisterModal) {
-      window.showRegisterModal();
+      // Добавляем небольшую задержку, чтобы избежать множественных вызовов
+      setTimeout(() => {
+        window.showRegisterModal();
+      }, 10);
     }
     return true;
   }

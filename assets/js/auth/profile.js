@@ -1,3 +1,6 @@
+// Переменная для отслеживания показа сообщения об ошибке
+let authErrorShown = false;
+
 // Переключение вкладок профиля
 async function initProfilePage() {
     // Инициализация переключения вкладок
@@ -16,7 +19,8 @@ async function initProfilePage() {
     initModalHandlers();
     
     // Загружаем корзину при загрузке страницы, если активна вкладка корзины
-    if (document.querySelector('.profile-tab.active').getAttribute('data-tab') === 'cart') {
+    const activeTab = document.querySelector('.profile-tab.active');
+    if (activeTab && activeTab.getAttribute('data-tab') === 'cart') {
         loadCart();
     }
     
@@ -27,18 +31,34 @@ async function initProfilePage() {
 
     // Инициализация избранных блюд
     await initFavorites();
-});
+}
 
 function initProfileTabs() {
-    document.querySelectorAll('.profile-tab').forEach(function(tabBtn) {
+    const tabs = document.querySelectorAll('.profile-tab');
+    
+    tabs.forEach(function(tabBtn) {
         tabBtn.addEventListener('click', function() {
-            document.querySelectorAll('.profile-tab').forEach(function(btn){btn.classList.remove('active');});
+            // Убираем активный класс со всех вкладок
+            document.querySelectorAll('.profile-tab').forEach(function(btn){
+                btn.classList.remove('active');
+            });
+            
+            // Добавляем активный класс к текущей вкладке
             tabBtn.classList.add('active');
+            
+            // Получаем название вкладки
             var tab = tabBtn.getAttribute('data-tab');
+            
+            // Скрываем все контенты вкладок
             document.querySelectorAll('.profile-tab-content').forEach(function(content){
                 content.style.display = 'none';
             });
-            document.getElementById('tab-' + tab).style.display = 'block';
+            
+            // Показываем нужный контент
+            const targetContent = document.getElementById('tab-' + tab);
+            if (targetContent) {
+                targetContent.style.display = 'block';
+            }
             
             // Если открыта вкладка корзины, загружаем корзину
             if (tab === 'cart') {
@@ -46,7 +66,6 @@ function initProfileTabs() {
             }
             // Если открыта вкладка избранных, обновляем избранные
             if (tab === 'favorites') {
-                // Вызываем функцию renderFavorites из profile-favorites.js
                 if (typeof renderFavorites === 'function') {
                     renderFavorites();
                 }
@@ -229,7 +248,10 @@ function loadProfileData() {
             
             // Проверяем, что userId существует
             if (!userId) {
-                showError('Помилка: користувач не авторизований. Будь ласка, увійдіть в систему.');
+                if (!authErrorShown) {
+                    showError('Помилка: користувач не авторизований. Будь ласка, увійдіть в систему.');
+                    authErrorShown = true;
+                }
                 return;
             }
             
@@ -332,7 +354,7 @@ function createFavoriteCard(dish) {
     
     return `
         <div class="cart-item" data-dish-id="${dish.id}">
-                            <img src="${dish.img || 'data/img/food1.jpg'}" alt="${dish.title}" class="cart-item-img">
+                            <img src="${window.getDishImage ? window.getDishImage(dish) : (dish.img || 'data/img/food1.jpg')}" alt="${dish.title}" class="cart-item-img">
             <div class="cart-item-content">
                 <div class="cart-item-title">${dish.title}</div>
                 <div class="cart-item-macros">Б: ${dish.p}г Ж: ${dish.f}г В: ${dish.c}г, ${calories} ккал</div>

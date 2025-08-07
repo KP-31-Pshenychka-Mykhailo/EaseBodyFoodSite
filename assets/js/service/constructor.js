@@ -195,17 +195,29 @@ async function initConstructorPage() {
     return true;
   }
 
+  // Переменная для отслеживания состояния сохранения
+  let isSaving = false;
+
   // Функция для сохранения шаблона в корзину
   function saveTemplateToCart() {
+    // Защита от повторного вызова
+    if (isSaving) {
+      return;
+    }
+    
+    isSaving = true;
+    
     const selectedDishes = getSelectedDishes();
     
     if (selectedDishes.length === 0) {
       showWarning('Будь ласка, додайте хоча б одну страву до меню, натиснувши на "+" біля страви');
+      isSaving = false;
       return;
     }
 
     // Проверяем минимальное количество дней
     if (!checkMinimumDays(selectedDishes)) {
+      isSaving = false;
       return;
     }
 
@@ -221,6 +233,7 @@ async function initConstructorPage() {
         
         if (savedCart.length === 0) {
           showError('Помилка: дані не збереглися в корзині. Спробуйте ще раз.');
+          isSaving = false;
           return;
         }
       }, 100);
@@ -246,6 +259,9 @@ async function initConstructorPage() {
     
     // Показываем уведомление об успешном добавлении
     showSuccess(`Успішно додано ${selectedDishes.length} страв до корзини!`);
+    
+    // Сбрасываем флаг перед перенаправлением
+    isSaving = false;
     
     // Перенаправляем в корзину с правильным путем
     const path = window.location.pathname;

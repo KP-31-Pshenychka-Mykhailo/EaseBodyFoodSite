@@ -239,7 +239,19 @@ window.showSuccess = function(message) {
     messageSystem.success(message);
 };
 
+// Переменная для отслеживания последнего показанного сообщения
+let lastErrorMessage = '';
+let lastErrorTime = 0;
+
 window.showError = function(message) {
+    const now = Date.now();
+    // Проверяем, не показывали ли мы это же сообщение в последние 2 секунды
+    if (message === lastErrorMessage && (now - lastErrorTime) < 2000) {
+        return;
+    }
+    
+    lastErrorMessage = message;
+    lastErrorTime = now;
     messageSystem.error(message);
 };
 

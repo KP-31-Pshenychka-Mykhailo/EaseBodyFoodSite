@@ -171,16 +171,29 @@ function getClosestMenuTypeLocal(calories) {
 
 async function loadCalculatorData() {
   try {
+    // Определяем правильный путь к данным в зависимости от текущего расположения
+    const path = window.location.pathname;
+    let dataPath;
+    
+    if (path.includes('/pages/main/')) {
+      // Мы в подпапке pages/main/
+      dataPath = '../../data/datafiles/';
+    } else {
+      // Мы в корне сайта
+      dataPath = 'data/datafiles/';
+    }
+    
     // Загружаем данные меню
-            const menuResponse = await fetch('data/datafiles/menu.json');
+    const menuResponse = await fetch(dataPath + 'menu.json');
     const menuData = await menuResponse.json();
     
     // Загружаем данные блюд
-            const dishesResponse = await fetch('data/datafiles/dishes.json');
+    const dishesResponse = await fetch(dataPath + 'dishes.json');
     const dishesData = await dishesResponse.json();
     
     return { menuData, dishesData };
   } catch (error) {
+    console.error('Ошибка загрузки данных калькулятора:', error);
     return { menuData: {}, dishesData: [] };
   }
 }
@@ -225,7 +238,7 @@ function createMenuCardAltLocal(dish, mealType) {
   return `
     <div class="menu-card-alt" data-dish-id="${dish.id}">
       <div class="menu-card-img-wrap-alt">
-                        <img src="${dish.img || 'data/img/food1.jpg'}" alt="${dish.title}" class="menu-card-img">
+                        <img src="${window.getDishImage ? window.getDishImage(dish) : (dish.img || 'data/img/food1.jpg')}" alt="${dish.title}" class="menu-card-img">
         <div class="gallery-card-icons-alt">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="gallery-heart-alt icon-heart">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -247,6 +260,7 @@ function renderPersonalMenu(menuArr, dishes, day) {
   const menuTotal = document.querySelector('.menu-total-alt');
   
   if (!menuSlider) {
+    console.error('❌ Элемент dietCards не найден');
     return;
   }
   
@@ -684,24 +698,21 @@ function setupDietSectionAnimation() {
   // Инициализация: загружаем данные при загрузке страницы
   async function initializeCalculator() {
     try {
-      // Проверяем, что все необходимые функции загружены
-      if (!window.loadAllData) {
-        console.error('loadAllData не найдена');
-        return;
-      }
+      console.log('🚀 Инициализация калькулятора...');
       
       const { menuData, dishesData } = await loadCalculatorData();
+      console.log('📊 Загружены данные:', { 
+        menuKeys: Object.keys(menuData), 
+        dishesCount: dishesData.length 
+      });
+      
       globalMenuData = menuData;
       globalDishesData = dishesData;
       
-      // Если есть данные, рендерим первое меню
-      if (Object.keys(menuData).length > 0 && dishesData.length > 0) {
-        const firstMenuType = Object.keys(menuData)[0];
-        globalMenuType = parseInt(firstMenuType);
-        renderPersonalMenu(menuData[firstMenuType], dishesData, 'monday');
-      }
+      // Не рендерим карточки сразу - они будут показаны после заполнения формы
+      console.log('✅ Данные загружены, готовы к использованию');
     } catch (error) {
-      // Ошибка инициализации
+      console.error('❌ Ошибка инициализации калькулятора:', error);
     }
   }
 

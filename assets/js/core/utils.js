@@ -84,11 +84,44 @@ function getDishImage(dish, fallbackPath = null) {
   if (!dish) {
     console.warn('getDishImage called with null dish');
     const fallback = fallbackPath || window.FALLBACK_IMAGE || 'data/img/food1.jpg';
-    return fallback;
+    return getCorrectImagePath(fallback);
   }
-  console.log('getDishImage called with dish:', dish);
+  
   const fallback = fallbackPath || window.FALLBACK_IMAGE || 'data/img/food1.jpg';
-  return dish.img || fallback;
+  const imagePath = dish.img || fallback;
+  const correctedPath = getCorrectImagePath(imagePath);
+  
+  return correctedPath;
+}
+
+/**
+ * Получение правильного пути к изображению в зависимости от текущего расположения
+ */
+function getCorrectImagePath(imagePath) {
+  if (!imagePath) return '';
+  
+  // Если путь уже абсолютный или начинается с http, возвращаем как есть
+  if (imagePath.startsWith('http') || imagePath.startsWith('/')) {
+    return imagePath;
+  }
+  
+  // Определяем правильный путь в зависимости от текущего расположения
+  const path = window.location.pathname;
+  let result = imagePath;
+  
+  if (path.includes('/pages/main/')) {
+    // Мы в подпапке pages/main/
+    if (imagePath.startsWith('data/')) {
+      result = '../../' + imagePath;
+    }
+  } else {
+    // Мы в корне сайта
+    if (imagePath.startsWith('data/')) {
+      result = imagePath;
+    }
+  }
+  
+  return result;
 }
 
 // ===== ФОРМАТИРОВАНИЕ =====
@@ -446,6 +479,7 @@ window.getUserName = getUserName;
 window.isUserAuthenticated = isUserAuthenticated;
 window.truncateUsername = truncateUsername;
 window.getDishImage = getDishImage;
+window.getCorrectImagePath = getCorrectImagePath;
 window.formatMacros = formatMacros;
 window.formatCalories = formatCalories;
 window.formatPrice = formatPrice;
