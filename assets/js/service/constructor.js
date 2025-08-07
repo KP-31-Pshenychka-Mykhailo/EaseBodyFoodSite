@@ -248,7 +248,18 @@ async function initConstructorPage() {
     showSuccess(`Успішно додано ${selectedDishes.length} страв до корзини!`);
     
     // Перенаправляем в корзину с правильным путем
-    window.location.href = '/pages/main/cart.html';
+    const path = window.location.pathname;
+    let cartPath;
+    
+    if (path.includes('/pages/main/')) {
+      // Мы в подпапке pages/main/
+      cartPath = 'cart.html';
+    } else {
+      // Мы в корне сайта
+      cartPath = 'pages/main/cart.html';
+    }
+    
+    window.location.href = cartPath;
   }
 
   // Обработчики для вкладок

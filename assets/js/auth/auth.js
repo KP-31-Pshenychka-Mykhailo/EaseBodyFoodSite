@@ -20,7 +20,19 @@ function setupLoginBtn() {
   window.addEventListenerSafe('#loginBtn', 'click', function(e) {
     e.preventDefault();
     if (window.isUserAuthenticated()) {
-      window.location.href = '/pages/main/profile.html';
+      // Перенаправляем в профиль с правильным путем
+      const path = window.location.pathname;
+      let profilePath;
+      
+      if (path.includes('/pages/main/')) {
+        // Мы в подпапке pages/main/
+        profilePath = 'profile.html';
+      } else {
+        // Мы в корне сайта
+        profilePath = 'pages/main/profile.html';
+      }
+      
+      window.location.href = profilePath;
     } else {
       // Используем функцию из modal.js
       if (window.showRegisterModal) {

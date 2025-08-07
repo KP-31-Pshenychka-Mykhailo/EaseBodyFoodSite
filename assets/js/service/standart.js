@@ -265,8 +265,19 @@ async function initStandartPage() {
       localStorage.setItem('cart', JSON.stringify(cart));
     }
     
-    // Перенаправляем в корзину
-    window.location.href = '/pages/main/cart.html';
+    // Перенаправляем в корзину с правильным путем
+    const path = window.location.pathname;
+    let cartPath;
+    
+    if (path.includes('/pages/main/')) {
+      // Мы в подпапке pages/main/
+      cartPath = 'cart.html';
+    } else {
+      // Мы в корне сайта
+      cartPath = 'pages/main/cart.html';
+    }
+    
+    window.location.href = cartPath;
   }
 
   // Обработчик для кнопки "Обрати це меню"
